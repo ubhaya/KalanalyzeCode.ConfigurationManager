@@ -1,4 +1,5 @@
-﻿using KalanalyzeCode.ConfigurationManager.Shared;
+﻿using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
+using KalanalyzeCode.ConfigurationManager.Shared;
 
 namespace KalanalyzeCode.ConfigurationManager.Api;
 
@@ -17,4 +18,3 @@ public class RepositoryService
     }
 }
 
-internal record ConfigurationSettings(string Id, string? Value);
