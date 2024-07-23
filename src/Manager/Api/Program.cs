@@ -17,6 +17,8 @@ builder.Services.AddPersistence(builder.Configuration);
 
 var app = builder.Build();
 
+await app.SeedDatabase();
+
 app.UseCors(AppConstants.CorsPolicy);
 app.UseStaticFiles();
 app.MapSwagger();
@@ -24,4 +26,4 @@ app.MapSwagger();
 
 app.MediateGet<GetAppSettingsRequest>("api/appsettings", nameof(GetAppSettingsRequest), nameof(GetAppSettingsResponse));
 
-app.Run();
+await app.RunAsync();
