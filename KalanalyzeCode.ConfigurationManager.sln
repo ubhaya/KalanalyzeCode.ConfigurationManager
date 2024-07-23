@@ -5,11 +5,11 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DD5B0F36-E012-48CD-8FE6-1F18416B84A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalanalyzeCode.ConfigurationManager", "src\KalanalyzeCode.ConfigurationManager\KalanalyzeCode.ConfigurationManager.csproj", "{09A7E7B0-A74D-4304-86DE-103364B8C418}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manager", "src\Manager\Manager.csproj", "{09A7E7B0-A74D-4304-86DE-103364B8C418}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalanalyzeCode.ConfigurationManager.Aspire.AppHost", "src\KalanalyzeCode.ConfigurationManager.Aspire.AppHost\KalanalyzeCode.ConfigurationManager.Aspire.AppHost.csproj", "{8230AE13-DDE6-4E5C-ADB7-8FDB55DB5243}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aspire.AppHost", "src\Aspire.AppHost\Aspire.AppHost.csproj", "{8230AE13-DDE6-4E5C-ADB7-8FDB55DB5243}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalanalyzeCode.ConfigurationManager.Aspire.ServiceDefaults", "src\KalanalyzeCode.ConfigurationManager.Aspire.ServiceDefaults\KalanalyzeCode.ConfigurationManager.Aspire.ServiceDefaults.csproj", "{3B824E9B-12C0-491E-B31C-B633F62E8451}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aspire.ServiceDefaults", "src\Aspire.ServiceDefaults\Aspire.ServiceDefaults.csproj", "{3B824E9B-12C0-491E-B31C-B633F62E8451}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution-item", "solution-item", "{D8D22849-2614-4A4F-9054-7B965685248C}"
 	ProjectSection(SolutionItems) = preProject

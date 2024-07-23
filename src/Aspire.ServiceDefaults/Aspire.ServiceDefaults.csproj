@@ -1,10 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
     <IsAspireSharedProject>true</IsAspireSharedProject>
+    <AssemblyName>KalanalyzeCode.ConfigurationManager.Aspire.ServiceDefaults</AssemblyName>
+    <RootNamespace>KalanalyzeCode.ConfigurationManager.Aspire.ServiceDefaults</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
