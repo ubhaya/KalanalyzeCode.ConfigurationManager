@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Respawn;
-using Respawn.Graph;
+﻿using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Api.IntegrationTests;
 
@@ -11,55 +11,42 @@ public class TestBase : IAsyncLifetime
     public TestBase()
     {
         Application = new ApiWebApplication();
-
-        using var scope = Application.Services.CreateScope();
-        EnsureDatabase(scope);
     }
 
     public async Task InitializeAsync()
     {
-        await ResetState();
+        await Application.DbContainer.StartAsync();
+        using (var scope = Application.Services.CreateScope())
+        {
+            await EnsureDatabase(scope);
+        }
     }
 
-    protected Task<TEntity> AddAsync<TEntity>(TEntity entity) where TEntity : class
+    protected async Task<TEntity> AddAsync<TEntity>(TEntity entity) where TEntity : class
     {
         using var scope = Application.Services.CreateScope();
-        // var context = scope.ServiceProvider.GetRequiredService<ApiDbContext>();
-        // context.Add(entity);
-        // await context.SaveChangesAsync();
-        return Task.FromResult(entity);
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        context.Add(entity);
+        await context.SaveChangesAsync();
+        return entity;
     }
 
-    protected Task<TEntity> FindAsync<TEntity>(params object[] keyValues) where TEntity : class
+    protected async Task<TEntity?> FindAsync<TEntity>(params object[] keyValues) where TEntity : class
     {
-        throw new NotImplementedException();
-        // using var scope = Application.Services.CreateScope();
-        // var context = scope.ServiceProvider.GetRequiredService<ApiDbContext>();
-        // return await context.FindAsync<TEntity>(keyValues);
+        using var scope = Application.Services.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        return await context.FindAsync<TEntity>(keyValues);
     }
     
-    private void EnsureDatabase(IServiceScope scope)
+    private async Task EnsureDatabase(IServiceScope scope)
     {
-        // var context = scope.ServiceProvider.GetRequiredService<ApiDbContext>();
-        // context.Database.Migrate();
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        await context.Database.MigrateAsync();
     }
 
-    private static Task ResetState()
+    public async Task DisposeAsync()
     {
-        return Task.CompletedTask;
-        // var checkpoint = await Respawner.CreateAsync(ApiWebApplication.TestConnectionString, new RespawnerOptions
-        // {
-        //     TablesToIgnore = new Table[]
-        //     {
-        //         "__EFMigrationsHistory"
-        //     }
-        // });
-        // await checkpoint.ResetAsync(ApiWebApplication.TestConnectionString);
-    }
-
-    public Task DisposeAsync()
-    {
-        Application.Dispose();
-        return Task.CompletedTask;
+        await Application.DbContainer.StopAsync();
+        await Application.DisposeAsync();
     }
 }
