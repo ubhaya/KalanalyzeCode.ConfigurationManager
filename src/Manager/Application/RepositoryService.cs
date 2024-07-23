@@ -1,7 +1,7 @@
 ﻿using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
 using KalanalyzeCode.ConfigurationManager.Shared;
 
-namespace KalanalyzeCode.ConfigurationManager.Api;
+namespace KalanalyzeCode.ConfigurationManager.Application;
 
 public class RepositoryService
 {
@@ -11,10 +11,10 @@ public class RepositoryService
         new ConfigurationSettings("StarfishOptions:PerformanceMonitorEnabled", "false")
     ];
     
-    public Task<IEnumerable<ApplicationSettings>> GetAllApplicationSettings(string settingName)
+    public Task<List<ApplicationSettings>> GetAllApplicationSettings(string settingName)
     {
         return Task.FromResult(_configurationSettingsList.Where(l => l.Id.StartsWith(settingName))
-            .Select(s => new ApplicationSettings(s.Id, s.Value)));
+            .Select(s => new ApplicationSettings(s.Id, s.Value)).ToList());
     }
 }
 

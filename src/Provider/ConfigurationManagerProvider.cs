@@ -40,7 +40,7 @@ public class ConfigurationManagerProvider : ConfigurationProvider, IDisposable
         };
 
         var result = Task.Run(async () => await client.GetFromJsonAsync<IEnumerable<ApplicationSettings>>(
-                "/appsettings?settingName=StarfishOptions"))
+                "/api/appsettings?settingName=StarfishOptions"))
             .Result;
 
         Data = result?
