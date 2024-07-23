@@ -1,9 +1,10 @@
-using Carter;
 using KalanalyzeCode.ConfigurationManager.Api;
 using KalanalyzeCode.ConfigurationManager.Api.Extensions;
 using KalanalyzeCode.ConfigurationManager.Application;
 using KalanalyzeCode.ConfigurationManager.Application.Helpers;
 using KalanalyzeCode.ConfigurationManager.Aspire.ServiceDefaults;
+using KalanalyzeCode.ConfigurationManager.Shared.Contract.Request;
+using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,8 @@ var app = builder.Build();
 app.UseCors(AppConstants.CorsPolicy);
 app.UseStaticFiles();
 app.MapSwagger();
-app.MapCarter();
+
+
+app.MediateGet<GetAppSettingsRequest>("api/appsettings", nameof(GetAppSettingsRequest), nameof(GetAppSettingsResponse));
 
 app.Run();

@@ -2,14 +2,9 @@
 
 namespace KalanalyzeCode.ConfigurationManager.Entity.Concrete;
 
-public class ConfigurationSettings : IEntity
+public class ConfigurationSettings : IEntity, IHasDomainEvent
 {
-    public ConfigurationSettings(string id, string? value)
-    {
-        this.Id = id;
-        this.Value = value;
-    }
-
-    public string Id { get;}
-    public string? Value { get;}
+    public string Id { get; set; } = string.Empty;
+    public string? Value { get; set; }
+    public List<DomainEvent> DomainEvents { get; set; } = [];
 }

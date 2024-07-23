@@ -1,5 +1,5 @@
-﻿using Carter;
-using FluentValidation;
+﻿using FluentValidation;
+using KalanalyzeCode.ConfigurationManager.Application.Common.Behaviours;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,7 +9,6 @@ public static class DependencyConfig
 {
     public static IServiceCollection AddApplicationCore(this IServiceCollection services)
     {
-        services.AddCarter();
         services.AddAutoMapper(typeof(Application));
         services.AddMediatR(config =>
         {

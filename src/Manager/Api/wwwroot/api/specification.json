@@ -9,16 +9,17 @@
     "/api/appsettings": {
       "get": {
         "tags": [
-          "ConfigurationSettings"
+          "GetAppSettingsResponse"
         ],
-        "operationId": "GetAppSettings",
+        "operationId": "GetAppSettingsRequest",
         "parameters": [
           {
-            "name": "settingName",
+            "name": "SettingName",
             "in": "query",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "nullable": true
             },
             "x-position": 1
           }

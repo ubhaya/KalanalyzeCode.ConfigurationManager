@@ -7,8 +7,14 @@ public class RepositoryService
 {
     private readonly List<ConfigurationSettings> _configurationSettingsList =
     [
-        new ConfigurationSettings("StarfishOptions:FraudCheckerEnabled", "true"),
-        new ConfigurationSettings("StarfishOptions:PerformanceMonitorEnabled", "false")
+        new ConfigurationSettings{
+            Id = "StarfishOptions:FraudCheckerEnabled", 
+            Value = "true"
+                },
+        new ConfigurationSettings{
+            Id = "StarfishOptions:PerformanceMonitorEnabled", 
+            Value = "true"
+        },
     ];
     
     public Task<List<ApplicationSettings>> GetAllApplicationSettings(string settingName)

@@ -1,5 +1,7 @@
 ﻿using System.Net.Http.Json;
+using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
 using KalanalyzeCode.ConfigurationManager.Shared;
+using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
 using Microsoft.Extensions.Configuration;
 
 namespace KalanalyzeCode.ConfigurationManager.Provider;
@@ -39,11 +41,11 @@ public class ConfigurationManagerProvider : ConfigurationProvider, IDisposable
             BaseAddress = options.BaseAddress
         };
 
-        var result = Task.Run(async () => await client.GetFromJsonAsync<IEnumerable<ApplicationSettings>>(
+        var result = Task.Run(async () => await client.GetFromJsonAsync<ResponseDataModel<GetAppSettingsResponse>>(
                 "/api/appsettings?settingName=StarfishOptions"))
             .Result;
 
-        Data = result?
+        Data = result?.Data?.Settings
                    .ToDictionary<ApplicationSettings, string, string?>(c => c.Id, c => c.Value,
                        StringComparer.OrdinalIgnoreCase) ??
                [];
