@@ -1,6 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <AssemblyName>KalanalyzeCode.ConfigurationManager.Business</AssemblyName>
-    <RootNamespace>KalanalyzeCode.ConfigurationManager.Business</RootNamespace>
-  </PropertyGroup>
-</Project>

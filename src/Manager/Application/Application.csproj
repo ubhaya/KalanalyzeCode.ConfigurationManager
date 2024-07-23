@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>KalanalyzeCode.ConfigurationManager.Application</AssemblyName>
+    <RootNamespace>KalanalyzeCode.ConfigurationManager.Application</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entity\Entity.csproj" />
+  </ItemGroup>
+</Project>
