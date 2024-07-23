@@ -1,61 +1,27 @@
 using KalanalyzeCode.ConfigurationManager.Api;
+using KalanalyzeCode.ConfigurationManager.Api.Extensions;
+using KalanalyzeCode.ConfigurationManager.Application;
+using KalanalyzeCode.ConfigurationManager.Application.Helpers;
 using KalanalyzeCode.ConfigurationManager.Aspire.ServiceDefaults;
+using KalanalyzeCode.ConfigurationManager.Shared.Contract.Request;
+using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddSingleton<RepositoryService>();
+builder.Host.AddSerilog();
+builder.Services.AddWebApiConfig();
+builder.Services.AddApplicationCore();
+builder.Services.AddPersistence(builder.Configuration);
 
 var app = builder.Build();
 
-app.MapDefaultEndpoints();
+app.UseCors(AppConstants.CorsPolicy);
+app.UseStaticFiles();
+app.MapSwagger();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
-app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/appsettings", async (string settingName, RepositoryService repositoryService) =>
-            Results.Ok(await repositoryService.GetAllApplicationSettings(settingName)))
-    .WithName("GetApplicationSettings")
-    .WithOpenApi();
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+app.MediateGet<GetAppSettingsRequest>("api/appsettings", nameof(GetAppSettingsRequest), nameof(GetAppSettingsResponse));
 
 app.Run();
-
-namespace KalanalyzeCode.ConfigurationManager.Api
-{
-    record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-    {
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-    }
-}

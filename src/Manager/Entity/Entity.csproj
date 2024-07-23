@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  
+  <PropertyGroup>
+    <AssemblyName>KalanalyzeCode.ConfigurationManager.Entity</AssemblyName>
+    <RootNamespace>KalanalyzeCode.ConfigurationManager.Entity</RootNamespace>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
+  </ItemGroup>
+  
+</Project>

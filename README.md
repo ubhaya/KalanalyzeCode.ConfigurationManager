@@ -1,6 +1,8 @@
 # KalanalyzeCode.ConfigurationManager
 This solution is provide a much safe way to manage your dotnet configuration than inbuilt appsetting.json on IIS
 
+[![Build and execute tests](https://github.com/ubhaya/KalanalyzeCode.ConfigurationManager/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/ubhaya/KalanalyzeCode.ConfigurationManager/actions/workflows/dotnet.yml)
+
 # Project Roadmap: Configuration System for .NET Applications
 
 ## Step 1: Define Project Requirements
