@@ -4,41 +4,6 @@ using Microsoft.Extensions.Configuration;
 
 namespace KalanalyzeCode.ConfigurationManager.Provider;
 
-public class ConfigurationManagerSource : IConfigurationSource
-{
-    public ConfigurationManagerSource(Action<ConfigurationOptions> optionsAction, bool? reloadPeriodically = null,
-        int? periodInSeconds = null)
-    {
-        OptionsAction = optionsAction;
-        ReloadPeriodically = reloadPeriodically ?? false;
-        PeriodInSeconds = periodInSeconds ?? 5;
-    }
-
-    public Action<ConfigurationOptions> OptionsAction { get; }
-
-    public bool ReloadPeriodically { get; }
-
-    public int PeriodInSeconds { get; }
-
-    public IConfigurationProvider Build(IConfigurationBuilder builder)
-        => new ConfigurationManagerProvider(this);
-}
-
-public class ConfigurationOptions
-{
-    public Uri? BaseAddress { get; private set; }
-
-    public void SetBaseAddress(string baseAddress)
-    {
-        BaseAddress = new Uri(baseAddress);
-    }
-
-    public void SetBaseAddress(Uri baseAddress)
-    {
-        BaseAddress = baseAddress;
-    }
-}
-
 public class ConfigurationManagerProvider : ConfigurationProvider, IDisposable
 {
     private readonly Timer? _timer;
@@ -47,18 +12,21 @@ public class ConfigurationManagerProvider : ConfigurationProvider, IDisposable
     {
         Source = source;
 
-        if (Source.ReloadPeriodically)
+        source.OptionsAction(Options);
+
+        if (Options.ReloadPeriodically)
         {
             _timer = new Timer(
                 callback: ReloadSettings,
                 dueTime: TimeSpan.FromSeconds(10),
-                period: TimeSpan.FromSeconds(Source.PeriodInSeconds),
+                period: TimeSpan.FromSeconds(Options.PeriodInSeconds),
                 state: null
             );
         }
     }
 
     private ConfigurationManagerSource Source { get; }
+    private ConfigurationOptions Options { get; } = new();
 
     public override void Load()
     {
@@ -90,17 +58,5 @@ public class ConfigurationManagerProvider : ConfigurationProvider, IDisposable
     public void Dispose()
     {
         _timer?.Dispose();
-    }
-}
-
-public static class ServiceRegistration
-{
-    public static IConfigurationManager AddConfigurationManager(this IConfigurationManager configuration,
-        Action<ConfigurationOptions> options)
-    {
-        configuration.Sources.Add(new ConfigurationManagerSource
-            (options, true, 5));
-
-        return configuration;
     }
 }

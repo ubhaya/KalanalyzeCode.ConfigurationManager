@@ -9,7 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Configuration.AddConfigurationManager(options => options.SetBaseAddress("http://localhost:5125/"));
+builder.Configuration.AddConfigurationManager(options =>
+{
+    options.BaseAddress = new Uri("http://localhost:5125");
+    options.ReloadPeriodically = true;
+    options.PeriodInSeconds = 2;
+});
 
 builder.Services.Configure<StarfishOptions>(builder.Configuration.GetSection(nameof(StarfishOptions)));
 
