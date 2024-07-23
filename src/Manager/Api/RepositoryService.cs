@@ -1,6 +1,6 @@
 ﻿using KalanalyzeCode.ConfigurationManager.Shared;
 
-namespace KalanalyzeCode.ConfigurationManager;
+namespace KalanalyzeCode.ConfigurationManager.Api;
 
 public class RepositoryService
 {
