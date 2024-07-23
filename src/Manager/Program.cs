@@ -1,3 +1,5 @@
+using KalanalyzeCode.ConfigurationManager;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
@@ -6,6 +8,8 @@ builder.AddServiceDefaults();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSingleton<RepositoryService>();
 
 var app = builder.Build();
 
@@ -24,6 +28,11 @@ var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
+
+app.MapGet("/appsettings", async (string settingName, RepositoryService repositoryService) =>
+            Results.Ok(await repositoryService.GetAllApplicationSettings(settingName)))
+    .WithName("GetApplicationSettings")
+    .WithOpenApi();
 
 app.MapGet("/weatherforecast", () =>
 {

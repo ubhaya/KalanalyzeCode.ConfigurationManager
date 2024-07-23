@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <AssemblyName>KalanalyzeCode.ConfigurationManager.Shared</AssemblyName>
+        <RootNamespace>KalanalyzeCode.ConfigurationManager.Shared</RootNamespace>
+    </PropertyGroup>
+
+</Project>
