@@ -11,6 +11,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalanalyzeCode.Configuratio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KalanalyzeCode.ConfigurationManager.Aspire.ServiceDefaults", "src\KalanalyzeCode.ConfigurationManager.Aspire.ServiceDefaults\KalanalyzeCode.ConfigurationManager.Aspire.ServiceDefaults.csproj", "{3B824E9B-12C0-491E-B31C-B633F62E8451}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution-item", "solution-item", "{D8D22849-2614-4A4F-9054-7B965685248C}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		global.json = global.json
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
