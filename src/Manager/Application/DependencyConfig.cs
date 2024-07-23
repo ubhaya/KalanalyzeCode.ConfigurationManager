@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using KalanalyzeCode.ConfigurationManager.Application.Common.Behaviours;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
+using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence.Seeder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,6 +42,8 @@ public static class DependencyConfig
         });
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+
+        services.AddScoped<IDatabaseSeeder, ApplicationDbContextSeeder>();
         
         return services;
     }

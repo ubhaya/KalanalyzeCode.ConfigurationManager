@@ -1,5 +1,9 @@
-﻿using KalanalyzeCode.ConfigurationManager.Shared.Contract.Request;
+﻿using KalanalyzeCode.ConfigurationManager.Application.Infrastructure;
+using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
+using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence.Seeder;
+using KalanalyzeCode.ConfigurationManager.Shared.Contract.Request;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
 
@@ -26,6 +30,32 @@ public static class WebApplicationBuilderExtensions
             async (IMediator mediator, [AsParameters] TRequest request) => await mediator.Send(request))
             .WithName(name)
             .WithTags(tags);
+        return app;
+    }
+
+    public static async Task<WebApplication> SeedDatabase(this WebApplication app)
+    {
+        using (var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+            try
+            {
+                var context = services.GetRequiredService<ApplicationDbContext>();
+                if (context.Database.IsNpgsql())
+                {
+                    await context.Database.MigrateAsync();
+                }
+
+                var dbSeeder = services.GetRequiredService<IDatabaseSeeder>();
+                await dbSeeder.SeedSampleDataAsync();
+            }
+            catch (Exception ex)
+            {
+                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                logger.LogError(ex, "An error occurred while migrating or initializing the database");
+                throw;
+            }
+        }
         return app;
     }
 }

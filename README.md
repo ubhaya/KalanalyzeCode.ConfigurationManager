@@ -27,7 +27,8 @@ This solution is provide a much safe way to manage your dotnet configuration tha
 
 ## Step 3: Design the System
 1. - [ ]  **Configuration Service**:
-    - - [ ]  **API**: Create RESTful APIs for CRUD operations on configurations.
+    - - [x]  **API**: Create RESTful APIs for CRUD operations on configurations.
+         > [Limitation](./docs/Limitation.md)
     - - [ ]  **Client Library**: Develop a client library to fetch configurations.
 2. - [ ]  **Configuration Storage**:
     - Design database schema or storage structure for configurations.
