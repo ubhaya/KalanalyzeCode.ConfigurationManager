@@ -8,10 +8,16 @@ namespace KalanalyzeCode.ConfigurationManager.Application.Features.Categories.Qu
 
 public class GetAppSettingsRequestHandler : IRequestHandler<GetAppSettingsRequest, IResult>
 {
+    private readonly RepositoryService _repository;
+
+    public GetAppSettingsRequestHandler(RepositoryService repository)
+    {
+        _repository = repository;
+    }
+
     public async Task<IResult> Handle(GetAppSettingsRequest request, CancellationToken cancellationToken)
     {
-        var repo = new RepositoryService();
-        var result = await repo.GetAllApplicationSettings(request.SettingName);
+        var result = await _repository.GetAllApplicationSettings(request.SettingName, cancellationToken);
         return Results.Ok(new ResponseDataModel<GetAppSettingsResponse>
         {
             Data = new GetAppSettingsResponse()

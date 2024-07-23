@@ -7,16 +7,18 @@ using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
 
 namespace Api.IntegrationTests;
 
-public class GetAppSettingEndpoint : TestBase
+public class GetAppSettingEndpointTests : TestBase
 {
     [Fact]
     public async Task GetAppSettingEndpoint_ReturnResult_WhenValidSettingNamesParse()
     {
         // Arrange
+        var testSettings = "TestSettings";
+        await AddAsync(new ConfigurationSettings() { Id = testSettings, Value = "true" });
         var client = Application.CreateClient();
 
         // Act
-        var settings = await client.GetFromJsonAsync<ResponseDataModel<GetAppSettingsResponse>>("/api/appsettings?settingName=StarfishOptions");
+        var settings = await client.GetFromJsonAsync<ResponseDataModel<GetAppSettingsResponse>>("/api/appsettings?settingName=TestSettings");
 
         // Assert
         settings.Should().NotBeNull();

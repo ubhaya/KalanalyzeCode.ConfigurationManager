@@ -1,26 +1,23 @@
-﻿using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
+﻿using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using KalanalyzeCode.ConfigurationManager.Shared;
+using Microsoft.EntityFrameworkCore;
 
 namespace KalanalyzeCode.ConfigurationManager.Application;
 
 public class RepositoryService
 {
-    private readonly List<ConfigurationSettings> _configurationSettingsList =
-    [
-        new ConfigurationSettings{
-            Id = "StarfishOptions:FraudCheckerEnabled", 
-            Value = "true"
-                },
-        new ConfigurationSettings{
-            Id = "StarfishOptions:PerformanceMonitorEnabled", 
-            Value = "true"
-        },
-    ];
-    
-    public Task<List<ApplicationSettings>> GetAllApplicationSettings(string settingName)
+    private readonly IApplicationDbContext _context;
+
+    public RepositoryService(IApplicationDbContext context)
     {
-        return Task.FromResult(_configurationSettingsList.Where(l => l.Id.StartsWith(settingName))
-            .Select(s => new ApplicationSettings(s.Id, s.Value)).ToList());
+        _context = context;
+    }
+
+    public async Task<List<ApplicationSettings>> GetAllApplicationSettings(string settingName, CancellationToken cancellationToken = default)
+    {
+        return await _context.Settings.Where(l => l.Id.StartsWith(settingName))
+            .Select(s => new ApplicationSettings(s.Id, s.Value))
+            .ToListAsync(cancellationToken);
     }
 }
 
