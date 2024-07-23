@@ -4,17 +4,24 @@ This solution is provide a much safe way to manage your dotnet configuration tha
 # Project Roadmap: Configuration System for .NET Applications
 
 ## Step 1: Define Project Requirements
-1. - [ ] **Configuration Source**: Decide where the configurations will be stored (e.g., database, cloud storage, environment variables).
-2. - [ ]  **Security**: Ensure that sensitive data is securely managed.
-3. - [ ]  **Flexibility**: Allow for different environments (development, staging, production).
+1. - [x] **Configuration Source**: Decide where the configurations will be stored (e.g., database, cloud storage, environment variables).
+        > Configuration Manager will using NoSql database as a persistent storage. which database to use will decide later. 
+2. - [x]  **Security**: Ensure that sensitive data is securely managed.
+        > Data that stored in persistent layer should encrypt before saving. This will add a more overhead on the operations, but this will not be a big problem.
+3. - [x]  **Flexibility**: Allow for different environments (development, staging, production).
+        > Multiple environment support is a necessary to succeed the project.
 4. - [ ]  **Scalability**: Ensure the system can handle large configurations efficiently.
 5. - [ ]  **Integration**: Seamlessly integrate with existing .NET Core/Framework applications.
 
 ## Step 2: Choose Technology Stack
-1. - [ ]  **Backend**: .NET Core/Framework.
-2. - [ ]  **Storage**: SQL/NoSQL database, cloud storage (Azure Blob, AWS S3).
-3. - [ ]  **Authentication & Authorization**: OAuth, JWT.
-4. - [ ]  **Deployment**: Docker, Kubernetes, Azure/AWS/GCP.
+1. - [x]  **Backend**: .NET Core/Framework.
+        > This project will use dotnet LTS versions. but further down the road it may possible to maintained a LTS version and STS version.
+2. - [x]  **Storage**: SQL/NoSQL database, cloud storage (Azure Blob, AWS S3).
+        > MongoDb will be use as primary database provider. As the project moved on user may able to choose custom database providers.
+3. - [x]  **Authentication & Authorization**: OAuth, JWT.
+        > Currently any authentication is not a consideration. But as a security reason project should use some authentication system.
+4. - [x]  **Deployment**: Docker, Kubernetes, Azure/AWS/GCP.
+        > This project will deploy mainly as a docker image. Still the options are open to provide the standalone application.
 
 ## Step 3: Design the System
 1. - [ ]  **Configuration Service**:
