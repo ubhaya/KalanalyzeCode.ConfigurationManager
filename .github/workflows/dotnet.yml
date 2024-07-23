@@ -23,13 +23,13 @@ jobs:
             - name: Build Solution
               run: dotnet build KalanalyzeCode.ConfigurationManager.sln --no-restore -c Release
 
-    # tests:
-    #     needs: 
-    #         - build
+    tests:
+        needs: 
+            - build
 
-    #     runs-on: ubuntu-latest
+        runs-on: ubuntu-latest
 
-    #     steps:
+        steps:
     #         - name: Checkout repository
     #           uses: actions/checkout@v4
 
@@ -42,5 +42,5 @@ jobs:
     #         - name: Build Solution
     #           run: dotnet build KalanalyzeCode.ConfigurationManager.sln --no-restore -c Release
 
-    #         - name: Execute Tests
-    #           run: dotnet test .\KalanalyzeCode.ConfigurationManager.sln --no-build -c Release
+            - name: Execute Tests
+              run: dotnet test .\KalanalyzeCode.ConfigurationManager.sln --no-build -c Release
