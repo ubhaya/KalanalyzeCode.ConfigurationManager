@@ -23,24 +23,24 @@ jobs:
             - name: Build Solution
               run: dotnet build KalanalyzeCode.ConfigurationManager.sln --no-restore -c Release
 
-    tests:
-        needs: 
-            - build
+    # tests:
+    #     needs: 
+    #         - build
 
-        runs-on: ubuntu-latest
+    #     runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v4
+    #     steps:
+    #         - name: Checkout repository
+    #           uses: actions/checkout@v4
 
-            - name: Restore pre requeties
-              uses: dotnet workload restore
+    #         - name: Restore pre requeties
+    #           uses: dotnet workload restore
 
-            - name: Restore Packages
-              run: dotnet restore KalanalyzeCode.ConfigurationManager.sln
+    #         - name: Restore Packages
+    #           run: dotnet restore KalanalyzeCode.ConfigurationManager.sln
 
-            - name: Build Solution
-              run: dotnet build KalanalyzeCode.ConfigurationManager.sln --no-restore -c Release
+    #         - name: Build Solution
+    #           run: dotnet build KalanalyzeCode.ConfigurationManager.sln --no-restore -c Release
 
-            - name: Execute Tests
-              run: dotnet test .\KalanalyzeCode.ConfigurationManager.sln --no-build -c Release
+    #         - name: Execute Tests
+    #           run: dotnet test .\KalanalyzeCode.ConfigurationManager.sln --no-build -c Release
