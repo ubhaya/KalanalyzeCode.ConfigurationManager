@@ -29,10 +29,12 @@ app.MapSwagger();
 app.UseRouting();
 app.UseIdentityServer();
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapRazorPages().RequireAuthorization();
 
-app.MediateGet<GetAppSettingsRequest>(ProjectConstant.GetAppSettings, nameof(GetAppSettingsRequest), nameof(GetAppSettingsResponse));
+app.MediateGet<GetAppSettingsRequest>(ProjectConstant.GetAppSettings, nameof(GetAppSettingsRequest), "AppSettings",
+    isAuthorized: true, nameof(GetAppSettingsResponse));
 
 var summaries = new[]
 {
@@ -40,19 +42,20 @@ var summaries = new[]
 };
 
 app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-            new WeatherForecast
-            (
-                DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                100,
-                summaries[Random.Shared.Next(summaries.Length)]
-            ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithTags(nameof(WeatherForecast));
+    {
+        var forecast = Enumerable.Range(1, 5).Select(index =>
+                new WeatherForecast
+                (
+                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+                    100,
+                    summaries[Random.Shared.Next(summaries.Length)]
+                ))
+            .ToArray();
+        return forecast;
+    })
+    .WithName("WeatherForecast_GetWeatherForecast")
+    .WithGroupName("WeatherForecast")
+    .WithTags(nameof(WeatherForecast));
 
 await app.RunAsync();
 
@@ -60,4 +63,3 @@ record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
-    

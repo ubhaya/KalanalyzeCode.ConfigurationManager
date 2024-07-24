@@ -24,12 +24,15 @@ public static class WebApplicationBuilderExtensions
 
     public static WebApplication MediateGet<TRequest>(
         this WebApplication app,
-        string template, string name, params string[] tags) where TRequest : IHttpRequest
+        string template, string name, string groupName, bool isAuthorized, params string[] tags) where TRequest : IHttpRequest
     {
-        var route = app.MapGet(template,
+        app.MapGet(template,
             async (IMediator mediator, [AsParameters] TRequest request) => await mediator.Send(request))
-            .WithName(name)
-            .WithTags(tags);
+            .WithName($"{groupName}_{name}")
+            .WithGroupName(groupName)
+            .WithTags(tags)
+            .RequireAuthorization();
+        
         return app;
     }
 

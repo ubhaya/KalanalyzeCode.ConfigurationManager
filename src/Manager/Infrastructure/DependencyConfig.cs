@@ -2,6 +2,7 @@
 using Duende.IdentityServer;
 using KalanalyzeCode.ConfigurationManager.Application.Common.Interfaces;
 using KalanalyzeCode.ConfigurationManager.Infrastructure.Identity;
+using KalanalyzeCode.ConfigurationManager.Infrastructure.Options;
 using KalanalyzeCode.ConfigurationManager.Infrastructure.Persistence;
 using KalanalyzeCode.ConfigurationManager.Infrastructure.Persistence.Seeder;
 using KalanalyzeCode.ConfigurationManager.Shared.Authorization;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Npgsql;
 
 namespace KalanalyzeCode.ConfigurationManager.Infrastructure;
@@ -22,10 +24,10 @@ public static class DependencyConfig
         return services;
     }
 
-    private static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration config)
+    private static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = config["PostgreSql:ConnectionString"];
-        var dbPassword = config["PostgreSql:DbPassword"];
+        var connectionString = configuration["PostgreSql:ConnectionString"];
+        var dbPassword = configuration["PostgreSql:DbPassword"];
 
         var builder = new NpgsqlConnectionStringBuilder(connectionString)
         {
@@ -78,7 +80,19 @@ public static class DependencyConfig
 
         identityBuilder.AddProfileService<ProfileService>();
         
-        services.AddAuthentication()
+        var oidcSettings = new OidcSettings();
+        configuration.GetRequiredSection(nameof(OidcSettings)).Bind(oidcSettings);
+        services.AddAuthentication("Bearer")
+            .AddJwtBearer("Bearer", options =>
+            {
+                options.Authority = oidcSettings.Authority;
+
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false,
+                    ValidateLifetime = false,
+                };
+            })
             .AddGoogle(options =>
             {
                 options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
@@ -88,6 +102,13 @@ public static class DependencyConfig
                 // set the redirect URI to https://localhost:5001/signin-google
                 options.ClientId = "copy client ID from Google here";
                 options.ClientSecret = "copy client secret from Google here";
+            });
+
+        services.AddAuthorizationBuilder()
+            .AddPolicy("api_scope", policy =>
+            {
+                policy.RequireAuthenticatedUser();
+                policy.RequireClaim("scope", oidcSettings.RequiredScope??Enumerable.Empty<string>());
             });
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
