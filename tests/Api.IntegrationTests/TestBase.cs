@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Api.IntegrationTests;
+namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests;
 
 public class TestBase : IAsyncLifetime
 {

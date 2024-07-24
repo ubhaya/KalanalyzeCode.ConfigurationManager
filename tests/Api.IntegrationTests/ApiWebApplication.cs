@@ -1,5 +1,4 @@
-﻿using DotNet.Testcontainers.Builders;
-using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
+﻿using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,7 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Npgsql;
 using Testcontainers.PostgreSql;
 
-namespace Api.IntegrationTests;
+namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests;
 
 public class ApiWebApplication : WebApplicationFactory<KalanalyzeCode.ConfigurationManager.Api.Api>
 {

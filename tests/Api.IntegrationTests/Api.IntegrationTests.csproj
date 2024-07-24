@@ -3,6 +3,8 @@
   <PropertyGroup>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <AssemblyName>KalanalyzeCode.ConfigurationManager.Api.IntegrationTests</AssemblyName>
+    <RootNamespace>KalanalyzeCode.ConfigurationManager.Api.IntegrationTests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

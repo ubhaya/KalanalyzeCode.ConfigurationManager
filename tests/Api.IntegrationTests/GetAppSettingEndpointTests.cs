@@ -5,7 +5,7 @@ using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
 using KalanalyzeCode.ConfigurationManager.Shared;
 using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
 
-namespace Api.IntegrationTests;
+namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests;
 
 public class GetAppSettingEndpointTests : TestBase
 {
