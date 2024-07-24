@@ -102,8 +102,8 @@ namespace MinimalApiArchitecture.Api
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "api/appsettings"
-                    urlBuilder_.Append("api/appsettings");
+                    // Operation Path: "Api/GetAppSettings"
+                    urlBuilder_.Append("Api/GetAppSettings");
                     urlBuilder_.Append('?');
                     urlBuilder_.Append(System.Uri.EscapeDataString("SettingName")).Append('=').Append(System.Uri.EscapeDataString(settingName != null ? ConvertToString(settingName, System.Globalization.CultureInfo.InvariantCulture) : "")).Append('&');
                     urlBuilder_.Length--;

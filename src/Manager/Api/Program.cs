@@ -3,6 +3,7 @@ using KalanalyzeCode.ConfigurationManager.Api.Extensions;
 using KalanalyzeCode.ConfigurationManager.Application;
 using KalanalyzeCode.ConfigurationManager.Application.Helpers;
 using KalanalyzeCode.ConfigurationManager.Aspire.ServiceDefaults;
+using KalanalyzeCode.ConfigurationManager.Shared;
 using KalanalyzeCode.ConfigurationManager.Shared.Contract.Request;
 using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
 
@@ -24,6 +25,6 @@ app.UseStaticFiles();
 app.MapSwagger();
 
 
-app.MediateGet<GetAppSettingsRequest>("api/appsettings", nameof(GetAppSettingsRequest), nameof(GetAppSettingsResponse));
+app.MediateGet<GetAppSettingsRequest>(ProjectConstant.GetAppSettings, nameof(GetAppSettingsRequest), nameof(GetAppSettingsResponse));
 
 await app.RunAsync();

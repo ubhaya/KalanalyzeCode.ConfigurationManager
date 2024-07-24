@@ -6,7 +6,7 @@
     "version": "v1"
   },
   "paths": {
-    "/api/appsettings": {
+    "/Api/GetAppSettings": {
       "get": {
         "tags": [
           "GetAppSettingsResponse"

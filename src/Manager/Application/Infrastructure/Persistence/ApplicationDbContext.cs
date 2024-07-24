@@ -1,4 +1,5 @@
-﻿using KalanalyzeCode.ConfigurationManager.Entity.Abstract;
+﻿using KalanalyzeCode.ConfigurationManager.Application.Helpers;
+using KalanalyzeCode.ConfigurationManager.Entity.Abstract;
 using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -35,12 +36,12 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         if (_currentTransaction is not null)
         {
-            _logger.LogInformation("A transaction with ID {ID} is already created", _currentTransaction.TransactionId);
+            _logger.LogInformation(AppConstants.LoggingMessages.TransactionAlreadyCreated, _currentTransaction.TransactionId);
             return;
         }
     
         _currentTransaction = await Database.BeginTransactionAsync(cancellationToken);
-        _logger.LogInformation("A new transaction was created with ID {ID}", _currentTransaction.TransactionId);
+        _logger.LogInformation(AppConstants.LoggingMessages.TransactionCreated, _currentTransaction.TransactionId);
     }
     
     public async Task CommitTransactionAsync(CancellationToken cancellationToken = default)
@@ -50,7 +51,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
             return;
         }
         
-        _logger.LogInformation("Commiting Transaction {ID}", _currentTransaction.TransactionId);
+        _logger.LogInformation(AppConstants.LoggingMessages.TransactionCommited, _currentTransaction.TransactionId);
     
         await _currentTransaction.CommitAsync(cancellationToken);
     
@@ -65,7 +66,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
             return;
         }
     
-        _logger.LogDebug("Rolling back Transaction {ID}", _currentTransaction.TransactionId);
+        _logger.LogDebug(AppConstants.LoggingMessages.TransactionRollingBack, _currentTransaction.TransactionId);
     
         await _currentTransaction.RollbackAsync(cancellationToken);
     
@@ -87,7 +88,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         {
             @event.IsPublished = true;
     
-            _logger.LogInformation("New domain event {Event}", @event.GetType().Name);
+            _logger.LogInformation(AppConstants.LoggingMessages.NewDomainEvent, @event.GetType().Name);
     
             // Note: If an unhandled exception occurs, all the saved changes will be rolled back
             // by the TransactionBehavior. All the operations related to a domain event finish

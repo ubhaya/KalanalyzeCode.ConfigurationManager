@@ -23,8 +23,4 @@
     <ProjectReference Include="..\..\src\Manager\Api\Api.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Manager\Api\Api.csproj" />
-  </ItemGroup>
-
 </Project>

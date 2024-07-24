@@ -1,4 +1,5 @@
-﻿using KalanalyzeCode.ConfigurationManager.Application.Infrastructure;
+﻿using KalanalyzeCode.ConfigurationManager.Application.Helpers;
+using KalanalyzeCode.ConfigurationManager.Application.Infrastructure;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence.Seeder;
 using KalanalyzeCode.ConfigurationManager.Shared.Contract.Request;
@@ -52,7 +53,7 @@ public static class WebApplicationBuilderExtensions
             catch (Exception ex)
             {
                 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                logger.LogError(ex, "An error occurred while migrating or initializing the database");
+                logger.LogError(ex, AppConstants.LoggingMessages.SeedingOrMigrationError);
                 throw;
             }
         }

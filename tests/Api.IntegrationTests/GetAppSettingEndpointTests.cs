@@ -18,7 +18,7 @@ public class GetAppSettingEndpointTests : TestBase
         var client = Application.CreateClient();
 
         // Act
-        var settings = await client.GetFromJsonAsync<ResponseDataModel<GetAppSettingsResponse>>("/api/appsettings?settingName=TestSettings");
+        var settings = await client.GetFromJsonAsync<ResponseDataModel<GetAppSettingsResponse>>($"{ProjectConstant.GetAppSettings}?settingName=TestSettings");
 
         // Assert
         settings.Should().NotBeNull();
@@ -36,7 +36,7 @@ public class GetAppSettingEndpointTests : TestBase
         var client = Application.CreateClient();
 
         // Act
-        var settings = await client.GetFromJsonAsync<ResponseDataModel<GetAppSettingsResponse>>("/api/appsettings?settingName=invalidName");
+        var settings = await client.GetFromJsonAsync<ResponseDataModel<GetAppSettingsResponse>>($"{ProjectConstant.GetAppSettings}?settingName=invalidName");
 
         // Assert
         settings.Should().NotBeNull();
