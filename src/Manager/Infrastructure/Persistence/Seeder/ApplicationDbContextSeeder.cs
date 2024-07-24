@@ -1,8 +1,9 @@
-﻿using KalanalyzeCode.ConfigurationManager.Application.Helpers;
-using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
+﻿using KalanalyzeCode.ConfigurationManager.Application.Common.Interfaces;
+using KalanalyzeCode.ConfigurationManager.Application.Helpers;
+using KalanalyzeCode.ConfigurationManager.Domain.Concrete;
 using Microsoft.Extensions.Logging;
 
-namespace KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence.Seeder;
+namespace KalanalyzeCode.ConfigurationManager.Infrastructure.Persistence.Seeder;
 
 internal class ApplicationDbContextSeeder : IDatabaseSeeder
 {

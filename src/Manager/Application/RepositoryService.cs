@@ -1,4 +1,4 @@
-﻿using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
+﻿using KalanalyzeCode.ConfigurationManager.Application.Common.Interfaces;
 using KalanalyzeCode.ConfigurationManager.Shared;
 using Microsoft.EntityFrameworkCore;
 

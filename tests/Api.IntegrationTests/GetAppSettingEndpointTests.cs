@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Net.Http.Json;
 using FluentAssertions;
-using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
+using KalanalyzeCode.ConfigurationManager.Domain.Concrete;
 using KalanalyzeCode.ConfigurationManager.Shared;
 using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
 

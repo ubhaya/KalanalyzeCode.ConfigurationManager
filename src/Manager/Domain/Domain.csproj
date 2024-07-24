@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-    <AssemblyName>KalanalyzeCode.ConfigurationManager.Entity</AssemblyName>
-    <RootNamespace>KalanalyzeCode.ConfigurationManager.Entity</RootNamespace>
+    <AssemblyName>KalanalyzeCode.ConfigurationManager.Doamin</AssemblyName>
+    <RootNamespace>KalanalyzeCode.ConfigurationManager.Domain</RootNamespace>
   </PropertyGroup>
   
   <ItemGroup>

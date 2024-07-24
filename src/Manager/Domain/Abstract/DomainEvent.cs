@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace KalanalyzeCode.ConfigurationManager.Entity.Abstract;
+namespace KalanalyzeCode.ConfigurationManager.Domain.Abstract;
 
 public abstract class DomainEvent : INotification
 {
