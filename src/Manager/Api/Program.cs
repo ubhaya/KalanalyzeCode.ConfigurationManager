@@ -2,7 +2,6 @@ using KalanalyzeCode.ConfigurationManager.Api;
 using KalanalyzeCode.ConfigurationManager.Api.Extensions;
 using KalanalyzeCode.ConfigurationManager.Application;
 using KalanalyzeCode.ConfigurationManager.Application.Helpers;
-using KalanalyzeCode.ConfigurationManager.Aspire.ServiceDefaults;
 using KalanalyzeCode.ConfigurationManager.Shared;
 using KalanalyzeCode.ConfigurationManager.Shared.Contract.Request;
 using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
@@ -18,6 +17,8 @@ builder.Services.AddPersistence(builder.Configuration);
 
 var app = builder.Build();
 
+app.MapDefaultEndpoints();
+
 await app.SeedDatabase();
 
 app.UseCors(AppConstants.CorsPolicy);
@@ -27,4 +28,30 @@ app.MapSwagger();
 
 app.MediateGet<GetAppSettingsRequest>(ProjectConstant.GetAppSettings, nameof(GetAppSettingsRequest), nameof(GetAppSettingsResponse));
 
+var summaries = new[]
+{
+    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+};
+
+app.MapGet("/weatherforecast", () =>
+{
+    var forecast =  Enumerable.Range(1, 5).Select(index =>
+            new WeatherForecast
+            (
+                DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+                100,
+                summaries[Random.Shared.Next(summaries.Length)]
+            ))
+        .ToArray();
+    return forecast;
+})
+.WithName("GetApplicationSettings")
+.WithTags(nameof(WeatherForecast));
+
 await app.RunAsync();
+
+record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+{
+    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+}
+    

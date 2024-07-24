@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <AssemblyName>KalanalyzeCode.ConfigurationManager.Ui</AssemblyName>
+        <RootNamespace>KalanalyzeCode.ConfigurationManager.Ui</RootNamespace>
+    </PropertyGroup>
+
+
+    <ItemGroup>
+        <PackageReference Include="MudBlazor" Version="7.*"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Shared\Shared.csproj" />
+        <ProjectReference Include="..\..\Aspire\Aspire.ServiceDefaults\Aspire.ServiceDefaults.csproj" />
+    </ItemGroup>
+    
+</Project>
