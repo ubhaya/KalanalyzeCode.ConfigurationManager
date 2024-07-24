@@ -1,4 +1,4 @@
-﻿using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
+﻿using KalanalyzeCode.ConfigurationManager.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
