@@ -18,129 +18,52 @@
 #pragma warning disable 8625 // Disable "CS8625 Cannot convert null literal to non-nullable reference type"
 #pragma warning disable 8765 // Disable "CS8765 Nullability of type of parameter doesn't match overridden member (possibly because of nullability attributes)."
 
-namespace KalanalyzeCode.ConfigurationManager.Api
+namespace KalanalyzeCode.ConfigurationManager.Ui
 {
     using System = global::System;
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial interface IClient
     {
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task GetAppSettingsRequestAsync(string settingName);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task GetAppSettingsRequestAsync(string settingName, System.Threading.CancellationToken cancellationToken);
 
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<WeatherForecast>> GetApplicationSettingsAsync();
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<WeatherForecast>> GetWeatherForecastAsync();
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<WeatherForecast>> GetApplicationSettingsAsync(System.Threading.CancellationToken cancellationToken);
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<WeatherForecast>> GetWeatherForecastAsync(System.Threading.CancellationToken cancellationToken);
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class WeatherForecast : System.ComponentModel.INotifyPropertyChanged
+    public partial class WeatherForecast
     {
-        private System.DateTime _date;
-        private int _temperatureC;
-        private string _summary;
-        private int _temperatureF;
 
         [System.Text.Json.Serialization.JsonPropertyName("date")]
         [System.Text.Json.Serialization.JsonConverter(typeof(DateFormatConverter))]
-        public System.DateTime Date
-        {
-            get { return _date; }
-
-            set
-            {
-                if (_date != value)
-                {
-                    _date = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        public System.DateTimeOffset Date { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("temperatureC")]
-        public int TemperatureC
-        {
-            get { return _temperatureC; }
-
-            set
-            {
-                if (_temperatureC != value)
-                {
-                    _temperatureC = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        public int TemperatureC { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("summary")]
-        public string Summary
-        {
-            get { return _summary; }
-
-            set
-            {
-                if (_summary != value)
-                {
-                    _summary = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        public string Summary { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("temperatureF")]
-        public int TemperatureF
-        {
-            get { return _temperatureF; }
+        public int TemperatureF { get; set; }
 
-            set
-            {
-                if (_temperatureF != value)
-                {
-                    _temperatureF = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        public string ToJson()
-        {
-
-            var options = new System.Text.Json.JsonSerializerOptions();
-
-            return System.Text.Json.JsonSerializer.Serialize(this, options);
-
-        }
-        public static WeatherForecast FromJson(string data)
-        {
-
-            var options = new System.Text.Json.JsonSerializerOptions();
-
-            return System.Text.Json.JsonSerializer.Deserialize<WeatherForecast>(data, options);
-
-        }
-
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
-        {
-            var handler = PropertyChanged;
-            if (handler != null)
-                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-        }
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    internal class DateFormatConverter : System.Text.Json.Serialization.JsonConverter<System.DateTime>
+    internal class DateFormatConverter : System.Text.Json.Serialization.JsonConverter<System.DateTimeOffset>
     {
-        public override System.DateTime Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
+        public override System.DateTimeOffset Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
         {
             var dateTime = reader.GetString();
             if (dateTime == null)
@@ -148,10 +71,10 @@ namespace KalanalyzeCode.ConfigurationManager.Api
                 throw new System.Text.Json.JsonException("Unexpected JsonTokenType.Null");
             }
 
-            return System.DateTime.Parse(dateTime);
+            return System.DateTimeOffset.Parse(dateTime);
         }
 
-        public override void Write(System.Text.Json.Utf8JsonWriter writer, System.DateTime value, System.Text.Json.JsonSerializerOptions options)
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, System.DateTimeOffset value, System.Text.Json.JsonSerializerOptions options)
         {
             writer.WriteStringValue(value.ToString("yyyy-MM-dd"));
         }
@@ -160,7 +83,7 @@ namespace KalanalyzeCode.ConfigurationManager.Api
 
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SwaggerException : System.Exception
+    public partial class ApiException : System.Exception
     {
         public int StatusCode { get; private set; }
 
@@ -168,7 +91,7 @@ namespace KalanalyzeCode.ConfigurationManager.Api
 
         public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> Headers { get; private set; }
 
-        public SwaggerException(string message, int statusCode, string response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Exception innerException)
+        public ApiException(string message, int statusCode, string response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Exception innerException)
             : base(message + "\n\nStatus: " + statusCode + "\nResponse: \n" + ((response == null) ? "(null)" : response.Substring(0, response.Length >= 512 ? 512 : response.Length)), innerException)
         {
             StatusCode = statusCode;
@@ -183,11 +106,11 @@ namespace KalanalyzeCode.ConfigurationManager.Api
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class SwaggerException<TResult> : SwaggerException
+    public partial class ApiException<TResult> : ApiException
     {
         public TResult Result { get; private set; }
 
-        public SwaggerException(string message, int statusCode, string response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, TResult result, System.Exception innerException)
+        public ApiException(string message, int statusCode, string response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, TResult result, System.Exception innerException)
             : base(message, statusCode, response, headers, innerException)
         {
             Result = result;

@@ -36,7 +36,7 @@
         "tags": [
           "WeatherForecast"
         ],
-        "operationId": "GetApplicationSettings",
+        "operationId": "GetWeatherForecast",
         "responses": {
           "200": {
             "description": "",

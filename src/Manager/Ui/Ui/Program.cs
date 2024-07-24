@@ -15,12 +15,17 @@ builder.Services.AddMudServices();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddHttpClient<WeatherApiClient>(client =>
-{
-    // This URL uses "https+http://" to indicate HTTPS is preferred over HTTP.
-    // Learn more about service discovery scheme resolution at https://aka.ms/dotnet/sdschemes.
-    client.BaseAddress = new($"https+http://{ProjectConstant.ConfigurationManagerApi}");
-});
+builder.Services.AddHttpClient(ProjectConstant.ConfigurationManagerClient,
+    client => client.BaseAddress = new($"https+http://{ProjectConstant.ConfigurationManagerApi}"));
+
+builder.Services.AddScoped(sp =>
+    sp.GetRequiredService<IHttpClientFactory>().CreateClient(ProjectConstant.ConfigurationManagerClient));
+
+builder.Services.Scan(scan => scan
+    .FromAssemblyOf<IClient>()
+    .AddClasses(@class => @class.AssignableTo<IClient>())
+    .AsImplementedInterfaces()
+    .WithScopedLifetime());
 
 var app = builder.Build();
 

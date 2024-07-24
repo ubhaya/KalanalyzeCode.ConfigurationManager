@@ -4,7 +4,7 @@
 // </auto-generated>
 //----------------------
 
-using KalanalyzeCode.ConfigurationManager.Api;
+using KalanalyzeCode.ConfigurationManager.Ui;
 
 #pragma warning disable 108 // Disable "CS0108 '{derivedDto}.ToJson()' hides inherited member '{dtoBase}.ToJson()'. Use the new keyword if hiding was intended."
 #pragma warning disable 114 // Disable "CS0114 '{derivedDto}.RaisePropertyChanged(String)' hides inherited member 'dtoBase.RaisePropertyChanged(String)'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword."
@@ -20,26 +20,21 @@ using KalanalyzeCode.ConfigurationManager.Api;
 #pragma warning disable 8625 // Disable "CS8625 Cannot convert null literal to non-nullable reference type"
 #pragma warning disable 8765 // Disable "CS8765 Nullability of type of parameter doesn't match overridden member (possibly because of nullability attributes)."
 
-namespace KalanalyzeCode.ConfigurationManager.Api
+namespace KalanalyzeCode.ConfigurationManager.Ui
 {
     using System = global::System;
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class Client : IClient
     {
-        #pragma warning disable 8618
-        private string _baseUrl;
-        #pragma warning restore 8618
-
         private System.Net.Http.HttpClient _httpClient;
         private static System.Lazy<System.Text.Json.JsonSerializerOptions> _settings = new System.Lazy<System.Text.Json.JsonSerializerOptions>(CreateSerializerSettings, true);
         private System.Text.Json.JsonSerializerOptions _instanceSettings;
 
     #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public Client(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public Client(System.Net.Http.HttpClient httpClient)
     #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
-            BaseUrl = baseUrl;
             _httpClient = httpClient;
             Initialize();
         }
@@ -49,17 +44,6 @@ namespace KalanalyzeCode.ConfigurationManager.Api
             var settings = new System.Text.Json.JsonSerializerOptions();
             UpdateJsonSerializerSettings(settings);
             return settings;
-        }
-
-        public string BaseUrl
-        {
-            get { return _baseUrl; }
-            set
-            {
-                _baseUrl = value;
-                if (!string.IsNullOrEmpty(_baseUrl) && !_baseUrl.EndsWith("/"))
-                    _baseUrl += '/';
-            }
         }
 
         protected System.Text.Json.JsonSerializerOptions JsonSerializerSettings { get { return _instanceSettings ?? _settings.Value; } }
@@ -72,14 +56,14 @@ namespace KalanalyzeCode.ConfigurationManager.Api
         partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
 
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task GetAppSettingsRequestAsync(string settingName)
         {
             return GetAppSettingsRequestAsync(settingName, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task GetAppSettingsRequestAsync(string settingName, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
@@ -91,7 +75,7 @@ namespace KalanalyzeCode.ConfigurationManager.Api
                     request_.Method = new System.Net.Http.HttpMethod("GET");
 
                     var urlBuilder_ = new System.Text.StringBuilder();
-                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                
                     // Operation Path: "Api/GetAppSettings"
                     urlBuilder_.Append("Api/GetAppSettings");
                     urlBuilder_.Append('?');
@@ -128,7 +112,7 @@ namespace KalanalyzeCode.ConfigurationManager.Api
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -145,15 +129,15 @@ namespace KalanalyzeCode.ConfigurationManager.Api
             }
         }
 
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<WeatherForecast>> GetApplicationSettingsAsync()
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<WeatherForecast>> GetWeatherForecastAsync()
         {
-            return GetApplicationSettingsAsync(System.Threading.CancellationToken.None);
+            return GetWeatherForecastAsync(System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<WeatherForecast>> GetApplicationSettingsAsync(System.Threading.CancellationToken cancellationToken)
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<WeatherForecast>> GetWeatherForecastAsync(System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -165,7 +149,7 @@ namespace KalanalyzeCode.ConfigurationManager.Api
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
-                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                
                     // Operation Path: "weatherforecast"
                     urlBuilder_.Append("weatherforecast");
 
@@ -197,14 +181,14 @@ namespace KalanalyzeCode.ConfigurationManager.Api
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<WeatherForecast>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
-                                throw new SwaggerException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
                         }
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new SwaggerException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -254,7 +238,7 @@ namespace KalanalyzeCode.ConfigurationManager.Api
                 catch (System.Text.Json.JsonException exception)
                 {
                     var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
-                    throw new SwaggerException(message, (int)response.StatusCode, responseText, headers, exception);
+                    throw new ApiException(message, (int)response.StatusCode, responseText, headers, exception);
                 }
             }
             else
@@ -270,7 +254,7 @@ namespace KalanalyzeCode.ConfigurationManager.Api
                 catch (System.Text.Json.JsonException exception)
                 {
                     var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
-                    throw new SwaggerException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                    throw new ApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
                 }
             }
         }

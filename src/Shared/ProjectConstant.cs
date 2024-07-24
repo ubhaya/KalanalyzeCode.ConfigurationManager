@@ -7,4 +7,5 @@ public class ProjectConstant
 
     public const string ConfigurationManagerApi = "configuration-manager-api";
     public const string ConfigurationManagerUi = "configuration-manager-ui";
+    public const string ConfigurationManagerClient = "KalanalyzeCode.ConfigurationManager.Api";
 }

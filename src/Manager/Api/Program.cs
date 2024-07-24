@@ -45,7 +45,7 @@ app.MapGet("/weatherforecast", () =>
         .ToArray();
     return forecast;
 })
-.WithName("GetApplicationSettings")
+.WithName("GetWeatherForecast")
 .WithTags(nameof(WeatherForecast));
 
 await app.RunAsync();

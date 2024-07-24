@@ -1,6 +1,6 @@
 ﻿@page "/weather"
 
-@inject WeatherApiClient WeatherApi
+@inject IClient WeatherApi
 
 <PageTitle>Weather</PageTitle>
 
@@ -41,11 +41,11 @@ else
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    private ICollection<WeatherForecast>? forecasts;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await WeatherApi.GetWeatherAsync();
+        forecasts = await WeatherApi.GetWeatherForecastAsync();
     }
 
 }
