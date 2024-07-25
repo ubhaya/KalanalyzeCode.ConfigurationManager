@@ -1,6 +1,9 @@
 using Duende.IdentityServer;
 using IdentityServer.Data;
+using IdentityServer.Infrastructure.Identity;
 using IdentityServer.Models;
+using IdentityServer.Shared.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -25,11 +28,15 @@ namespace IdentityServer
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(postgrSqlBuilder.ConnectionString));
 
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+            builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddClaimsPrincipalFactory<PermissionClaimsPrincipalFactory>()
                 .AddDefaultTokenProviders();
 
-            builder.Services
+            builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
+            
+            var identityBuilder = builder.Services
                 .AddIdentityServer(options =>
                 {
                     options.Events.RaiseErrorEvents = true;
@@ -44,6 +51,8 @@ namespace IdentityServer
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<ApplicationUser>();
+            
+            identityBuilder.AddProfileService<ProfileService>();
 
             builder.Services.AddAuthentication()
                 .AddGoogle(options =>

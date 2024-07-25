@@ -5,6 +5,8 @@
 
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.3" />
 
+		<PackageReference Include="NetEscapades.EnumGenerators" Version="1.0.0-beta09" />
+
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
 		<PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
 
@@ -17,4 +19,5 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Aspire\Aspire.ServiceDefaults\Aspire.ServiceDefaults.csproj" />
 	</ItemGroup>
+
 </Project>
