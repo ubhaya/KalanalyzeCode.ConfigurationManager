@@ -2,7 +2,6 @@ using KalanalyzeCode.ConfigurationManager.Api;
 using KalanalyzeCode.ConfigurationManager.Api.Extensions;
 using KalanalyzeCode.ConfigurationManager.Application;
 using KalanalyzeCode.ConfigurationManager.Application.Helpers;
-using KalanalyzeCode.ConfigurationManager.Infrastructure;
 using KalanalyzeCode.ConfigurationManager.Shared;
 using KalanalyzeCode.ConfigurationManager.Shared.Contract.Request;
 using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
@@ -14,7 +13,7 @@ builder.AddServiceDefaults();
 builder.Host.AddSerilog();
 builder.Services.AddWebApiConfig();
 builder.Services.AddApplicationCore();
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddPersistence(builder.Configuration);
 
 var app = builder.Build();
 

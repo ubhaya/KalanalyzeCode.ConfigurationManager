@@ -1,4 +1,4 @@
-﻿namespace KalanalyzeCode.ConfigurationManager.Infrastructure.Persistence.Seeder;
+﻿namespace KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence.Seeder;
 
 public interface IDatabaseSeeder
 {

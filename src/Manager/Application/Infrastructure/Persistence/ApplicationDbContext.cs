@@ -1,17 +1,23 @@
-﻿using KalanalyzeCode.ConfigurationManager.Application.Common.Interfaces;
-using KalanalyzeCode.ConfigurationManager.Application.Helpers;
-using KalanalyzeCode.ConfigurationManager.Domain.Abstract;
-using KalanalyzeCode.ConfigurationManager.Domain.Concrete;
-using KalanalyzeCode.ConfigurationManager.Infrastructure.Identity;
+﻿using KalanalyzeCode.ConfigurationManager.Application.Helpers;
+using KalanalyzeCode.ConfigurationManager.Entity.Abstract;
+using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
 using MediatR;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 
-namespace KalanalyzeCode.ConfigurationManager.Infrastructure.Persistence;
+namespace KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>, IApplicationDbContext
+public interface IApplicationDbContext
+{
+    DbSet<ConfigurationSettings> Settings { get; set; }
+    Task BeginTransactionAsync(CancellationToken cancellationToken = default);
+    Task CommitTransactionAsync(CancellationToken cancellationToken = default);
+    Task RollbackTransaction(CancellationToken cancellationToken = default);
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+}
+
+public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     private readonly IPublisher _publisher;
     private readonly ILogger<ApplicationDbContext> _logger;

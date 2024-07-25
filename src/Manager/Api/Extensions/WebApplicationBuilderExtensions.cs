@@ -1,6 +1,7 @@
 ﻿using KalanalyzeCode.ConfigurationManager.Application.Helpers;
-using KalanalyzeCode.ConfigurationManager.Infrastructure.Persistence;
-using KalanalyzeCode.ConfigurationManager.Infrastructure.Persistence.Seeder;
+using KalanalyzeCode.ConfigurationManager.Application.Infrastructure;
+using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
+using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence.Seeder;
 using KalanalyzeCode.ConfigurationManager.Shared.Contract.Request;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

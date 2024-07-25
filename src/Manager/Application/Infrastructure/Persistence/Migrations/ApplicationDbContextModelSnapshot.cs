@@ -2,7 +2,6 @@
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,11 +10,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240723181927_Initial")]
-    partial class Initial
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,7 +21,7 @@ namespace KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persist
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("KalanalyzeCode.ConfigurationManager.Domain.Concrete.ConfigurationSettings", b =>
+            modelBuilder.Entity("KalanalyzeCode.ConfigurationManager.Entity.Concrete.ConfigurationSettings", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");

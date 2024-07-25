@@ -1,4 +1,4 @@
-﻿namespace KalanalyzeCode.ConfigurationManager.Domain.Abstract;
+﻿namespace KalanalyzeCode.ConfigurationManager.Entity.Abstract;
 
 public interface IHasDomainEvent
 {

@@ -1,5 +1,5 @@
-﻿using KalanalyzeCode.ConfigurationManager.Application.Common.Interfaces;
-using KalanalyzeCode.ConfigurationManager.Application.Helpers;
+﻿using KalanalyzeCode.ConfigurationManager.Application.Helpers;
+using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

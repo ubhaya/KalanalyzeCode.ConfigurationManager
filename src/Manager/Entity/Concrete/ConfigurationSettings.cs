@@ -1,6 +1,6 @@
-﻿using KalanalyzeCode.ConfigurationManager.Domain.Abstract;
+﻿using KalanalyzeCode.ConfigurationManager.Entity.Abstract;
 
-namespace KalanalyzeCode.ConfigurationManager.Domain.Concrete;
+namespace KalanalyzeCode.ConfigurationManager.Entity.Concrete;
 
 public class ConfigurationSettings : IEntity, IHasDomainEvent
 {

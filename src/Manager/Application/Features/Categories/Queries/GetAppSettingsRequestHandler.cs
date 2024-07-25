@@ -1,4 +1,4 @@
-﻿using KalanalyzeCode.ConfigurationManager.Domain.Concrete;
+﻿using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
 using KalanalyzeCode.ConfigurationManager.Shared.Contract.Request;
 using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
 using MediatR;

@@ -1,8 +1,8 @@
-﻿using KalanalyzeCode.ConfigurationManager.Domain.Concrete;
+﻿using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace KalanalyzeCode.ConfigurationManager.Infrastructure.Persistence.Configurations;
+namespace KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence.Configurations;
 
 public class ProductConfiguration : IEntityTypeConfiguration<ConfigurationSettings>
 {
