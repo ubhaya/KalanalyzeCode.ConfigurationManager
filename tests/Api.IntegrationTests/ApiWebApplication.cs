@@ -1,35 +1,48 @@
-﻿using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
+﻿using System.Data.Common;
+using System.Security.Claims;
+using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
+using Respawn;
 using Testcontainers.PostgreSql;
 
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests;
 
-public class ApiWebApplication : WebApplicationFactory<KalanalyzeCode.ConfigurationManager.Api.Api>
+public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
 {
-    public const string ConnectionString = "Host=localhost;Username=postgres;Database=myDatabaseTest";
-    public const string DatabaseName = "myDatabaseTest";
-    public const string Username = "postgres";
-    public const string DbPassword = "mysecretpassword";
+    private const string DatabaseName = "myDatabaseTest";
+    private const string Username = "postgres";
+    private const string DbPassword = "mysecretpassword";
 
-    public readonly PostgreSqlContainer DbContainer = new PostgreSqlBuilder()
+    private readonly PostgreSqlContainer _dbContainer = new PostgreSqlBuilder()
         .WithDatabase(DatabaseName)
         .WithUsername(Username)
         .WithPassword(DbPassword)
         .Build();
+    private readonly MockAuthUser _user = new MockAuthUser(
+        new Claim("sub", Guid.NewGuid().ToString()),
+        new Claim("email", "default-user@xyz.com"));
+
+    private DbConnection _dbConnection = default!;
+    private Respawner _respawner = default!;
+    
+    public HttpClient HttpClient { get; private set; } = default!;
+    public IServiceScope Scope { get; private set; } = default!;
     
     protected override IHost CreateHost(IHostBuilder builder)
     {
-        var connectionStringBuilder = new NpgsqlConnectionStringBuilder(DbContainer.GetConnectionString())
+        var connectionStringBuilder = new NpgsqlConnectionStringBuilder(_dbContainer.GetConnectionString())
         {
             Password = DbPassword
         };
         
         builder.ConfigureServices(services =>
         {
+            services.AddTestAuthentication();
+            services.AddScoped(_ => _user);
             services.AddScoped(sp => new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseNpgsql(connectionStringBuilder.ConnectionString)
                 .UseApplicationServiceProvider(sp)
@@ -37,5 +50,43 @@ public class ApiWebApplication : WebApplicationFactory<KalanalyzeCode.Configurat
         });
 
         return base.CreateHost(builder);
+    }
+
+    public async Task ResetDatabaseAsync()
+    {
+        await _respawner.ResetAsync(_dbConnection);
+    }
+    
+    public async Task InitializeAsync()
+    {
+        await _dbContainer.StartAsync();
+        Scope = Services.CreateScope();
+        await EnsureDatabase();
+        _dbConnection = new NpgsqlConnection(_dbContainer.GetConnectionString());
+        HttpClient = CreateClient();
+        await InitializeRespawner();
+    }
+
+    private async Task InitializeRespawner()
+    {
+        await _dbConnection.OpenAsync();
+        _respawner = await Respawner.CreateAsync(_dbConnection, new RespawnerOptions
+        {
+            DbAdapter = DbAdapter.Postgres,
+            TablesToIgnore = [
+                "__EFMigrationsHistory"
+            ],
+        });
+    }
+
+    private async Task EnsureDatabase()
+    {
+        var context = Scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        await context.Database.MigrateAsync();
+    }
+
+    public new async Task DisposeAsync()
+    {
+        await _dbContainer.DisposeAsync();
     }
 }

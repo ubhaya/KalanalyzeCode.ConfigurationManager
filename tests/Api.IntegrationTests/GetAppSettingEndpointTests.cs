@@ -1,24 +1,40 @@
 using System.Diagnostics;
 using System.Net.Http.Json;
 using FluentAssertions;
+using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
 using KalanalyzeCode.ConfigurationManager.Shared;
 using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests;
 
-public class GetAppSettingEndpointTests : TestBase
+[Collection("Test collection")]
+public class GetAppSettingEndpointTests : TestBase, IAsyncLifetime
 {
+    private readonly HttpClient _client;
+    private readonly IServiceScope _scope;
+    private readonly Func<Task> _resetDatabase;
+
+    public GetAppSettingEndpointTests(ApiWebApplication factory)
+    {
+        _client = factory.HttpClient;
+        _scope = factory.Scope;
+        _resetDatabase = factory.ResetDatabaseAsync;
+    }
+
+    
+    
     [Fact]
     public async Task GetAppSettingEndpoint_ReturnResult_WhenValidSettingNamesParse()
     {
         // Arrange
         var testSettings = "TestSettings";
-        await AddAsync(new ConfigurationSettings() { Id = testSettings, Value = "true" });
-        var client = Application.CreateClient();
+        await AddAsync(_scope, new ConfigurationSettings() { Id = testSettings, Value = "true" });
 
         // Act
-        var settings = await client.GetFromJsonAsync<ResponseDataModel<GetAppSettingsResponse>>($"{ProjectConstant.GetAppSettings}?settingName=TestSettings");
+        var settings = await _client.GetFromJsonAsync<ResponseDataModel<GetAppSettingsResponse>>($"{ProjectConstant.GetAppSettings}?settingName=TestSettings");
 
         // Assert
         settings.Should().NotBeNull();
@@ -33,10 +49,9 @@ public class GetAppSettingEndpointTests : TestBase
     public async Task GetAppSettingEndpoint_ReturnResult_WhenInvalidSettingNamesParse()
     {
         // Arrange
-        var client = Application.CreateClient();
 
         // Act
-        var settings = await client.GetFromJsonAsync<ResponseDataModel<GetAppSettingsResponse>>($"{ProjectConstant.GetAppSettings}?settingName=invalidName");
+        var settings = await _client.GetFromJsonAsync<ResponseDataModel<GetAppSettingsResponse>>($"{ProjectConstant.GetAppSettings}?settingName=invalidName");
 
         // Assert
         settings.Should().NotBeNull();
@@ -46,4 +61,8 @@ public class GetAppSettingEndpointTests : TestBase
         Debug.Assert(settings.Data is not null);
         settings.Data.Settings.Should().BeNullOrEmpty();
     }
+
+    public Task InitializeAsync() => Task.CompletedTask;
+
+    public Task DisposeAsync() => _resetDatabase();
 }
