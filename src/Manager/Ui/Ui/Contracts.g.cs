@@ -23,7 +23,7 @@ namespace KalanalyzeCode.ConfigurationManager.Ui
     using System = global::System;
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial interface IAppSettingsClient : IClient
+    public partial interface IClient
     {
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task GetAppSettingsRequestAsync(string settingName);
@@ -32,11 +32,6 @@ namespace KalanalyzeCode.ConfigurationManager.Ui
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task GetAppSettingsRequestAsync(string settingName, System.Threading.CancellationToken cancellationToken);
 
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial interface IWeatherForecastClient : IClient
-    {
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.Generic.ICollection<WeatherForecast>> GetWeatherForecastAsync();
 

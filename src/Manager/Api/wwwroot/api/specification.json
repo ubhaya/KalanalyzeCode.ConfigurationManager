@@ -11,7 +11,7 @@
         "tags": [
           "GetAppSettingsResponse"
         ],
-        "operationId": "AppSettings_GetAppSettingsRequest",
+        "operationId": "GetAppSettingsRequest",
         "parameters": [
           {
             "name": "SettingName",
@@ -36,7 +36,7 @@
         "tags": [
           "WeatherForecast"
         ],
-        "operationId": "WeatherForecast_GetWeatherForecast",
+        "operationId": "GetWeatherForecast",
         "responses": {
           "200": {
             "description": "",
