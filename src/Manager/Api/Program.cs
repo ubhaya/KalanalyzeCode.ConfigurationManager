@@ -26,7 +26,10 @@ app.UseStaticFiles();
 app.MapSwagger();
 
 
-app.MediateGet<GetAppSettingsRequest>(ProjectConstant.GetAppSettings, nameof(GetAppSettingsRequest), nameof(GetAppSettingsResponse));
+app.MediateGet<GetAppSettingsRequest>(ProjectConstant.GetAppSettings)
+    .WithName($"AppSettings_{nameof(GetAppSettingsRequest)}")
+    .WithTags(nameof(GetAppSettingsResponse), nameof(GetAppSettingsRequest))
+    .RequireAuthorization();
 
 var summaries = new[]
 {
@@ -46,7 +49,8 @@ app.MapGet("/weatherforecast", () =>
         return forecast;
     })
     .WithName("WeatherForecast_GetWeatherForecast")
-    .WithTags(nameof(WeatherForecast));
+    .WithTags(nameof(WeatherForecast))
+    .RequireAuthorization();
 
 await app.RunAsync();
 

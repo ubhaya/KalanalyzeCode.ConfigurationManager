@@ -9,7 +9,8 @@
     "/Api/GetAppSettings": {
       "get": {
         "tags": [
-          "GetAppSettingsResponse"
+          "GetAppSettingsResponse",
+          "GetAppSettingsRequest"
         ],
         "operationId": "AppSettings_GetAppSettingsRequest",
         "parameters": [

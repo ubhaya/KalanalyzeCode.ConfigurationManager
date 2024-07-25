@@ -1,5 +1,7 @@
 ﻿using KalanalyzeCode.ConfigurationManager.Application;
 using KalanalyzeCode.ConfigurationManager.Application.Helpers;
+using KalanalyzeCode.ConfigurationManager.Shared;
+using Microsoft.IdentityModel.Tokens;
 
 namespace KalanalyzeCode.ConfigurationManager.Api;
 
@@ -21,6 +23,22 @@ public static class DependencyConfig
             c.Version = "v1";
         });
 
+        services.AddAuthentication("Bearer")
+            .AddJwtBearer("Bearer", options =>
+            {
+                options.Authority = $"https://localhost:5001";
+
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false
+                };
+            });
+
+        services.AddAuthorizationBuilder()
+            .AddPolicy("api_scope", policy =>
+            {
+                policy.RequireClaim("scope", "KalanalyzeCode.ConfigurationManager");
+            });
 
         return services;
     }
@@ -32,8 +50,9 @@ public static class DependencyConfig
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-        // app.UseOpenApi();
-        // app.UseSwaggerUi(settings => { settings.Path = "/api"; });
+
+        app.UseAuthentication();
+        app.UseAuthorization();
 
         return app;
     }

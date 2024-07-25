@@ -23,15 +23,12 @@ public static class WebApplicationBuilderExtensions
             .CreateLogger();
     }
 
-    public static WebApplication MediateGet<TRequest>(
+    public static RouteHandlerBuilder MediateGet<TRequest>(
         this WebApplication app,
-        string template, string name, params string[] tags) where TRequest : IHttpRequest
+        string template) where TRequest : IHttpRequest
     {
-        app.MapGet(template,
-            async (IMediator mediator, [AsParameters] TRequest request) => await mediator.Send(request))
-            .WithName($"AppSettings_{name}")
-            .WithTags(tags);
-        return app;
+        return app.MapGet(template,
+            async (IMediator mediator, [AsParameters] TRequest request) => await mediator.Send(request));
     }
 
     public static async Task<WebApplication> SeedDatabase(this WebApplication app)
