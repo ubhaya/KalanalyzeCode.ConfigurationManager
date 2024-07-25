@@ -29,7 +29,7 @@ public static class WebApplicationBuilderExtensions
     {
         app.MapGet(template,
             async (IMediator mediator, [AsParameters] TRequest request) => await mediator.Send(request))
-            .WithName(name)
+            .WithName($"AppSettings_{name}")
             .WithTags(tags);
         return app;
     }
