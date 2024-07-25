@@ -6,4 +6,6 @@ builder.AddProject<Projects.Ui>("configuration-manager-ui")
     .WithExternalHttpEndpoints()
     .WithReference(apiService);
 
+builder.AddProject<Projects.IdentityServer>("identityserver");
+
 builder.Build().Run();

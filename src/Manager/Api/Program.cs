@@ -46,8 +46,7 @@ app.MapGet("/weatherforecast", () =>
         return forecast;
     })
     .WithName("WeatherForecast_GetWeatherForecast")
-    .WithTags(nameof(WeatherForecast))
-    .RequireAuthorization();
+    .WithTags(nameof(WeatherForecast));
 
 await app.RunAsync();
 
