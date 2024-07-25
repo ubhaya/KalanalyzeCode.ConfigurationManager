@@ -14,6 +14,7 @@ public static class DependencyConfig
         });
 
         services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen();
         services.AddOpenApiDocument(c =>
         {
             c.Title = "Minimal APIs";
@@ -26,8 +27,13 @@ public static class DependencyConfig
 
     public static WebApplication MapSwagger(this WebApplication app)
     {
-        app.UseOpenApi();
-        app.UseSwaggerUi(settings => { settings.Path = "/api"; });
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+        // app.UseOpenApi();
+        // app.UseSwaggerUi(settings => { settings.Path = "/api"; });
 
         return app;
     }
