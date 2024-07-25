@@ -26,11 +26,6 @@ app.UseCors(AppConstants.CorsPolicy);
 app.UseStaticFiles();
 app.MapSwagger();
 
-app.UseRouting();
-app.UseIdentityServer();
-app.UseAuthentication();
-
-app.MapRazorPages().RequireAuthorization();
 
 app.MediateGet<GetAppSettingsRequest>(ProjectConstant.GetAppSettings, nameof(GetAppSettingsRequest), nameof(GetAppSettingsResponse));
 

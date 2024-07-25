@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace KalanalyzeCode.ConfigurationManager.Application.Helpers;
+﻿namespace KalanalyzeCode.ConfigurationManager.Application.Helpers;
 
 public class AppConstants
 {
@@ -18,14 +16,5 @@ public class AppConstants
         public const string TransactionRollingBack = "Rolling back Transaction {ID}";
         public const string NewDomainEvent = "New domain event {Event}";
         public const string SeedingOrMigrationError = "An error occurred while migrating or initializing the database";
-    }
-    
-    public class Identity
-    {
-        public const string ScopeName = "clean_architecture_maui_api";
-        public const string DisplayName = "CleanArchitecture.Maui.Api";
-        public const string ClientId = "CleanArchitecture.Maui.MobileUi";
-        public const string ClientName = "Clean Architecture Maui app";
-        public static readonly List<string> AllowedScope = ["clean_architecture_maui_api"];
     }
 }

@@ -2,6 +2,5 @@
 
 public interface IDatabaseSeeder
 {
-    Task InitializeAsync();
-    Task SeedAsync();
+    Task SeedSampleDataAsync(CancellationToken cancellationToken = default);
 }

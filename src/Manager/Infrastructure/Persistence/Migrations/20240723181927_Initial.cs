@@ -1,8 +1,8 @@
-﻿#nullable disable
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-using Microsoft.EntityFrameworkCore.Migrations;
+#nullable disable
 
-namespace KalanalyzeCode.ConfigurationManager.Infrastructure.Persistence.Migrations.ApplicationDb
+namespace KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

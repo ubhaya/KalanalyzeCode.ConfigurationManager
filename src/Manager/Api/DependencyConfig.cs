@@ -20,7 +20,6 @@ public static class DependencyConfig
             c.Version = "v1";
         });
 
-        services.AddRazorPages();
 
         return services;
     }

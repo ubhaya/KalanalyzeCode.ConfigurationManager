@@ -26,7 +26,7 @@ public static class WebApplicationBuilderExtensions
         this WebApplication app,
         string template, string name, params string[] tags) where TRequest : IHttpRequest
     {
-        var route = app.MapGet(template,
+        app.MapGet(template,
             async (IMediator mediator, [AsParameters] TRequest request) => await mediator.Send(request))
             .WithName(name)
             .WithTags(tags);
@@ -40,9 +40,14 @@ public static class WebApplicationBuilderExtensions
             var services = scope.ServiceProvider;
             try
             {
+                var context = services.GetRequiredService<ApplicationDbContext>();
+                if (context.Database.IsNpgsql())
+                {
+                    await context.Database.MigrateAsync();
+                }
+
                 var dbSeeder = services.GetRequiredService<IDatabaseSeeder>();
-                await dbSeeder.InitializeAsync();
-                await dbSeeder.SeedAsync();
+                await dbSeeder.SeedSampleDataAsync();
             }
             catch (Exception ex)
             {
