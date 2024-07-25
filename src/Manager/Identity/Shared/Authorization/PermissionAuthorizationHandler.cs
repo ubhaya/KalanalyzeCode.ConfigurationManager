@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 
-namespace IdentityServer.Shared.Authorization;
+namespace Identity.Shared.Authorization;
 
 public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionAuthorizationRequirement>
 {
@@ -19,11 +19,20 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionAut
             return Task.CompletedTask;
         }
 
-        var userPermission = (Permissions)permissionClaimValue;
+        var userPermissions = (Permissions)permissionClaimValue;
 
-        if ((userPermission & requirement.Permission) == 0) return Task.CompletedTask;
-        
-        context.Succeed(requirement);
+        if (userPermissions == 0 && requirement.Permission == 0)
+        {
+            context.Succeed(requirement);
+            return Task.CompletedTask;
+        }
+
+        if ((userPermissions & requirement.Permission) != 0)
+        {
+            context.Succeed(requirement);
+            return Task.CompletedTask;
+        }
+
         return Task.CompletedTask;
     }
 }

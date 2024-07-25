@@ -1,8 +1,8 @@
 using Duende.IdentityServer;
+using Identity.Shared.Authorization;
 using IdentityServer.Data;
 using IdentityServer.Infrastructure.Identity;
 using IdentityServer.Models;
-using IdentityServer.Shared.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

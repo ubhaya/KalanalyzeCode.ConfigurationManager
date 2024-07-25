@@ -1,10 +1,11 @@
 using NetEscapades.EnumGenerators;
 
-namespace IdentityServer.Shared.Authorization;
+namespace Identity.Shared.Authorization;
 
 [Flags]
 [EnumExtensions]
 public enum Permissions
 {
-    None
+    None = 0,
+    All = ~None
 }

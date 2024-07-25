@@ -50,6 +50,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aspire", "Aspire", "{E0A9CE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "src\Manager\IdentityServer\IdentityServer.csproj", "{AE033DB6-0821-4019-BF93-BBDE72CF3909}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity", "src\Manager\Identity\Identity.csproj", "{3534A250-ED4D-4DDC-B1FE-5554411853C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -100,6 +102,10 @@ Global
 		{AE033DB6-0821-4019-BF93-BBDE72CF3909}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE033DB6-0821-4019-BF93-BBDE72CF3909}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE033DB6-0821-4019-BF93-BBDE72CF3909}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3534A250-ED4D-4DDC-B1FE-5554411853C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3534A250-ED4D-4DDC-B1FE-5554411853C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3534A250-ED4D-4DDC-B1FE-5554411853C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3534A250-ED4D-4DDC-B1FE-5554411853C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -120,6 +126,7 @@ Global
 		{6155F177-8618-44E1-9FE3-998131E0F59F} = {B4FB8992-C32A-4B37-AF99-4E4AEDB1A581}
 		{E0A9CEC6-5765-4911-BD5E-93F557420C50} = {4CEFBB38-3328-44DA-B406-0B5C99B21F2B}
 		{AE033DB6-0821-4019-BF93-BBDE72CF3909} = {4CEFBB38-3328-44DA-B406-0B5C99B21F2B}
+		{3534A250-ED4D-4DDC-B1FE-5554411853C3} = {4CEFBB38-3328-44DA-B406-0B5C99B21F2B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9028E6BC-28F4-4289-9D28-4CB2B39ADBBC}

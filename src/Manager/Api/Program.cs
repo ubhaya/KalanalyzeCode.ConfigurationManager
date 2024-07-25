@@ -1,3 +1,4 @@
+using Identity.Shared.Authorization;
 using KalanalyzeCode.ConfigurationManager.Api;
 using KalanalyzeCode.ConfigurationManager.Api.Extensions;
 using KalanalyzeCode.ConfigurationManager.Application;
@@ -11,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 
 builder.Host.AddSerilog();
-builder.Services.AddWebApiConfig();
+builder.Services.AddWebApiConfig(builder.Configuration);
 builder.Services.AddApplicationCore();
 builder.Services.AddPersistence(builder.Configuration);
 
@@ -29,7 +30,7 @@ app.MapSwagger();
 app.MediateGet<GetAppSettingsRequest>(ProjectConstant.GetAppSettings)
     .WithName($"AppSettings_{nameof(GetAppSettingsRequest)}")
     .WithTags(nameof(GetAppSettingsResponse), nameof(GetAppSettingsRequest))
-    .RequireAuthorization();
+    .RequireAuthorization(Permissions.None);
 
 var summaries = new[]
 {
@@ -50,7 +51,7 @@ app.MapGet("/weatherforecast", () =>
     })
     .WithName("WeatherForecast_GetWeatherForecast")
     .WithTags(nameof(WeatherForecast))
-    .RequireAuthorization();
+    .RequireAuthorization(Permissions.All);
 
 await app.RunAsync();
 

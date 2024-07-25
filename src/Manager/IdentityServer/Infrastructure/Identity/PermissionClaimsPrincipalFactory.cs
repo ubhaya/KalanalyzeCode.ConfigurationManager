@@ -1,6 +1,6 @@
 using System.Security.Claims;
+using Identity.Shared.Authorization;
 using IdentityServer.Models;
-using IdentityServer.Shared.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -26,7 +26,7 @@ public class PermissionClaimsPrincipalFactory : UserClaimsPrincipalFactory<Appli
         var userPermissions = Permissions.None;
 
         foreach (var role in userRoles)
-            userPermissions |= role.Permission;
+            userPermissions |= role.Permissions;
 
         var permissionValue = (int)userPermissions;
         

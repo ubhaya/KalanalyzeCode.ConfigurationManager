@@ -2,8 +2,8 @@ using System.Security.Claims;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
+using Identity.Shared.Authorization;
 using IdentityServer.Models;
-using IdentityServer.Shared.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,7 +35,7 @@ public class ProfileService : IProfileService
         var userPermissions = Permissions.None;
 
         foreach (var role in userRoles)
-            userPermissions |= role.Permission;
+            userPermissions |= role.Permissions;
 
         var permissionValue = (int)userPermissions;
         

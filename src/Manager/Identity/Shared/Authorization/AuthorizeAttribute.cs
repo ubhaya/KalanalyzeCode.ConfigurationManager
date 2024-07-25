@@ -1,4 +1,4 @@
-namespace IdentityServer.Shared.Authorization;
+namespace Identity.Shared.Authorization;
 
 public sealed class AuthorizeAttribute : Microsoft.AspNetCore.Authorization.AuthorizeAttribute
 {

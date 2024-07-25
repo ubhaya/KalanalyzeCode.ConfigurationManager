@@ -1,4 +1,5 @@
-﻿using KalanalyzeCode.ConfigurationManager.Application.Helpers;
+﻿using Identity.Shared.Authorization;
+using KalanalyzeCode.ConfigurationManager.Application.Helpers;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence.Seeder;
@@ -55,5 +56,12 @@ public static class WebApplicationBuilderExtensions
             }
         }
         return app;
+    }
+    
+    public static RouteHandlerBuilder RequireAuthorization(this RouteHandlerBuilder builder, Permissions permissions)
+    {
+        builder.RequireAuthorization(policyBuilder =>
+            policyBuilder.AddRequirements(new PermissionAuthorizationRequirement(permissions)));
+        return builder;
     }
 }
