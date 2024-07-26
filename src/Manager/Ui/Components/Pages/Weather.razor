@@ -1,5 +1,8 @@
 ﻿@page "/weather"
-@using KalanalyzeCode.ConfigurationManager.Ui
+@using Identity.Shared.Authorization
+
+@attribute [Authorize(Permissions.All)]
+
 @inject IWeatherForecastClient WeatherApi
 
 

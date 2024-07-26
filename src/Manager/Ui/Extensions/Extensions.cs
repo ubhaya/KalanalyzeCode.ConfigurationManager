@@ -1,14 +1,19 @@
-using MdUi.HttpHandlers;
+using Identity.Shared.Authorization;
+using KalanalyzeCode.ConfigurationManager.Ui.HttpHandlers;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 
-namespace MdUi.Extensions;
+namespace KalanalyzeCode.ConfigurationManager.Ui.Extensions;
 
 public static partial class Extensions
 {
     public static IServiceCollection AddOpenIdConnect(this IServiceCollection services)
     {
+        services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+        services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
         services.AddTransient<AuthenticationDelegatingHandler>();
 
         services.AddAntiforgery(options => options.Cookie.Name = "ClientBlazorAppAntiForgeryCookie")
@@ -39,12 +44,13 @@ public static partial class Extensions
 
                 options.Scope.Add("KalanalyzeCode.ConfigurationManager");
 
-                //options.ClaimActions.MapJsonKey("role", "role");
+                options.ClaimActions.MapJsonKey(CustomClaimTypes.Permissions, CustomClaimTypes.Permissions);
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateAudience = false,
                     ValidateLifetime = false,
+                    NameClaimType = "name",
                 };
 
                 options.Events = new OpenIdConnectEvents

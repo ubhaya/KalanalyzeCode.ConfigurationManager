@@ -1,9 +1,8 @@
 using KalanalyzeCode.ConfigurationManager.Ui;
-using MdUi;
 using MudBlazor.Services;
 using KalanalyzeCode.ConfigurationManager.Ui.Components;
-using MdUi.Extensions;
-using MdUi.HttpHandlers;
+using KalanalyzeCode.ConfigurationManager.Ui.Extensions;
+using KalanalyzeCode.ConfigurationManager.Ui.HttpHandlers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;

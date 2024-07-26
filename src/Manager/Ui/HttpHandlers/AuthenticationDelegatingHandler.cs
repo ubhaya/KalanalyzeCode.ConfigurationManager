@@ -2,7 +2,7 @@ using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
-namespace MdUi.HttpHandlers;
+namespace KalanalyzeCode.ConfigurationManager.Ui.HttpHandlers;
 
 public class AuthenticationDelegatingHandler : DelegatingHandler
 {
