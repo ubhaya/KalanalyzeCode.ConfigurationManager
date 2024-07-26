@@ -1,33 +1,13 @@
-@* <AuthorizeView> *@
-@*     <Authorized> *@
-@*         <MudLink Href="profile">Hello, @context.User.Identity?.Name</MudLink> *@
-@*          *@
-@*         <form action="Account/Logout" method="post"> *@
-@*             <AntiforgeryToken/> *@
-@*              *@
-@*             <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text">Logout</MudButton> *@
-@*         </form> *@
-@*     </Authorized> *@
-@*     <NotAuthorized> *@
-@*         <MudLink Href="Account/login?redirectUri=/"></MudLink> *@
-@*     </NotAuthorized> *@
-@* </AuthorizeView> *@
-
 <AuthorizeView>
     <Authorized>
-        <a href="profile">Hello, @context.User.Identity?.Name !</a>
+        <MudLink Href="profile">Hello, @context.User.Identity?.Name</MudLink>
 
         <form action="Account/Logout" method="post">
-            <AntiforgeryToken />
-            @* <input type="hidden" name="ReturnUrl" value="@currentUrl" /> *@
-            @* <button type="submit" class="dropdown-item notify-item">
-            <span>Logout</span>
-            </button> *@
-            <a href="#" onclick="this.parentNode.submit();">Logout</a>
+            <AntiforgeryToken/>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text">Logout</MudButton>
         </form>
-
     </Authorized>
     <NotAuthorized>
-        <a href="Account/login?redirectUri=/">Log in</a>
+        <MudLink Href="Account/login?redirectUri=/"></MudLink>
     </NotAuthorized>
 </AuthorizeView>
