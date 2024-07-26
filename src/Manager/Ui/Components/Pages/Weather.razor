@@ -49,7 +49,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await WeatherApi.GetWeatherForecastAsync();
+        forecasts = await WeatherApi.GetWeatherForecastAsync(CancellationToken);
     }
 
 }
