@@ -80,13 +80,12 @@ namespace IdentityServer
                     ClientName = AppConstants.Identity.ClientName  ,
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
-
-                    RequireClientSecret = false,
                     
-                    // ClientSecrets =
-                    // {
-                    //     new Secret("secret".Sha256())
-                    // },
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    
                     AllowedScopes = [
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
@@ -96,8 +95,8 @@ namespace IdentityServer
                     AllowOfflineAccess = true,
                     
                     AllowedCorsOrigins = {"https://localhost:7016"},
-                    RedirectUris = {"https://localhost:7016/authentication/login-callback"},
-                    PostLogoutRedirectUris = {"https://localhost:7016"},
+                    RedirectUris = {"http://localhost:5163/signin-oidc"},
+                    PostLogoutRedirectUris = {"http://localhost:5163/signout-callback-oidc"},
                     //
                     // RefreshTokenUsage = TokenUsage.OneTimeOnly,
                     // RefreshTokenExpiration = TokenExpiration.Sliding
