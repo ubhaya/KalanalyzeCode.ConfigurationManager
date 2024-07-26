@@ -9,16 +9,12 @@ using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddServiceDefaults();
-
 builder.Host.AddSerilog();
 builder.Services.AddWebApiConfig(builder.Configuration);
 builder.Services.AddApplicationCore();
 builder.Services.AddPersistence(builder.Configuration);
 
 var app = builder.Build();
-
-app.MapDefaultEndpoints();
 
 await app.SeedDatabase();
 

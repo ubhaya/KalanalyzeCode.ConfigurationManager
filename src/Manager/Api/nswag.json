@@ -47,7 +47,7 @@
       "generateNativeRecords": false,
       "generateContractsOutput": true,
       "contractsNamespace": "KalanalyzeCode.ConfigurationManager.Ui",
-      "contractsOutputFilePath": "../Ui/Ui/Contracts.g.cs",
+      "contractsOutputFilePath": "../Ui/Contracts.g.cs",
       "parameterDateTimeFormat": "s",
       "parameterDateFormat": "yyyy-MM-dd",
       "generateUpdateJsonSerializerSettingsMethod": true,
@@ -103,7 +103,7 @@
       "templateDirectory": null,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": "../Ui/Ui/ApiClient.g.cs",
+      "output": "../Ui/ApiClient.g.cs",
       "newLineBehavior": "Auto"
     }
   }

@@ -1,19 +1,17 @@
-﻿@page "/weather"
-
+﻿@page "/fetchdata"
 @inject IWeatherForecastClient WeatherApi
 
-<PageTitle>Weather</PageTitle>
+<PageTitle>Weather forecast</PageTitle>
 
 <MudText Typo="Typo.h3" GutterBottom="true">Weather forecast</MudText>
-<MudText Typo="Typo.body1" Class="mb-8">This component demonstrates fetching data from the server.</MudText>
-
+<MudText Class="mb-8">This component demonstrates fetching data from the server.</MudText>
 @if (forecasts == null)
 {
     <MudProgressCircular Color="Color.Default" Indeterminate="true"/>
 }
 else
 {
-    <MudTable Items="forecasts" Hover="true" SortLabel="Sort By" Elevation="0" AllowUnsorted="false">
+    <MudTable Items="forecasts" Hover="true" SortLabel="Sort By" Elevation="0">
         <HeaderContent>
             <MudTh>
                 <MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<WeatherForecast, object>(x=>x.Date)">Date</MudTableSortLabel>
@@ -39,6 +37,7 @@ else
         </PagerContent>
     </MudTable>
 }
+
 
 @code {
     private ICollection<WeatherForecast>? forecasts;
