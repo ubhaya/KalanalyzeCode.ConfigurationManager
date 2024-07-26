@@ -31,12 +31,12 @@ try
     // if (args.Contains("/seed"))
     // {
         Log.Information("Seeding database...");
-        SeedData.EnsureSeedData(app);
+        await SeedData.EnsureSeedData(app);
         Log.Information("Done seeding database. Exiting.");
         // return;
     // }
     
-    app.Run();
+    await app.RunAsync();
 }
 catch (Exception ex) when (ex is not HostAbortedException)
 {

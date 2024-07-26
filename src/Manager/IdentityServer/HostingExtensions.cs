@@ -28,6 +28,8 @@ namespace IdentityServer
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(postgrSqlBuilder.ConnectionString));
 
+            builder.Services.AddScoped<ApplicationDbContextSeeder>();
+
             builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddClaimsPrincipalFactory<PermissionClaimsPrincipalFactory>()
