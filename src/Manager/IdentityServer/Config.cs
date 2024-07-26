@@ -53,8 +53,8 @@ namespace IdentityServer
                 },
                 new()
                 {
-                    ClientId = AppConstants.Identity.ClientId ,
-                    ClientName = AppConstants.Identity.ClientName  ,
+                    ClientId = "postman",
+                    ClientName = "PostMan",
                     AllowedGrantTypes = GrantTypes.Code,
 
                     ClientSecrets =
@@ -73,6 +73,34 @@ namespace IdentityServer
 
                     RefreshTokenUsage = TokenUsage.OneTimeOnly,
                     RefreshTokenExpiration = TokenExpiration.Sliding
+                },
+                new()
+                {
+                    ClientId = AppConstants.Identity.ClientId ,
+                    ClientName = AppConstants.Identity.ClientName  ,
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequirePkce = true,
+
+                    RequireClientSecret = false,
+                    
+                    // ClientSecrets =
+                    // {
+                    //     new Secret("secret".Sha256())
+                    // },
+                    AllowedScopes = [
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email,
+                        AppConstants.Identity.ScopeName
+                    ],
+                    AllowOfflineAccess = true,
+                    
+                    AllowedCorsOrigins = {"https://localhost:7016"},
+                    RedirectUris = {"https://localhost:7016/authentication/login-callback"},
+                    PostLogoutRedirectUris = {"https://localhost:7016"},
+                    //
+                    // RefreshTokenUsage = TokenUsage.OneTimeOnly,
+                    // RefreshTokenExpiration = TokenExpiration.Sliding
                 },
             };
     }

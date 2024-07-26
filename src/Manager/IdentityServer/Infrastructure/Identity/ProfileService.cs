@@ -1,8 +1,10 @@
 using System.Security.Claims;
+using Duende.IdentityServer;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Identity.Shared.Authorization;
+using IdentityModel;
 using IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +40,11 @@ public class ProfileService : IProfileService
             userPermissions |= role.Permissions;
 
         var permissionValue = (int)userPermissions;
+
+        var claims = context.Subject.Claims.Where(c => c.Type is 
+            JwtClaimTypes.Name or JwtClaimTypes.Email);
         
+        context.IssuedClaims.AddRange(claims);
         context.IssuedClaims.Add(new Claim(CustomClaimTypes.Permissions,permissionValue.ToString()));
     }
 
