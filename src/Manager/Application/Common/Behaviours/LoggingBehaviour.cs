@@ -1,4 +1,5 @@
-﻿using MediatR.Pipeline;
+﻿using KalanalyzeCode.ConfigurationManager.Application.Helpers;
+using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
 
 namespace KalanalyzeCode.ConfigurationManager.Application.Common.Behaviours;
@@ -17,7 +18,7 @@ public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest>
     {
         var requestName = typeof(TRequest).Name;
 
-        _logger.LogInformation("Minimal API Request: {Name} {@Request}", requestName, request);
+        _logger.LogInformation(AppConstants.LoggingMessages.LoggingBehaviour, requestName, request);
 
         return Task.CompletedTask;
     }

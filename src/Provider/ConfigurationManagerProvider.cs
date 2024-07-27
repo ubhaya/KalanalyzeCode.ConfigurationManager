@@ -1,6 +1,7 @@
 ﻿using System.Net.Http.Json;
 using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
 using KalanalyzeCode.ConfigurationManager.Shared;
+using KalanalyzeCode.ConfigurationManager.Shared.Contract.Request;
 using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
 using Microsoft.Extensions.Configuration;
 
@@ -42,7 +43,7 @@ public class ConfigurationManagerProvider : ConfigurationProvider, IDisposable
         };
 
         var result = Task.Run(async () => await client.GetFromJsonAsync<ResponseDataModel<GetAppSettingsResponse>>(
-                "/api/appsettings?settingName=StarfishOptions"))
+                $"{ProjectConstant.GetAppSettings}?{nameof(GetAppSettingsRequest.SettingName)}=StarfishOptions"))
             .Result;
 
         Data = result?.Data?.Settings

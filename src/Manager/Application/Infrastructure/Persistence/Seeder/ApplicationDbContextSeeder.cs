@@ -1,4 +1,5 @@
-﻿using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
+﻿using KalanalyzeCode.ConfigurationManager.Application.Helpers;
+using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
 using Microsoft.Extensions.Logging;
 
 namespace KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence.Seeder;
@@ -31,11 +32,11 @@ internal class ApplicationDbContextSeeder : IDatabaseSeeder
         if (!_context.Settings.Any())
         {
             await _context.Settings.AddRangeAsync(_configurationSettingsList, cancellationToken);
-            _logger.LogInformation("Database seed. Count={Count}", _configurationSettingsList.Count);
+            _logger.LogInformation(AppConstants.LoggingMessages.DatabaseSeed, _configurationSettingsList.Count);
         }
 
         await _context.SaveChangesAsync(cancellationToken);
-        _logger.LogInformation("Database saved successfully at {Date} - {Time}", DateOnly.FromDateTime(DateTime.UtcNow),
+        _logger.LogInformation(AppConstants.LoggingMessages.DatabaseSaved, DateOnly.FromDateTime(DateTime.UtcNow),
             TimeOnly.FromDateTime(DateTime.UtcNow));
     }
 }

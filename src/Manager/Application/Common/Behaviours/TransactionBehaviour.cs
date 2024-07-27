@@ -1,4 +1,5 @@
-﻿using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
+﻿using KalanalyzeCode.ConfigurationManager.Application.Helpers;
+using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -22,7 +23,7 @@ public class TransactionBehaviour<TRequest, TResponse>(
         }
         catch (Exception)
         {
-            logger.LogError("Request failed: Rolling back all the changes made to the Context");
+            logger.LogError(AppConstants.LoggingMessages.TransactionBehaviour);
 
             await context.RollbackTransaction(cancellationToken);
             throw;

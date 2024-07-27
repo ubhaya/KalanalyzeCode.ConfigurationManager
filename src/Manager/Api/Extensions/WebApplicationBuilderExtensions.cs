@@ -1,4 +1,6 @@
-﻿using KalanalyzeCode.ConfigurationManager.Application.Infrastructure;
+﻿using Identity.Shared.Authorization;
+using KalanalyzeCode.ConfigurationManager.Application.Helpers;
+using KalanalyzeCode.ConfigurationManager.Application.Infrastructure;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence.Seeder;
 using KalanalyzeCode.ConfigurationManager.Shared.Contract.Request;
@@ -22,15 +24,12 @@ public static class WebApplicationBuilderExtensions
             .CreateLogger();
     }
 
-    public static WebApplication MediateGet<TRequest>(
+    public static RouteHandlerBuilder MediateGet<TRequest>(
         this WebApplication app,
-        string template, string name, params string[] tags) where TRequest : IHttpRequest
+        string template) where TRequest : IHttpRequest
     {
-        app.MapGet(template,
-            async (IMediator mediator, [AsParameters] TRequest request) => await mediator.Send(request))
-            .WithName(name)
-            .WithTags(tags);
-        return app;
+        return app.MapGet(template,
+            async (IMediator mediator, [AsParameters] TRequest request) => await mediator.Send(request));
     }
 
     public static async Task<WebApplication> SeedDatabase(this WebApplication app)
@@ -52,10 +51,17 @@ public static class WebApplicationBuilderExtensions
             catch (Exception ex)
             {
                 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                logger.LogError(ex, "An error occurred while migrating or initializing the database");
+                logger.LogError(ex, AppConstants.LoggingMessages.SeedingOrMigrationError);
                 throw;
             }
         }
         return app;
+    }
+    
+    public static RouteHandlerBuilder RequireAuthorization(this RouteHandlerBuilder builder, Permissions permissions)
+    {
+        builder.RequireAuthorization(policyBuilder =>
+            policyBuilder.AddRequirements(new PermissionAuthorizationRequirement(permissions)));
+        return builder;
     }
 }
