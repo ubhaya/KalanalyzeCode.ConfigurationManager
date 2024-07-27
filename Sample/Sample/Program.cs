@@ -11,7 +11,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Configuration.AddConfigurationManager(options =>
 {
-    options.BaseAddress = new Uri("http://localhost:5125");
+    options.BaseAddress = new Uri("https://localhost:7015");
     options.ReloadPeriodically = true;
     options.PeriodInSeconds = 2;
 });
