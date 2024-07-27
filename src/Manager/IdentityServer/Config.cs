@@ -58,7 +58,7 @@ namespace IdentityServer
                     ClientId = "postman",
                     ClientName = "PostMan",
                     AllowedGrantTypes = GrantTypes.Code,
-
+                
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
@@ -72,7 +72,7 @@ namespace IdentityServer
                     
                     RedirectUris = {"https://localhost:7015/swagger/oauth2-redirect.html"},
                     AllowedCorsOrigins = {"https://localhost:7015"},
-
+                
                     RefreshTokenUsage = TokenUsage.OneTimeOnly,
                     RefreshTokenExpiration = TokenExpiration.Sliding
                 },
@@ -96,9 +96,9 @@ namespace IdentityServer
                     ],
                     AllowOfflineAccess = true,
                     
-                    AllowedCorsOrigins = {"https://localhost:7016"},
-                    RedirectUris = {"http://localhost:5163/signin-oidc"},
-                    PostLogoutRedirectUris = {"http://localhost:5163/signout-callback-oidc"},
+                    AllowedCorsOrigins = {"https://localhost:7089"},
+                    RedirectUris = {"https://localhost:7089/signin-oidc"},
+                    PostLogoutRedirectUris = {"https://localhost:7089/signout-callback-oidc"},
                     //
                     // RefreshTokenUsage = TokenUsage.OneTimeOnly,
                     // RefreshTokenExpiration = TokenExpiration.Sliding
