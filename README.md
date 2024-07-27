@@ -28,8 +28,9 @@ This solution is provide a much safe way to manage your dotnet configuration tha
 ## Step 3: Design the System
 1. - [ ]  **Configuration Service**:
     - - [x]  **API**: Create RESTful APIs for CRUD operations on configurations.
-         > [Limitation](./docs/Limitation.md)
-    - - [ ]  **Client Library**: Develop a client library to fetch configurations.
+         > [Limitation][api-limitation]
+    - - [x]  **Client Library**: Develop a client library to fetch configurations.
+         > [Limitation][client-library-limitation]
 2. - [ ]  **Configuration Storage**:
     - Design database schema or storage structure for configurations.
 3. - [ ]  **Security**:
@@ -38,33 +39,41 @@ This solution is provide a much safe way to manage your dotnet configuration tha
 
 ## Step 4: Setup Development Environment
 1. - [ ]  **Tools**: Visual Studio, .NET SDK, Docker.
-2. - [ ]  **Repositories**: GitHub/GitLab for version control.
+      >  - **Docker file is not completed.**
+      >  - Project is currently based on dotnet 8.0.300.
+2. - [ ]  **Repositories**: GitHub/GitLab for version control
+      >  - Using Github
+      >  - Continues development pipeline is configured.
 
 ## Step 5: Develop Configuration Service
-1. - [ ]  **API Development**:
+1. - [x]  **API Development**:
     - Set up a new .NET project for the API.
     - Implement endpoints for managing configurations (GET, POST, PUT, DELETE).
     - Implement authentication and authorization.
-2. - [ ]  **Database Integration**:
+    - > [Limitation][api-limitation]
+2. - [x]  **Database Integration**:
     - Set up the database.
     - Implement data access layer using Entity Framework or Dapper.
-3. - [ ]  **Client Library**:
+3. - [x]  **Client Library**:
     - Create a .NET Standard library.
     - Implement methods to fetch configurations from the API.
+    - > [Limitation][client-library-limitation]
 
 ## Step 6: Develop Configuration Fetching Logic
-1. - [ ]  **Replace `appsettings.json`**:
+1. - [X]  **Replace `appsettings.json`**:
     - Create a custom configuration provider by implementing `IConfigurationProvider` and `IConfigurationSource`.
     - Use the client library to fetch configurations from your service.
     - Register your custom provider in the `Startup.cs`.
+    - [Limitation][client-library-limitation]
 
 ## Step 7: Implement Security Features
 1. - [ ]  **Encryption**:
     - Encrypt sensitive data before storing it.
     - Decrypt data when fetching configurations.
-2. - [ ]  **Authentication**:
+2. - [x]  **Authentication**:
     - Use OAuth or JWT to secure the API.
     - Ensure the client library handles authentication.
+    - [Limitation][client-library-limitation]
 
 ## Step 8: Testing
 1. - [ ]  **Unit Testing**:
@@ -105,3 +114,6 @@ This solution is provide a much safe way to manage your dotnet configuration tha
     - Consider open-sourcing the project to get feedback and contributions.
 2. - [ ]  **Feedback Loop**:
     - Collect feedback from users and continuously improve the system.
+
+[api-limitation]: ./docs/Limitation.md/#api-limitation
+[client-library-limitation]: ./docs/Limitation.md/#client-library-limitation
