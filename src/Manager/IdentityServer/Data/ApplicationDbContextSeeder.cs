@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Identity.Shared.Authorization;
 using IdentityModel;
 using IdentityServer.Infrastructure.Identity;
+using IdentityServer.Logging;
 using IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 
@@ -12,6 +13,34 @@ public class ApplicationDbContextSeeder
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly ILogger<ApplicationDbContextSeeder> _logger;
+
+    private readonly Dictionary<string, TestUser> _seedUsers = new()
+    {
+        {
+            "alice",
+            new TestUser("AliceSmith@email.com", 
+            [
+                new Claim(JwtClaimTypes.Name, "Alice Smith"),
+                new Claim(JwtClaimTypes.GivenName, "Alice"),
+                new Claim(JwtClaimTypes.FamilyName, "Smith"),
+                new Claim(JwtClaimTypes.WebSite, "http://alice.com")
+
+            ],[])
+        },
+        {
+            "bob",
+            new TestUser("BobSmith@email.com",[
+                new Claim(JwtClaimTypes.Name, "Bob Smith"),
+                new Claim(JwtClaimTypes.GivenName, "Bob"),
+                new Claim(JwtClaimTypes.FamilyName, "Smith"),
+                new Claim(JwtClaimTypes.WebSite, "http://bob.com"),
+                new Claim("location", "somewhere"),
+            ],[AdministratorRole])
+        }
+    };
+
+    private const string AdministratorRole = "Administrator";
+    private const string DefaultPassword = "Pass123$";
 
     public ApplicationDbContextSeeder(ApplicationDbContext context, 
         UserManager<ApplicationUser> userManager, 
@@ -25,12 +54,12 @@ public class ApplicationDbContextSeeder
 
     public async Task SeedDataAsync()
     {
-        await EnsureRoles("Administrator");
-        
-        await EnsureUser("alice", "AliceSmith@email.com", "Alice Smith", 
-            "Alice", "Smith", "http://alice.com");
-        await EnsureUser("bob", "BobSmith@email.com", "Bob Smith", 
-            "Bob", "Smith", "http://bob.com");
+        await EnsureRoles(AdministratorRole);
+
+        foreach (var (userName, data) in _seedUsers)
+        {
+            await EnsureUser(userName, data);
+        }
     }
 
     private async Task EnsureRoles(string roleName)
@@ -51,16 +80,15 @@ public class ApplicationDbContextSeeder
                 throw new Exception(result.Errors.First().Description);
             }
             
-            _logger.LogDebug("{Role} created", roleName);
+            _logger.LogRoleCreated(roleName);
         }
         else
         {
-            _logger.LogDebug("{Role} already exists", roleName);
+            _logger.LogRoleAlreadyExists(roleName);
         }
     }
 
-    private async Task EnsureUser(string userName, string email, string name, string givenName, string familyName,
-        string webSite)
+    private async Task EnsureUser(string userName, TestUser data)
     {
         var user = await _userManager.FindByNameAsync(userName);
         if (user == null)
@@ -68,49 +96,51 @@ public class ApplicationDbContextSeeder
             user = new ApplicationUser
             {
                 UserName = userName,
-                Email = email,
+                Email = data.Email,
                 EmailConfirmed = true,
             };
-            var result = await _userManager.CreateAsync(user, "Pass123$");
+            var result = await _userManager.CreateAsync(user, DefaultPassword);
             if (!result.Succeeded)
             {
                 throw new Exception(result.Errors.First().Description);
             }
 
-            result = await _userManager.AddClaimsAsync(user, new Claim[]{
-                new(JwtClaimTypes.Name, name),
-                new(JwtClaimTypes.GivenName, givenName),
-                new(JwtClaimTypes.FamilyName, familyName),
-                new(JwtClaimTypes.WebSite, webSite),
-            });
+            result = await _userManager.AddClaimsAsync(user, data.Claims);
             if (!result.Succeeded)
             {
                 throw new Exception(result.Errors.First().Description);
             }
-            
-            _logger.LogDebug("{Username} created", userName);
 
-            await AddToRole(user);
+            _logger.LogUserCreated(user.UserName);
+
+            await AddToRole(user, data.Roles);
         }
         else
         {
-            _logger.LogDebug("{Username} already exists", userName);
-            await AddToRole(user);
+            _logger.LogUserAlreadyExists(user.UserName!);
+            await AddToRole(user, data.Roles);
         }
     }
 
-    private async Task AddToRole(ApplicationUser user)
+    private async Task AddToRole(ApplicationUser user, IEnumerable<string> roles)
     {
-        var result = await _userManager.IsInRoleAsync(user, "Administrator");
-        if (result)
+        foreach (var roleName in roles)
         {
-            _logger.LogDebug("{User} already in {Role}", user.UserName, "Administrator");
-            return;
-        }
-        var identityResult = await _userManager.AddToRoleAsync(user, "Administrator");
-        if (!identityResult.Succeeded)
-        {
-            throw new Exception(identityResult.Errors.First().Description);
+            var result = await _userManager.IsInRoleAsync(user, roleName);
+            if (result)
+            {
+                _logger.LogUserAlreadyInRole(user.UserName!, roleName);
+                return;
+            }
+            var identityResult = await _userManager.AddToRoleAsync(user, roleName);
+            if (!identityResult.Succeeded)
+            {
+                throw new Exception(identityResult.Errors.First().Description);
+            }
+
+            _logger.LogUserAddToRole(user.UserName!, roleName);
         }
     }
+
+    internal record TestUser(string Email, IEnumerable<Claim> Claims, IEnumerable<string> Roles);
 }
