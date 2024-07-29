@@ -53,9 +53,10 @@ public class ConfigurationManagerProvider : ConfigurationProvider, IDisposable
             new KeyValuePair<string, string>("scope", "KalanalyzeCode.ConfigurationManager profile openid"),
             new KeyValuePair<string, string>("client_id", "postman.apikey"),
             new KeyValuePair<string, string>("client_secret", "secret"),
-            new KeyValuePair<string, string>("api_key", "TestApiKey"),
+            new KeyValuePair<string, string>("api_key", "674e2a077bd64d669340af69c460767c"),
         ]);
-        var identityResult = Task.Run(async () => await _identityClient.PostAsync("connect/token", formData))
+        var identityResult = Task.Run(async () => 
+                await _identityClient.PostAsync("connect/token", formData))
             .Result;
 
         identityResult.EnsureSuccessStatusCode();

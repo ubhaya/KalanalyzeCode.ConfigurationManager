@@ -1,39 +1,45 @@
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
+using IdentityServer.Models;
+using IdentityServer.Models.Dto;
+using IdentityServer.Services.Interfaces;
 
 namespace IdentityServer.GrantValidators;
 
 public class ApiKeyValidator : IExtensionGrantValidator
 {
+    private readonly IApiKeyValidatorService _apiKeyValidator;
+
+    public ApiKeyValidator(IApiKeyValidatorService apiKeyValidator)
+    {
+        _apiKeyValidator = apiKeyValidator;
+    }
+
     public string GrantType => "api_key";
 
-    public Task ValidateAsync(ExtensionGrantValidationContext context)
+    public async Task ValidateAsync(ExtensionGrantValidationContext context)
     {
         var apiKey = context.Request.Raw.Get("api_key");
 
         if (string.IsNullOrEmpty(apiKey))
         {
             context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, "API key missing");
-            return Task.CompletedTask;
+            return;
         }
 
-        // Validate the API key (this is where you implement your logic to check the API key)
-        if (IsValidApiKey(apiKey))
-        {
-            // Create a subject identifier (this could be a user ID or something similar)
-            context.Result = new GrantValidationResult(subject: "user_id", authenticationMethod: GrantType);
-        }
-        else
+        var result = await IsValidApiKey(apiKey);
+
+        if (!result.IsValid)
         {
             context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant, "Invalid API key");
+            return;
         }
         
-        return Task.CompletedTask;
+        context.Result = new GrantValidationResult(subject: result.User!.Id, authenticationMethod: GrantType);
     }
 
-    private bool IsValidApiKey(string apiKey)
+    private async Task<ApiKeyValidationResult> IsValidApiKey(string apiKey)
     {
-        // Todo: Implement your API key validation logic here
-        return true;
+        return await _apiKeyValidator.Validate(apiKey);
     }
 }

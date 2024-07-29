@@ -5,6 +5,7 @@ using IdentityServer.Data;
 using IdentityServer.GrantValidators;
 using IdentityServer.Infrastructure.Identity;
 using IdentityServer.Models;
+using IdentityServer.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +41,8 @@ namespace IdentityServer
             builder.Services.AddTransient<IExtensionGrantValidator, ApiKeyValidator>();
             builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
             builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
+
+            builder.Services.AddTransient<IApiKeyValidatorService, ApiKeyValidatorService>();
             
             var identityBuilder = builder.Services
                 .AddIdentityServer(options =>

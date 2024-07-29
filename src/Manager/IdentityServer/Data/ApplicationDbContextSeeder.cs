@@ -18,28 +18,37 @@ public class ApplicationDbContextSeeder
     {
         {
             "alice",
-            new TestUser("AliceSmith@email.com", 
+            new TestUser("AliceSmith@email.com",
             [
                 new Claim(JwtClaimTypes.Name, "Alice Smith"),
                 new Claim(JwtClaimTypes.GivenName, "Alice"),
                 new Claim(JwtClaimTypes.FamilyName, "Smith"),
                 new Claim(JwtClaimTypes.WebSite, "http://alice.com")
 
-            ],[])
+            ], [], string.Empty)
         },
         {
             "bob",
-            new TestUser("BobSmith@email.com",[
+            new TestUser("BobSmith@email.com", [
                 new Claim(JwtClaimTypes.Name, "Bob Smith"),
                 new Claim(JwtClaimTypes.GivenName, "Bob"),
                 new Claim(JwtClaimTypes.FamilyName, "Smith"),
                 new Claim(JwtClaimTypes.WebSite, "http://bob.com"),
                 new Claim("location", "somewhere"),
-            ],[AdministratorRole])
+            ], ["Administrator"], string.Empty)
+        },
+        {
+            "apiKeyUser",
+            new TestUser("apiKeyUser@email.com", [
+            ], ["ApiKey"], "674e2a077bd64d669340af69c460767c")
         }
     };
 
-    private const string AdministratorRole = "Administrator";
+    private readonly Dictionary<string, Permissions> _roles = new()
+    {
+        { "Administrator", Permissions.All },
+        { "ApiKey", Permissions.GetAppSettings }
+    };
     private const string DefaultPassword = "Pass123$";
 
     public ApplicationDbContextSeeder(ApplicationDbContext context, 
@@ -54,7 +63,10 @@ public class ApplicationDbContextSeeder
 
     public async Task SeedDataAsync()
     {
-        await EnsureRoles(AdministratorRole);
+        foreach (var (roleName, permissions) in _roles)
+        {
+            await EnsureRoles(roleName, permissions);
+        }
 
         foreach (var (userName, data) in _seedUsers)
         {
@@ -62,7 +74,7 @@ public class ApplicationDbContextSeeder
         }
     }
 
-    private async Task EnsureRoles(string roleName)
+    private async Task EnsureRoles(string roleName, Permissions permissions)
     {
         var isExists = await _roleManager.RoleExistsAsync(roleName);
 
@@ -71,7 +83,7 @@ public class ApplicationDbContextSeeder
             var role = new ApplicationRole()
             {
                 Name = roleName,
-                Permissions = Permissions.All
+                Permissions = permissions
             };
 
             var result = await _roleManager.CreateAsync(role);
@@ -98,6 +110,7 @@ public class ApplicationDbContextSeeder
                 UserName = userName,
                 Email = data.Email,
                 EmailConfirmed = true,
+                ApiKey = data.ApiKey
             };
             var result = await _userManager.CreateAsync(user, DefaultPassword);
             if (!result.Succeeded)
@@ -142,5 +155,5 @@ public class ApplicationDbContextSeeder
         }
     }
 
-    internal record TestUser(string Email, IEnumerable<Claim> Claims, IEnumerable<string> Roles);
+    internal record TestUser(string Email, IEnumerable<Claim> Claims, IEnumerable<string> Roles, string ApiKey);
 }
