@@ -1,6 +1,8 @@
 using Duende.IdentityServer;
+using Duende.IdentityServer.Validation;
 using Identity.Shared.Authorization;
 using IdentityServer.Data;
+using IdentityServer.GrantValidators;
 using IdentityServer.Infrastructure.Identity;
 using IdentityServer.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -35,6 +37,7 @@ namespace IdentityServer
                 .AddClaimsPrincipalFactory<PermissionClaimsPrincipalFactory>()
                 .AddDefaultTokenProviders();
 
+            builder.Services.AddTransient<IExtensionGrantValidator, ApiKeyValidator>();
             builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
             builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
             

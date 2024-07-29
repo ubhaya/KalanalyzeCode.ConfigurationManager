@@ -12,7 +12,7 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionAut
 
         if (permissionClaim is null)
         {
-            return HandlerM2MRequirement(context, requirement);
+            return Task.CompletedTask;
         }
 
         if (!int.TryParse(permissionClaim.Value, out var permissionClaimValue))
@@ -34,28 +34,6 @@ public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionAut
             return Task.CompletedTask;
         }
 
-        return Task.CompletedTask;
-    }
-
-    private Task HandlerM2MRequirement(AuthorizationHandlerContext context, PermissionAuthorizationRequirement requirement)
-    {
-        var requiredScope = context.User.FindAll(c => c.Type == "scope");
-        var clientId = context.User.FindFirst(c => c.Type == "client_id");
-
-        if (requiredScope.All(c => c.Value != AppConstants.Identity.ClientScopeName) &&
-            clientId?.Value != "m2m.client")
-        {
-            return Task.CompletedTask;
-        }
-
-        var permission = Permissions.GetAppSettings;
-
-        if ((permission & requirement.Permission) != 0)
-        {
-            context.Succeed(requirement);
-            return Task.CompletedTask;
-        }
-        
         return Task.CompletedTask;
     }
 }

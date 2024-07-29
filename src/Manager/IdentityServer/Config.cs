@@ -78,6 +78,26 @@ namespace IdentityServer
                 },
                 new()
                 {
+                    ClientId = "postman.apikey",
+                    ClientName = "PostMan.api",
+                    AllowedGrantTypes = ["api_key"],
+                
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    AllowedScopes = [
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        AppConstants.Identity.ScopeName
+                    ],
+                    AllowOfflineAccess = true,
+                
+                    RefreshTokenUsage = TokenUsage.OneTimeOnly,
+                    RefreshTokenExpiration = TokenExpiration.Sliding
+                },
+                new()
+                {
                     ClientId = AppConstants.Identity.ClientId ,
                     ClientName = AppConstants.Identity.ClientName  ,
                     AllowedGrantTypes = GrantTypes.Code,
