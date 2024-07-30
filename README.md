@@ -7,30 +7,32 @@ This solution is provide a much safe way to manage your dotnet configuration tha
 
 ## Step 1: Define Project Requirements
 1. - [x] **Configuration Source**: Decide where the configurations will be stored (e.g., database, cloud storage, environment variables).
-        > Configuration Manager will using NoSql database as a persistent storage. which database to use will decide later. 
+   > Configuration Manager will using NoSql database as a persistent storage. which database to use will decide later. 
 2. - [x]  **Security**: Ensure that sensitive data is securely managed.
-        > Data that stored in persistent layer should encrypt before saving. This will add a more overhead on the operations, but this will not be a big problem.
+   > Data that stored in persistent layer should encrypt before saving. This will add a more overhead on the operations, but this will not be a big problem.
 3. - [x]  **Flexibility**: Allow for different environments (development, staging, production).
-        > Multiple environment support is a necessary to succeed the project.
+   > Multiple environment support is a necessary to succeed the project.
 4. - [ ]  **Scalability**: Ensure the system can handle large configurations efficiently.
 5. - [ ]  **Integration**: Seamlessly integrate with existing .NET Core/Framework applications.
 
 ## Step 2: Choose Technology Stack
 1. - [x]  **Backend**: .NET Core/Framework.
-        > This project will use dotnet LTS versions. but further down the road it may possible to maintained a LTS version and STS version.
+   > This project will use dotnet LTS versions. but further down the road it may possible to maintained a LTS version and STS version.
 2. - [x]  **Storage**: SQL/NoSQL database, cloud storage (Azure Blob, AWS S3).
-        > MongoDb will be use as primary database provider. As the project moved on user may able to choose custom database providers.
+   > MongoDb will be use as primary database provider. As the project moved on user may able to choose custom database providers.
 3. - [x]  **Authentication & Authorization**: OAuth, JWT.
-        > Currently any authentication is not a consideration. But as a security reason project should use some authentication system.
+   > Currently any authentication is not a consideration. But as a security reason project should use some authentication system.
 4. - [x]  **Deployment**: Docker, Kubernetes, Azure/AWS/GCP.
-        > This project will deploy mainly as a docker image. Still the options are open to provide the standalone application.
+   > This project will deploy mainly as a docker image. Still the options are open to provide the standalone application.
 
 ## Step 3: Design the System
 1. - [ ]  **Configuration Service**:
     - - [x]  **API**: Create RESTful APIs for CRUD operations on configurations.
-         > [Limitation][api-limitation]
+      > [Limitation][api-limitation]
+      > [Functions][api-functions]
     - - [x]  **Client Library**: Develop a client library to fetch configurations.
-         > [Limitation][client-library-limitation]
+    - - [ ] **Manager UI**: Create a UI to managed the configuration
+      > [Functions][ui-functions]
 2. - [ ]  **Configuration Storage**:
     - Design database schema or storage structure for configurations.
 3. - [ ]  **Security**:
@@ -39,11 +41,11 @@ This solution is provide a much safe way to manage your dotnet configuration tha
 
 ## Step 4: Setup Development Environment
 1. - [ ]  **Tools**: Visual Studio, .NET SDK, Docker.
-      >  - **Docker file is not completed.**
-      >  - Project is currently based on dotnet 8.0.300.
-2. - [ ]  **Repositories**: GitHub/GitLab for version control
-      >  - Using Github
-      >  - Continues development pipeline is configured.
+   >  - **Docker file is not completed.**
+   >  - Project is currently based on dotnet 8.0.300.
+2. - [x]  **Repositories**: GitHub/GitLab for version control
+   >  - Using Github
+   >  - Continues development pipeline is configured.
 
 ## Step 5: Develop Configuration Service
 1. - [x]  **API Development**:
@@ -57,14 +59,12 @@ This solution is provide a much safe way to manage your dotnet configuration tha
 3. - [x]  **Client Library**:
     - Create a .NET Standard library.
     - Implement methods to fetch configurations from the API.
-    - > [Limitation][client-library-limitation]
 
 ## Step 6: Develop Configuration Fetching Logic
 1. - [X]  **Replace `appsettings.json`**:
     - Create a custom configuration provider by implementing `IConfigurationProvider` and `IConfigurationSource`.
     - Use the client library to fetch configurations from your service.
     - Register your custom provider in the `Startup.cs`.
-    - [Limitation][client-library-limitation]
 
 ## Step 7: Implement Security Features
 1. - [ ]  **Encryption**:
@@ -73,7 +73,6 @@ This solution is provide a much safe way to manage your dotnet configuration tha
 2. - [x]  **Authentication**:
     - Use OAuth or JWT to secure the API.
     - Ensure the client library handles authentication.
-    - [Limitation][client-library-limitation]
 
 ## Step 8: Testing
 1. - [ ]  **Unit Testing**:
@@ -116,4 +115,5 @@ This solution is provide a much safe way to manage your dotnet configuration tha
     - Collect feedback from users and continuously improve the system.
 
 [api-limitation]: ./docs/Limitation.md/#api-limitation
-[client-library-limitation]: ./docs/Limitation.md/#client-library-limitation
+[api-functions]: ./docs/Limitation.md/#api-functions
+[ui-functions]: ./docs/Functions.md/#ui-functions

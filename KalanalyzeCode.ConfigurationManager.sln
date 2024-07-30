@@ -36,6 +36,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{309A2165-0FEF-4041-96AC-AACE7DD417FB}"
 	ProjectSection(SolutionItems) = preProject
 		docs\Limitation.md = docs\Limitation.md
+		docs\Functions.md = docs\Functions.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "src\Manager\IdentityServer\IdentityServer.csproj", "{AE033DB6-0821-4019-BF93-BBDE72CF3909}"
