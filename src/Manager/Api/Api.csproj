@@ -27,7 +27,12 @@
   
   <Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
     <Message Importance="High" Text="$(NSwagExe_Net80) run nswag.json /variables:Configuration=$(Configuration)" />
-    <Exec WorkingDirectory="$(ProjectDir)" EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Net80) run nswag.json /variables:Configuration=$(Configuration)" />
+    <Exec WorkingDirectory="$(ProjectDir)" 
+          EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" 
+          Command="$(NSwagExe_Net80) run ui.json /variables:Configuration=$(Configuration)" />
+    <Exec WorkingDirectory="$(ProjectDir)" 
+          EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" 
+          Command="$(NSwagExe_Net80) run integration-tests.json /variables:Configuration=$(Configuration)" />
     <Delete Files="$(ProjectDir)\obj\$(MSBuildProjectFile).NSwag.targets" />
     <!-- This thingy trigger project rebuild -->
   </Target>

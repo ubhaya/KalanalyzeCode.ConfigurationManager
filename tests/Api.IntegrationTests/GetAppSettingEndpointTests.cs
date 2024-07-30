@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Net.Http.Json;
 using FluentAssertions;
+using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
 using KalanalyzeCode.ConfigurationManager.Shared;
@@ -13,13 +14,13 @@ namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests;
 [Collection("Test collection")]
 public class GetAppSettingEndpointTests : TestBase, IAsyncLifetime
 {
-    private readonly HttpClient _client;
+    private readonly IAppSettingsClient _client;
     private readonly IServiceScope _scope;
     private readonly Func<Task> _resetDatabase;
 
     public GetAppSettingEndpointTests(ApiWebApplication factory)
     {
-        _client = factory.HttpClient;
+        _client = new AppSettingsClient(factory.HttpClient);
         _scope = factory.Scope;
         _resetDatabase = factory.ResetDatabaseAsync;
     }
@@ -34,7 +35,7 @@ public class GetAppSettingEndpointTests : TestBase, IAsyncLifetime
         await AddAsync(_scope, new ConfigurationSettings() { Id = testSettings, Value = "true" });
 
         // Act
-        var settings = await _client.GetFromJsonAsync<ResponseDataModel<GetAppSettingsResponse>>($"{ProjectConstant.GetAppSettings}?settingName=TestSettings");
+        var settings = await _client.GetAppSettingsRequestAsync(testSettings);
 
         // Assert
         settings.Should().NotBeNull();
@@ -51,7 +52,7 @@ public class GetAppSettingEndpointTests : TestBase, IAsyncLifetime
         // Arrange
 
         // Act
-        var settings = await _client.GetFromJsonAsync<ResponseDataModel<GetAppSettingsResponse>>($"{ProjectConstant.GetAppSettings}?settingName=invalidName");
+        var settings = await _client.GetAppSettingsRequestAsync("invalidName");
 
         // Assert
         settings.Should().NotBeNull();
