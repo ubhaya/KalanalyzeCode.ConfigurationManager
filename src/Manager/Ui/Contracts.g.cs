@@ -26,11 +26,11 @@ namespace KalanalyzeCode.ConfigurationManager.Ui
     public partial interface IAppSettingsClient : IClient
     {
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetAppSettingsRequestAsync(string settingName);
+        System.Threading.Tasks.Task<ResponseDataModelOfGetAppSettingsResponse> GetAppSettingsRequestAsync(string settingName);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task GetAppSettingsRequestAsync(string settingName, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ResponseDataModelOfGetAppSettingsResponse> GetAppSettingsRequestAsync(string settingName, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -43,6 +43,48 @@ namespace KalanalyzeCode.ConfigurationManager.Ui
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.Generic.ICollection<WeatherForecast>> GetWeatherForecastAsync(System.Threading.CancellationToken cancellationToken);
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ResponseDataModelOfGetAppSettingsResponse : ResponseModel
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("data")]
+        public GetAppSettingsResponse Data { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetAppSettingsResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("settings")]
+        public System.Collections.Generic.ICollection<ApplicationSettings> Settings { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ApplicationSettings
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("id")]
+        public string Id { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("value")]
+        public string Value { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ResponseModel
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("success")]
+        public bool Success { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("errors")]
+        public System.Collections.Generic.ICollection<string> Errors { get; set; }
 
     }
 

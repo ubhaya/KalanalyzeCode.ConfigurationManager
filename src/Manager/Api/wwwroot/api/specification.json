@@ -9,8 +9,7 @@
     "/Api/GetAppSettings": {
       "get": {
         "tags": [
-          "GetAppSettingsResponse",
-          "GetAppSettingsRequest"
+          "ApiSettings"
         ],
         "operationId": "AppSettings_GetAppSettingsRequest",
         "parameters": [
@@ -27,7 +26,14 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDataModelOfGetAppSettingsResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -58,6 +64,68 @@
   },
   "components": {
     "schemas": {
+      "ResponseDataModelOfGetAppSettingsResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResponseModel"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "data": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/GetAppSettingsResponse"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "GetAppSettingsResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "settings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApplicationSettings"
+            }
+          }
+        }
+      },
+      "ApplicationSettings": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ResponseModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "errors": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "WeatherForecast": {
         "type": "object",
         "additionalProperties": false,

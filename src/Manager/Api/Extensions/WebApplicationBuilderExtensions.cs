@@ -1,10 +1,8 @@
 ﻿using Identity.Shared.Authorization;
+using KalanalyzeCode.ConfigurationManager.Api.Endpoints;
 using KalanalyzeCode.ConfigurationManager.Application.Helpers;
-using KalanalyzeCode.ConfigurationManager.Application.Infrastructure;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence.Seeder;
-using KalanalyzeCode.ConfigurationManager.Shared.Contract.Request;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
@@ -22,14 +20,6 @@ public static class WebApplicationBuilderExtensions
             .Enrich.FromLogContext()
             .WriteTo.Console()
             .CreateLogger();
-    }
-
-    public static RouteHandlerBuilder MediateGet<TRequest>(
-        this WebApplication app,
-        string template) where TRequest : IHttpRequest
-    {
-        return app.MapGet(template,
-            async (IMediator mediator, [AsParameters] TRequest request) => await mediator.Send(request));
     }
 
     public static async Task<WebApplication> SeedDatabase(this WebApplication app)
@@ -58,10 +48,36 @@ public static class WebApplicationBuilderExtensions
         return app;
     }
     
-    public static RouteHandlerBuilder RequireAuthorization(this RouteHandlerBuilder builder, Permissions permissions)
+    public static IEndpointConventionBuilder RequireAuthorization(this IEndpointConventionBuilder builder, Permissions permissions)
     {
         builder.RequireAuthorization(policyBuilder =>
             policyBuilder.AddRequirements(new PermissionAuthorizationRequirement(permissions)));
         return builder;
+    }
+    
+    public static void AddEndpointDefinitions(this IServiceCollection services, params Type[] scanMakers)
+    {
+        var endpointDefinitions = new List<IEndpointsDefinition>();
+
+        foreach (var maker in scanMakers)
+        {
+            endpointDefinitions.AddRange(
+                maker.Assembly.ExportedTypes
+                    .Where(x=>typeof(IEndpointsDefinition).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
+                    .Select(Activator.CreateInstance).Cast<IEndpointsDefinition>()
+            );
+        }
+
+        services.AddSingleton(endpointDefinitions as IReadOnlyCollection<IEndpointsDefinition>);
+    }
+
+    public static void UseEndpointDefinition(this WebApplication app)
+    {
+        var definitions = app.Services.GetRequiredService<IReadOnlyCollection<IEndpointsDefinition>>();
+
+        foreach (var endpointsDefinition in definitions)
+        {
+            endpointsDefinition.DefineEndpoints(app);
+        }
     }
 }

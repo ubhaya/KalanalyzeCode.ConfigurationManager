@@ -4,13 +4,13 @@
         <AssemblyName>KalanalyzeCode.ConfigurationManager.Shared</AssemblyName>
         <RootNamespace>KalanalyzeCode.ConfigurationManager.Shared</RootNamespace>
     </PropertyGroup>
-
-    <ItemGroup>
-        <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    </ItemGroup>
     
     <ItemGroup>
       <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\Manager\Entity\Entity.csproj" />
     </ItemGroup>
 
 </Project>

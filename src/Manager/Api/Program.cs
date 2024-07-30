@@ -1,11 +1,8 @@
-using Identity.Shared.Authorization;
 using KalanalyzeCode.ConfigurationManager.Api;
+using KalanalyzeCode.ConfigurationManager.Api.Endpoints;
 using KalanalyzeCode.ConfigurationManager.Api.Extensions;
 using KalanalyzeCode.ConfigurationManager.Application;
 using KalanalyzeCode.ConfigurationManager.Application.Helpers;
-using KalanalyzeCode.ConfigurationManager.Shared;
-using KalanalyzeCode.ConfigurationManager.Shared.Contract.Request;
-using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +10,8 @@ builder.Host.AddSerilog();
 builder.Services.AddWebApiConfig(builder.Configuration);
 builder.Services.AddApplicationCore();
 builder.Services.AddPersistence(builder.Configuration);
+
+builder.Services.AddEndpointDefinitions(typeof(IEndpointsDefinition));
 
 var app = builder.Build();
 
@@ -22,32 +21,7 @@ app.UseCors(AppConstants.CorsPolicy);
 app.UseStaticFiles();
 app.MapSwagger();
 
-
-app.MediateGet<GetAppSettingsRequest>(ProjectConstant.GetAppSettings)
-    .WithName($"AppSettings_{nameof(GetAppSettingsRequest)}")
-    .WithTags(nameof(GetAppSettingsResponse), nameof(GetAppSettingsRequest))
-    .RequireAuthorization(Permissions.GetAppSettings);
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    100,
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("WeatherForecast_GetWeatherForecast")
-    .WithTags(nameof(WeatherForecast))
-    .RequireAuthorization(Permissions.All);
+app.UseEndpointDefinition();
 
 await app.RunAsync();
 
