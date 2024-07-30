@@ -33,6 +33,9 @@
     <Exec WorkingDirectory="$(ProjectDir)" 
           EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" 
           Command="$(NSwagExe_Net80) run integration-tests.json /variables:Configuration=$(Configuration)" />
+    <Exec WorkingDirectory="$(ProjectDir)"
+          EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development"
+          Command="$(NSwagExe_Net80) run provider.json /variables:Configuration=$(Configuration)" />
     <Delete Files="$(ProjectDir)\obj\$(MSBuildProjectFile).NSwag.targets" />
     <!-- This thingy trigger project rebuild -->
   </Target>
