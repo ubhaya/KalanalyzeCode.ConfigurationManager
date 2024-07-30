@@ -1,12 +1,7 @@
 using System.Diagnostics;
-using System.Net.Http.Json;
 using FluentAssertions;
 using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client;
-using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
-using KalanalyzeCode.ConfigurationManager.Shared;
-using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests;

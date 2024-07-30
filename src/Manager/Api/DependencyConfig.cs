@@ -1,8 +1,6 @@
 ﻿using Identity.Shared.Authorization;
 using KalanalyzeCode.ConfigurationManager.Api.Options;
-using KalanalyzeCode.ConfigurationManager.Application;
 using KalanalyzeCode.ConfigurationManager.Application.Helpers;
-using KalanalyzeCode.ConfigurationManager.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 

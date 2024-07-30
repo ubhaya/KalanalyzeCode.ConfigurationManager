@@ -17,4 +17,10 @@ public class AppConstants
         public const string NewDomainEvent = "New domain event {Event}";
         public const string SeedingOrMigrationError = "An error occurred while migrating or initializing the database";
     }
+
+    public class Routes
+    {
+        private const string Api = nameof(Api);
+        public const string GetAppSettings = $"{nameof(Api)}/{nameof(GetAppSettings)}";
+    }
 }

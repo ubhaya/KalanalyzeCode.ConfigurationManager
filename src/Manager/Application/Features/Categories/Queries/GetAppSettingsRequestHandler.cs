@@ -1,8 +1,7 @@
-﻿using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
-using KalanalyzeCode.ConfigurationManager.Shared.Contract.Request;
-using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
+﻿using KalanalyzeCode.ConfigurationManager.Application.Contract.Request;
+using KalanalyzeCode.ConfigurationManager.Application.Contract.Response;
+using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 
 namespace KalanalyzeCode.ConfigurationManager.Application.Features.Categories.Queries;
 

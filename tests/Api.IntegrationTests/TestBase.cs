@@ -1,5 +1,4 @@
 ﻿using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests;

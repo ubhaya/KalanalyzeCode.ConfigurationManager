@@ -1,10 +1,5 @@
-﻿using IdentityModel;
-using IdentityServer.Data;
-using IdentityServer.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using IdentityServer.Data;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
-using System.Security.Claims;
 
 namespace IdentityServer
 {

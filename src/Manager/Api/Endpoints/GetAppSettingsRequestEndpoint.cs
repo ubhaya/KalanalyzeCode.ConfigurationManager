@@ -1,7 +1,7 @@
+using KalanalyzeCode.ConfigurationManager.Application.Contract.Request;
+using KalanalyzeCode.ConfigurationManager.Application.Contract.Response;
+using KalanalyzeCode.ConfigurationManager.Application.Helpers;
 using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
-using KalanalyzeCode.ConfigurationManager.Shared;
-using KalanalyzeCode.ConfigurationManager.Shared.Contract.Request;
-using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
 using MediatR;
 
 namespace KalanalyzeCode.ConfigurationManager.Api.Endpoints;
@@ -10,7 +10,7 @@ public class GetAppSettingsRequestEndpoint : IEndpointsDefinition
 {
     public void DefineEndpoints(IEndpointRouteBuilder app)
     {
-        app.MapGet(ProjectConstant.GetAppSettings, GetAppSettings)
+        app.MapGet(AppConstants.Routes.GetAppSettings, GetAppSettings)
             .WithName($"AppSettings_{nameof(GetAppSettingsRequest)}")
             .WithTags("ApiSettings");
     }

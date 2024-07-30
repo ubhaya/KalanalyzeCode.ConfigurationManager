@@ -1,7 +1,6 @@
 using System.Security.Claims;
 using Identity.Shared.Authorization;
 using IdentityModel;
-using IdentityServer.Infrastructure.Identity;
 using IdentityServer.Logging;
 using IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
