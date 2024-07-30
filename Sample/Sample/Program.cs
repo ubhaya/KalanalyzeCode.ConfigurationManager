@@ -11,7 +11,15 @@ builder.Services.AddSwaggerGen();
 
 builder.Configuration.AddConfigurationManager(options =>
 {
-    options.BaseAddress = new Uri("https://localhost:7015");
+    options.SecreteManagerOptions = new()
+    {
+        BaseAddress = new Uri("https://localhost:7015"),
+        Scopes = ["KalanalyzeCode.ConfigurationManager", "profile", "openid"],
+        ClientId = "postman.apikey",
+        ClientSecrete = "secret",
+        ApiKey = "674e2a077bd64d669340af69c460767c"
+    };
+        
     options.ReloadPeriodically = true;
     options.PeriodInSeconds = 2;
 });

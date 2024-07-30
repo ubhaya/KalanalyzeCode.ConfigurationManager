@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using KalanalyzeCode.ConfigurationManager.Provider.Options;
+using Microsoft.Extensions.Configuration;
 
 namespace KalanalyzeCode.ConfigurationManager.Provider;
 

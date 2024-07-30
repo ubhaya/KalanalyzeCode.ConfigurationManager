@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
+using KalanalyzeCode.ConfigurationManager.Provider.Options;
 using KalanalyzeCode.ConfigurationManager.Shared;
 using KalanalyzeCode.ConfigurationManager.Shared.Contract.Request;
 using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
@@ -34,7 +35,7 @@ public class ConfigurationManagerProvider : ConfigurationProvider, IDisposable
         
         _client = new HttpClient()
         {
-            BaseAddress = Options.BaseAddress
+            BaseAddress = Options.SecreteManagerOptions.BaseAddress
         };
 
         _identityClient = new HttpClient()
@@ -50,10 +51,10 @@ public class ConfigurationManagerProvider : ConfigurationProvider, IDisposable
     {
         var formData = new FormUrlEncodedContent([
             new KeyValuePair<string, string>("grant_type", "api_key"),
-            new KeyValuePair<string, string>("scope", "KalanalyzeCode.ConfigurationManager profile openid"),
-            new KeyValuePair<string, string>("client_id", "postman.apikey"),
-            new KeyValuePair<string, string>("client_secret", "secret"),
-            new KeyValuePair<string, string>("api_key", "674e2a077bd64d669340af69c460767c"),
+            new KeyValuePair<string, string>("scope", Options.SecreteManagerOptions.Scope),
+            new KeyValuePair<string, string>("client_id", Options.SecreteManagerOptions.ClientId),
+            new KeyValuePair<string, string>("client_secret", Options.SecreteManagerOptions.ClientSecrete),
+            new KeyValuePair<string, string>("api_key", Options.SecreteManagerOptions.ApiKey),
         ]);
         var identityResult = Task.Run(async () => 
                 await _identityClient.PostAsync("connect/token", formData))
