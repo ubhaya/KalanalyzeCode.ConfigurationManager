@@ -1,3 +1,4 @@
+using IdentityServer;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Identity.Shared.Authorization;

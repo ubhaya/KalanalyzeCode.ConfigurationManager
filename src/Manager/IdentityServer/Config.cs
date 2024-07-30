@@ -32,7 +32,9 @@ namespace IdentityServer
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     ClientSecrets = { new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256()) },
 
-                    AllowedScopes = { "scope1" }
+                    AllowedScopes = [
+                            AppConstants.Identity.ScopeName
+                        ]
                 },
 
                 // interactive client using code flow + pkce
@@ -56,7 +58,7 @@ namespace IdentityServer
                     ClientId = "postman",
                     ClientName = "PostMan",
                     AllowedGrantTypes = GrantTypes.Code,
-
+                
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
@@ -70,7 +72,27 @@ namespace IdentityServer
                     
                     RedirectUris = {"https://localhost:7015/swagger/oauth2-redirect.html"},
                     AllowedCorsOrigins = {"https://localhost:7015"},
-
+                
+                    RefreshTokenUsage = TokenUsage.OneTimeOnly,
+                    RefreshTokenExpiration = TokenExpiration.Sliding
+                },
+                new()
+                {
+                    ClientId = "postman.apikey",
+                    ClientName = "PostMan.api",
+                    AllowedGrantTypes = ["api_key"],
+                
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    AllowedScopes = [
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        AppConstants.Identity.ScopeName
+                    ],
+                    AllowOfflineAccess = true,
+                
                     RefreshTokenUsage = TokenUsage.OneTimeOnly,
                     RefreshTokenExpiration = TokenExpiration.Sliding
                 },
@@ -94,9 +116,9 @@ namespace IdentityServer
                     ],
                     AllowOfflineAccess = true,
                     
-                    AllowedCorsOrigins = {"https://localhost:7016"},
-                    RedirectUris = {"http://localhost:5163/signin-oidc"},
-                    PostLogoutRedirectUris = {"http://localhost:5163/signout-callback-oidc"},
+                    AllowedCorsOrigins = {"https://localhost:7089"},
+                    RedirectUris = {"https://localhost:7089/signin-oidc"},
+                    PostLogoutRedirectUris = {"https://localhost:7089/signout-callback-oidc"},
                     //
                     // RefreshTokenUsage = TokenUsage.OneTimeOnly,
                     // RefreshTokenExpiration = TokenExpiration.Sliding

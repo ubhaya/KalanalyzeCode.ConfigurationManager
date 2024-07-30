@@ -1,8 +1,8 @@
-﻿namespace KalanalyzeCode.ConfigurationManager.Provider;
+﻿namespace KalanalyzeCode.ConfigurationManager.Provider.Options;
 
 public class ConfigurationOptions
 {
-    public Uri? BaseAddress { get; set; }
+    public SecreteManagerOptions SecreteManagerOptions { get; set; } = new();
     public bool ReloadPeriodically { get; set; } = false;
     public int PeriodInSeconds { get; set; } = 5;
 }

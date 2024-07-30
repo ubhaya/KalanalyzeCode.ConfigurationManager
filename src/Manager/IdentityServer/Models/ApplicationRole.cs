@@ -1,7 +1,7 @@
 using Identity.Shared.Authorization;
 using Microsoft.AspNetCore.Identity;
 
-namespace IdentityServer.Infrastructure.Identity;
+namespace IdentityServer.Models;
 
 public class ApplicationRole : IdentityRole
 {

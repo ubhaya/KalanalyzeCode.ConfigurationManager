@@ -7,5 +7,6 @@ namespace Identity.Shared.Authorization;
 public enum Permissions
 {
     None = 0,
+    GetAppSettings = 1,
     All = ~None
 }

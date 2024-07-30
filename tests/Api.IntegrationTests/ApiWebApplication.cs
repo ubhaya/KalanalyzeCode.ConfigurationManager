@@ -30,7 +30,7 @@ public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
         new Claim("scope", "KalanalyzeCode.ConfigurationManager"),
         new Claim("scope", "profile"),
         new Claim("scope", "openid"),
-        new Claim(CustomClaimTypes.Permissions, ((int)Permissions.None).ToString()));
+        new Claim(CustomClaimTypes.Permissions, ((int)Permissions.GetAppSettings).ToString()));
 
     private DbConnection _dbConnection = default!;
     private Respawner _respawner = default!;

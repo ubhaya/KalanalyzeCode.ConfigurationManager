@@ -26,7 +26,7 @@ app.MapSwagger();
 app.MediateGet<GetAppSettingsRequest>(ProjectConstant.GetAppSettings)
     .WithName($"AppSettings_{nameof(GetAppSettingsRequest)}")
     .WithTags(nameof(GetAppSettingsResponse), nameof(GetAppSettingsRequest))
-    .RequireAuthorization(Permissions.None);
+    .RequireAuthorization(Permissions.GetAppSettings);
 
 var summaries = new[]
 {
