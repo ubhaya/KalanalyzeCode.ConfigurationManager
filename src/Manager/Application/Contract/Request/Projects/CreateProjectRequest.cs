@@ -4,4 +4,4 @@ using MediatR;
 
 namespace KalanalyzeCode.ConfigurationManager.Application.Contract.Request.Projects;
 
-public sealed record GetProjectByIdRequest(Guid Id) : IRequest<ResponseDataModel<GetProjectByIdResponse>>;
+public sealed record CreateProjectRequest(string ProjectName) : IRequest<ResponseDataModel<CreateProjectResponse>>;

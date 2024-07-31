@@ -3,11 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
 
-public class TestBase: IAsyncLifetime
+public class TestBase : IAsyncLifetime
 {
     private readonly IServiceScope _scope;
     private readonly Func<Task> _resetDatabase;
-    protected readonly ApplicationDbContext Context;
+    protected readonly IApplicationDbContext Context;
     private CancellationTokenSource? _cancellationTokenSource;
     protected CancellationToken CancellationToken;
     

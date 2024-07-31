@@ -32,4 +32,36 @@ public class ProjectsController : ApiControllerBase
         var result = await Mediator.Send(request, cancellationToken);
         return Ok(result);
     }
+
+    [HttpPost]
+    [Authorize(Permissions.Project | Permissions.Write)]
+    public async Task<ActionResult<ResponseDataModel<CreateProjectResponse>>> PostAsync(
+        [FromBody] CreateProjectRequest request, CancellationToken cancellationToken = default)
+    {
+        return await Mediator.Send(request, cancellationToken);
+    }
+
+    [HttpPut("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Authorize(Permissions.Project | Permissions.Write)]
+    public async Task<IActionResult> PutAsync(Guid id, [FromBody] UpdateProjectRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        if (id != request.Id) return BadRequest();
+
+        await Mediator.Send(request, cancellationToken);
+
+        return NoContent();
+    }
+    
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesDefaultResponseType]
+    public async Task<IActionResult> DeleteMotor([FromRoute] DeleteProjectRequest request, CancellationToken cancellationToken)
+    {
+        await Mediator.Send(request, cancellationToken);
+
+        return NoContent();
+    }
 }
