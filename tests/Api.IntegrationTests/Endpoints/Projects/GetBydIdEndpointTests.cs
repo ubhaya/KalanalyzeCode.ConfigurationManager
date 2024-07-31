@@ -6,19 +6,13 @@ using Microsoft.Extensions.DependencyInjection;
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Endpoints.Projects;
 
 [Collection("Test collection")]
-public class GetBydIdEndpointTests : TestBase, IAsyncLifetime
+public class GetBydIdEndpointTests : TestBase
 {
     private readonly IProjectsClient _client;
-    private readonly IServiceScope _scope;
-    private readonly Func<Task> _resetDatabase;
-    private CancellationTokenSource? _cancellationTokenSource;
-    private CancellationToken _cancellationToken;
 
-    public GetBydIdEndpointTests(ApiWebApplication factory)
+    public GetBydIdEndpointTests(ApiWebApplication factory) : base(factory)
     {
         _client = new ProjectsClient(factory.HttpClient);
-        _scope = factory.Scope;
-        _resetDatabase = factory.ResetDatabaseAsync;
     }
 
     [Fact]
@@ -27,30 +21,11 @@ public class GetBydIdEndpointTests : TestBase, IAsyncLifetime
         // Arrange
         
         // Act
-        var project = await _client.GetByIdAsync(Guid.NewGuid(), _cancellationToken);
+        var project = await _client.GetByIdAsync(Guid.NewGuid(), CancellationToken);
 
         // Assert
         project.Should().NotBeNull();
         project.Data.Should().NotBeNull();
         project.Data.Project.Should().BeNull();
-    }
-    
-    public Task InitializeAsync()
-    {
-        _cancellationToken = (_cancellationTokenSource ?? new CancellationTokenSource()).Token;
-        return Task.CompletedTask;
-    }
-
-    public Task DisposeAsync()
-    {
-        if (_cancellationTokenSource is not null)
-        {
-            _cancellationTokenSource.Cancel();
-            _cancellationTokenSource.Dispose();
-            _cancellationTokenSource = null;
-            return _resetDatabase();
-        }
-
-        return _resetDatabase();
     }
 }

@@ -38,6 +38,7 @@ public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
     
     public HttpClient HttpClient { get; private set; } = default!;
     public IServiceScope Scope { get; private set; } = default!;
+    public ApplicationDbContext DatabaseContext { get; set; } = default!;
     
     protected override IHost CreateHost(IHostBuilder builder)
     {
@@ -68,12 +69,13 @@ public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
     {
         await _dbContainer.StartAsync();
         Scope = Services.CreateScope();
-        await EnsureDatabase();
         _dbConnection = new NpgsqlConnection(_dbContainer.GetConnectionString());
+        DatabaseContext = Scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        await EnsureDatabase();
         HttpClient = CreateClient();
         await InitializeRespawner();
     }
-
+    
     private async Task InitializeRespawner()
     {
         await _dbConnection.OpenAsync();
@@ -88,8 +90,7 @@ public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
 
     private async Task EnsureDatabase()
     {
-        var context = Scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        await context.Database.MigrateAsync();
+        await DatabaseContext.Database.MigrateAsync();
     }
 
     public new async Task DisposeAsync()

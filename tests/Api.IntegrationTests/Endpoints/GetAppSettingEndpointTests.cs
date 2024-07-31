@@ -8,17 +8,13 @@ using Microsoft.Extensions.DependencyInjection;
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Endpoints;
 
 [Collection("Test collection")]
-public class GetAppSettingEndpointTests : TestBase, IAsyncLifetime
+public class GetAppSettingEndpointTests : TestBase
 {
     private readonly IAppSettingsClient _client;
-    private readonly IServiceScope _scope;
-    private readonly Func<Task> _resetDatabase;
 
-    public GetAppSettingEndpointTests(ApiWebApplication factory)
+    public GetAppSettingEndpointTests(ApiWebApplication factory) : base(factory)
     {
         _client = new AppSettingsClient(factory.HttpClient);
-        _scope = factory.Scope;
-        _resetDatabase = factory.ResetDatabaseAsync;
     }
 
     
@@ -28,10 +24,10 @@ public class GetAppSettingEndpointTests : TestBase, IAsyncLifetime
     {
         // Arrange
         var testSettings = "TestSettings";
-        await AddAsync(_scope, new ConfigurationSettings() { Id = testSettings, Value = "true" });
+        await AddAsync(new ConfigurationSettings() { Id = testSettings, Value = "true" });
 
         // Act
-        var settings = await _client.GetAsync(testSettings);
+        var settings = await _client.GetAsync(testSettings, CancellationToken);
 
         // Assert
         settings.Should().NotBeNull();
@@ -48,7 +44,7 @@ public class GetAppSettingEndpointTests : TestBase, IAsyncLifetime
         // Arrange
 
         // Act
-        var settings = await _client.GetAsync("invalidName");
+        var settings = await _client.GetAsync("invalidName", CancellationToken);
 
         // Assert
         settings.Should().NotBeNull();
@@ -58,8 +54,4 @@ public class GetAppSettingEndpointTests : TestBase, IAsyncLifetime
         Debug.Assert(settings.Data is not null);
         settings.Data.Settings.Should().BeNullOrEmpty();
     }
-
-    public Task InitializeAsync() => Task.CompletedTask;
-
-    public Task DisposeAsync() => _resetDatabase();
 }
