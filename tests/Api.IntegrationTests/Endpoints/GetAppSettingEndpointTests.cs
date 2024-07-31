@@ -3,11 +3,10 @@ using FluentAssertions;
 using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client;
 using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
 using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Endpoints;
 
-[Collection("Test collection")]
+[Collection(Collections.ApiWebApplicationCollection)]
 public class GetAppSettingEndpointTests : TestBase
 {
     private readonly IAppSettingsClient _client;

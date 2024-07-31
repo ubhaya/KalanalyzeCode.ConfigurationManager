@@ -1,7 +1,12 @@
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
 
-[CollectionDefinition("Test collection")]
+[CollectionDefinition(Collections.ApiWebApplicationCollection)]
 public class SharedTestCollection : ICollectionFixture<ApiWebApplication>
 {
     
+}
+
+public class Collections
+{
+    public const string ApiWebApplicationCollection = "Test collection";
 }

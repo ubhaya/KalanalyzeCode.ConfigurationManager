@@ -1,11 +1,10 @@
 using FluentAssertions;
 using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client;
 using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Endpoints.Projects;
 
-[Collection("Test collection")]
+[Collection(Collections.ApiWebApplicationCollection)]
 public class GetBydIdEndpointTests : TestBase
 {
     private readonly IProjectsClient _client;
