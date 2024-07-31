@@ -70,7 +70,7 @@ public class ConfigurationManagerProvider : ConfigurationProvider, IDisposable
         });
         
         var result = Task.Run(async () => 
-                await _client.GetAppSettingsRequestAsync("StarfishOptions"))
+                await _client.GetAsync("StarfishOptions"))
             .Result;
 
         Data = result?.Data?.Settings

@@ -57,14 +57,14 @@ namespace KalanalyzeCode.ConfigurationManager.Provider.Client
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
 
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ResponseDataModelOfGetAppSettingsResponse> GetAppSettingsRequestAsync(string settingName)
+        public virtual System.Threading.Tasks.Task<ResponseDataModelOfGetAppSettingsResponse> GetAsync(string settingName)
         {
-            return GetAppSettingsRequestAsync(settingName, System.Threading.CancellationToken.None);
+            return GetAsync(settingName, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ResponseDataModelOfGetAppSettingsResponse> GetAppSettingsRequestAsync(string settingName, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ResponseDataModelOfGetAppSettingsResponse> GetAsync(string settingName, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -77,10 +77,13 @@ namespace KalanalyzeCode.ConfigurationManager.Provider.Client
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "Api/GetAppSettings"
-                    urlBuilder_.Append("Api/GetAppSettings");
+                    // Operation Path: "api/AppSettings"
+                    urlBuilder_.Append("api/AppSettings");
                     urlBuilder_.Append('?');
-                    urlBuilder_.Append(System.Uri.EscapeDataString("SettingName")).Append('=').Append(System.Uri.EscapeDataString(settingName != null ? ConvertToString(settingName, System.Globalization.CultureInfo.InvariantCulture) : "")).Append('&');
+                    if (settingName != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("SettingName")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(settingName, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
                     urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
@@ -277,14 +280,14 @@ namespace KalanalyzeCode.ConfigurationManager.Provider.Client
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
 
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<WeatherForecast>> GetWeatherForecastAsync()
+        public virtual System.Threading.Tasks.Task<System.Collections.Generic.ICollection<WeatherForecast>> GetAsync()
         {
-            return GetWeatherForecastAsync(System.Threading.CancellationToken.None);
+            return GetAsync(System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<WeatherForecast>> GetWeatherForecastAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<WeatherForecast>> GetAsync(System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -297,8 +300,8 @@ namespace KalanalyzeCode.ConfigurationManager.Provider.Client
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                 
-                    // Operation Path: "weatherforecast"
-                    urlBuilder_.Append("weatherforecast");
+                    // Operation Path: "WeatherForecast"
+                    urlBuilder_.Append("WeatherForecast");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 

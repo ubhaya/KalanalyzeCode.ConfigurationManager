@@ -11,7 +11,7 @@ public partial class Index
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await Client.GetAllAsync();
+        var result = await Client.GetAllAsync(CancellationToken);
 
         _projects = result?.Data.Projects;
     }

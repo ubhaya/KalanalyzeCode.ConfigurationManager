@@ -6,20 +6,18 @@
     "version": "v1"
   },
   "paths": {
-    "/Api/GetAppSettings": {
+    "/api/AppSettings": {
       "get": {
         "tags": [
-          "ApiSettings"
+          "AppSettings"
         ],
-        "operationId": "AppSettings_GetAppSettingsRequest",
+        "operationId": "AppSettings_Get",
         "parameters": [
           {
             "name": "SettingName",
             "in": "query",
-            "required": true,
             "schema": {
-              "type": "string",
-              "nullable": true
+              "type": "string"
             },
             "x-position": 1
           }
@@ -38,30 +36,7 @@
         }
       }
     },
-    "/weatherforecast": {
-      "get": {
-        "tags": [
-          "WeatherForecast"
-        ],
-        "operationId": "WeatherForecast_GetWeatherForecast",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/Api/Projects": {
+    "/api/Projects": {
       "get": {
         "tags": [
           "Projects"
@@ -74,6 +49,29 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseDataModelOfGetAllProjectsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/WeatherForecast": {
+      "get": {
+        "tags": [
+          "WeatherForecast"
+        ],
+        "operationId": "WeatherForecast_Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
                 }
               }
             }
@@ -146,28 +144,6 @@
           }
         }
       },
-      "WeatherForecast": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "temperatureC": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "summary": {
-            "type": "string",
-            "nullable": true
-          },
-          "temperatureF": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
       "ResponseDataModelOfGetAllProjectsResponse": {
         "allOf": [
           {
@@ -211,6 +187,28 @@
           },
           "name": {
             "type": "string"
+          }
+        }
+      },
+      "WeatherForecast": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "temperatureC": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "summary": {
+            "type": "string",
+            "nullable": true
+          },
+          "temperatureF": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       }

@@ -31,7 +31,7 @@ public class GetAppSettingEndpointTests : TestBase, IAsyncLifetime
         await AddAsync(_scope, new ConfigurationSettings() { Id = testSettings, Value = "true" });
 
         // Act
-        var settings = await _client.GetAppSettingsRequestAsync(testSettings);
+        var settings = await _client.GetAsync(testSettings);
 
         // Assert
         settings.Should().NotBeNull();
@@ -48,7 +48,7 @@ public class GetAppSettingEndpointTests : TestBase, IAsyncLifetime
         // Arrange
 
         // Act
-        var settings = await _client.GetAppSettingsRequestAsync("invalidName");
+        var settings = await _client.GetAsync("invalidName");
 
         // Assert
         settings.Should().NotBeNull();

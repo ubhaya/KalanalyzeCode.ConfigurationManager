@@ -10,6 +10,7 @@ public static class DependencyConfig
 {
     public static IServiceCollection AddWebApiConfig(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddControllers();
         services.AddCors(options =>
         {
             options.AddPolicy(name: AppConstants.CorsPolicy,
@@ -61,6 +62,8 @@ public static class DependencyConfig
 
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.MapControllers();
 
         return app;
     }
