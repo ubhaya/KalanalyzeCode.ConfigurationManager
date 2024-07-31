@@ -60,6 +60,26 @@
           }
         }
       }
+    },
+    "/Api/Projects": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "operationId": "Projects_GetAll",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDataModelOfGetAllProjectsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -147,6 +167,31 @@
             "format": "int32"
           }
         }
+      },
+      "ResponseDataModelOfGetAllProjectsResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResponseModel"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "data": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/GetAllProjectsResponse"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "GetAllProjectsResponse": {
+        "type": "object",
+        "additionalProperties": false
       }
     }
   }

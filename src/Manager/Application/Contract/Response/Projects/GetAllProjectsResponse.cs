@@ -1,0 +1,3 @@
+namespace KalanalyzeCode.ConfigurationManager.Application.Contract.Response.Projects;
+
+public sealed record GetAllProjectsResponse;

@@ -22,5 +22,10 @@ public class AppConstants
     {
         private const string Api = nameof(Api);
         public const string GetAppSettings = $"{nameof(Api)}/{nameof(GetAppSettings)}";
+
+        public class Projects
+        {
+            public const string GetAll = $"{nameof(Api)}/{nameof(Projects)}";
+        }
     }
 }
