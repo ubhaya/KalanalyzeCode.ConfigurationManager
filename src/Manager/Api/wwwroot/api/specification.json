@@ -56,6 +56,38 @@
         }
       }
     },
+    "/api/Projects/{id}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "operationId": "Projects_GetById",
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDataModelOfGetProjectByIdResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/WeatherForecast": {
       "get": {
         "tags": [
@@ -187,6 +219,41 @@
           },
           "name": {
             "type": "string"
+          }
+        }
+      },
+      "ResponseDataModelOfGetProjectByIdResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResponseModel"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "data": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/GetProjectByIdResponse"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "GetProjectByIdResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "project": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Project"
+              }
+            ]
           }
         }
       },

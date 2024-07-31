@@ -44,6 +44,13 @@ namespace KalanalyzeCode.ConfigurationManager.Ui
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<ResponseDataModelOfGetAllProjectsResponse> GetAllAsync(System.Threading.CancellationToken cancellationToken);
 
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ResponseDataModelOfGetProjectByIdResponse> GetByIdAsync(System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ResponseDataModelOfGetProjectByIdResponse> GetByIdAsync(System.Guid id, System.Threading.CancellationToken cancellationToken);
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -127,6 +134,24 @@ namespace KalanalyzeCode.ConfigurationManager.Ui
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string Name { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ResponseDataModelOfGetProjectByIdResponse : ResponseModel
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("data")]
+        public GetProjectByIdResponse Data { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetProjectByIdResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("project")]
+        public Project Project { get; set; }
 
     }
 

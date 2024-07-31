@@ -15,7 +15,7 @@ public class AppSettingsController : ApiControllerBase
     }
 
     [HttpGet]
-    [Authorize(Permissions.GetAppSettings)]
+    [Authorize(Permissions.AppSettings | Permissions.Read)]
     public async Task<ActionResult<ResponseDataModel<GetAppSettingsResponse>>> Get(
         [FromQuery] GetAppSettingsRequest request, CancellationToken cancellationToken = default)
     {
