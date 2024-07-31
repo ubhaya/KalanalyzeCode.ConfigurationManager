@@ -48,7 +48,7 @@ public static class WebApplicationBuilderExtensions
         return app;
     }
     
-    public static IEndpointConventionBuilder RequireAuthorization(this IEndpointConventionBuilder builder, Permissions permissions)
+    public static IEndpointConventionBuilder WithPermissions(this IEndpointConventionBuilder builder, Permissions permissions)
     {
         builder.RequireAuthorization(policyBuilder =>
             policyBuilder.AddRequirements(new PermissionAuthorizationRequirement(permissions)));

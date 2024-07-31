@@ -1,3 +1,5 @@
+using Identity.Shared.Authorization;
+using KalanalyzeCode.ConfigurationManager.Api.Extensions;
 using KalanalyzeCode.ConfigurationManager.Application.Contract.Request;
 using KalanalyzeCode.ConfigurationManager.Application.Contract.Response;
 using KalanalyzeCode.ConfigurationManager.Application.Helpers;
@@ -11,6 +13,7 @@ public class GetAppSettingsRequestEndpoint : IEndpointsDefinition
     public void DefineEndpoints(IEndpointRouteBuilder app)
     {
         app.MapGet(AppConstants.Routes.GetAppSettings, GetAppSettings)
+            .WithPermissions(Permissions.GetAppSettings)
             .WithName($"AppSettings_{nameof(GetAppSettingsRequest)}")
             .WithTags("ApiSettings");
     }

@@ -13,7 +13,7 @@ public class WeatherForecastEndpoint : IEndpointsDefinition
     public void DefineEndpoints(IEndpointRouteBuilder app)
     {
         app.MapGet("/weatherforecast", GetWeatherForecast)
-            .RequireAuthorization(Permissions.All)
+            .WithPermissions(Permissions.All)
             .WithName("WeatherForecast_GetWeatherForecast")
             .WithTags("WeatherForecast");
     }
