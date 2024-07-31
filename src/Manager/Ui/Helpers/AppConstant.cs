@@ -2,6 +2,7 @@ namespace KalanalyzeCode.ConfigurationManager.Ui.Helpers;
 
 public sealed class AppConstant
 {
+    public const string Loading = "Loading...";
     public sealed class Projects
     {
         public sealed class Index

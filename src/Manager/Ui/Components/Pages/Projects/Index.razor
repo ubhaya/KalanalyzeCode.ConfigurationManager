@@ -3,3 +3,20 @@
 <PageTitle>@AppConstant.Projects.Index.AppTitle</PageTitle>
 
 <h3>@AppConstant.Projects.Index.Name</h3>
+
+@if (_projects is null)
+{
+    <MudText>@AppConstant.Loading</MudText>
+    return;
+}
+
+<MudTable T="Project" Items="_projects">
+    <HeaderContent>
+        <MudTh>Project Name</MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Project Name">@context.Name</MudTd>
+        <MudTd>some</MudTd>
+    </RowTemplate>
+</MudTable>

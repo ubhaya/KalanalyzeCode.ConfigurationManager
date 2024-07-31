@@ -31,6 +31,8 @@ public class GetGetAllEndpointsTests : TestBase, IAsyncLifetime
 
         // Assert
         allProjectResponse.Should().NotBeNull();
+        allProjectResponse.Data.Should().NotBeNull();
+        allProjectResponse.Data.Projects.Should().BeEmpty();
     }
 
     public Task InitializeAsync()
