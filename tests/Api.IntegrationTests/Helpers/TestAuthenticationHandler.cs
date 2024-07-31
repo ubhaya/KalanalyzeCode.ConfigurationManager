@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests;
+namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
 
 public class TestAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {

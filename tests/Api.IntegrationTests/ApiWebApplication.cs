@@ -1,6 +1,7 @@
 ﻿using System.Data.Common;
 using System.Security.Claims;
 using Identity.Shared.Authorization;
+using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
