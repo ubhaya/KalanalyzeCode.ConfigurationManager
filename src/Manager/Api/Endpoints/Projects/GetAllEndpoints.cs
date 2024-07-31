@@ -18,9 +18,9 @@ public class GetAllEndpoints : IEndpointsDefinition
             .WithTags("Projects");
     }
 
-    private Task<ResponseDataModel<GetAllProjectsResponse>> GetAllProjects(IMediator mediator,
+    private async Task<ResponseDataModel<GetAllProjectsResponse>> GetAllProjects(IMediator mediator,
         [AsParameters] GetAllProjectsRequest request, CancellationToken cancellationToken = default)
     {
-        return mediator.Send(request, cancellationToken);
+        return await mediator.Send(request, cancellationToken);
     }
 }
