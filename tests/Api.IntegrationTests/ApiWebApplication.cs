@@ -25,13 +25,13 @@ public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
         .WithPassword(DbPassword)
         .Build();
 
-    private readonly MockAuthUser _user = new(
+    private readonly MockAuthUser _user = new([
         new Claim("sub", Guid.NewGuid().ToString()),
         new Claim("email", "default-user@xyz.com"),
         new Claim("scope", "KalanalyzeCode.ConfigurationManager"),
         new Claim("scope", "profile"),
         new Claim("scope", "openid"),
-        new Claim(CustomClaimTypes.Permissions, ((int)Permissions.GetAppSettings).ToString()));
+        new Claim(CustomClaimTypes.Permissions, ((int)Permissions.All).ToString())]);
 
     private DbConnection _dbConnection = default!;
     private Respawner _respawner = default!;

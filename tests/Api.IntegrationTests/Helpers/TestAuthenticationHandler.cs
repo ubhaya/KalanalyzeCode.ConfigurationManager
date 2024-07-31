@@ -38,14 +38,6 @@ public class TestAuthenticationHandler : AuthenticationHandler<AuthenticationSch
     }
 }
 
-public class MockAuthUser
-{
-    public List<Claim> Claims { get; private set; }
-
-    public MockAuthUser(params Claim[] claims)
-        => Claims = claims.ToList();
-}
-
 public static class AuthConstants
 {
     public const string Scheme = "TestAuth";

@@ -1,10 +1,10 @@
 ﻿using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests;
+namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
 
 public class TestBase
-{ 
+{
     protected async Task<TEntity> AddAsync<TEntity>(IServiceScope scope, TEntity entity) where TEntity : class
     {
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();

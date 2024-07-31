@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using FluentAssertions;
 using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client;
+using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
 using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
 using Microsoft.Extensions.DependencyInjection;
 
