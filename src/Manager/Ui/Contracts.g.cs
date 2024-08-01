@@ -38,11 +38,11 @@ namespace KalanalyzeCode.ConfigurationManager.Ui
     public partial interface IProjectsClient : IClient
     {
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ResponseDataModelOfGetAllProjectsResponse> GetAllAsync();
+        System.Threading.Tasks.Task<ResponseDataModelOfGetAllProjectsResponse> GetAllAsync(string searchString, int? page, int? pageSize, CustomSortDirection? sortDirection, string sortColumnName);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ResponseDataModelOfGetAllProjectsResponse> GetAllAsync(System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ResponseDataModelOfGetAllProjectsResponse> GetAllAsync(string searchString, int? page, int? pageSize, CustomSortDirection? sortDirection, string sortColumnName, System.Threading.CancellationToken cancellationToken);
 
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<ResponseDataModelOfCreateProjectResponse> PostAsync(CreateProjectRequest request);
@@ -66,11 +66,11 @@ namespace KalanalyzeCode.ConfigurationManager.Ui
         System.Threading.Tasks.Task PutAsync(System.Guid id, UpdateProjectRequest request, System.Threading.CancellationToken cancellationToken);
 
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteMotorAsync(System.Guid id);
+        System.Threading.Tasks.Task DeleteAsync(System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteMotorAsync(System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task DeleteAsync(System.Guid id, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -144,6 +144,9 @@ namespace KalanalyzeCode.ConfigurationManager.Ui
         [System.Text.Json.Serialization.JsonPropertyName("projects")]
         public System.Collections.Generic.ICollection<Project> Projects { get; set; }
 
+        [System.Text.Json.Serialization.JsonPropertyName("totalItem")]
+        public int TotalItem { get; set; }
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -155,6 +158,18 @@ namespace KalanalyzeCode.ConfigurationManager.Ui
 
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string Name { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public enum CustomSortDirection
+    {
+
+        None = 0,
+
+        Ascending = 1,
+
+        Descending = 2,
 
     }
 

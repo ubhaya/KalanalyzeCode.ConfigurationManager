@@ -280,14 +280,14 @@ namespace KalanalyzeCode.ConfigurationManager.Ui.Client
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
 
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ResponseDataModelOfGetAllProjectsResponse> GetAllAsync()
+        public virtual System.Threading.Tasks.Task<ResponseDataModelOfGetAllProjectsResponse> GetAllAsync(string searchString, int? page, int? pageSize, CustomSortDirection? sortDirection, string sortColumnName)
         {
-            return GetAllAsync(System.Threading.CancellationToken.None);
+            return GetAllAsync(searchString, page, pageSize, sortDirection, sortColumnName, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ResponseDataModelOfGetAllProjectsResponse> GetAllAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ResponseDataModelOfGetAllProjectsResponse> GetAllAsync(string searchString, int? page, int? pageSize, CustomSortDirection? sortDirection, string sortColumnName, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -302,6 +302,28 @@ namespace KalanalyzeCode.ConfigurationManager.Ui.Client
                 
                     // Operation Path: "api/Projects"
                     urlBuilder_.Append("api/Projects");
+                    urlBuilder_.Append('?');
+                    if (searchString != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("SearchString")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(searchString, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (page != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("Page")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(page, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (pageSize != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("PageSize")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(pageSize, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (sortDirection != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("SortDirection")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(sortDirection, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (sortColumnName != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("SortColumnName")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(sortColumnName, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -464,6 +486,7 @@ namespace KalanalyzeCode.ConfigurationManager.Ui.Client
                 
                     // Operation Path: "api/Projects/{id}"
                     urlBuilder_.Append("api/Projects/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -609,14 +632,14 @@ namespace KalanalyzeCode.ConfigurationManager.Ui.Client
         }
 
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task DeleteMotorAsync(System.Guid id)
+        public virtual System.Threading.Tasks.Task DeleteAsync(System.Guid id)
         {
-            return DeleteMotorAsync(id, System.Threading.CancellationToken.None);
+            return DeleteAsync(id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task DeleteMotorAsync(System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task DeleteAsync(System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -633,6 +656,7 @@ namespace KalanalyzeCode.ConfigurationManager.Ui.Client
                 
                     // Operation Path: "api/Projects/{id}"
                     urlBuilder_.Append("api/Projects/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 

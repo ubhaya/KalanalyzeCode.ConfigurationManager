@@ -1,0 +1,12 @@
+<MudDialog>
+    <DialogContent>
+        @if (EditModel is null)
+        {
+            <Add Success="Submit"/>
+        }
+        else
+        {
+            <Edit Success="Submit" Model="EditModel.MapToUpdateProjectRequest()" />
+        }
+    </DialogContent>
+</MudDialog>
