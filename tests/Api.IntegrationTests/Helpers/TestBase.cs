@@ -1,4 +1,5 @@
-﻿using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
+﻿using AutoFixture;
+using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
@@ -10,6 +11,7 @@ public class TestBase : IAsyncLifetime
     protected readonly IApplicationDbContext Context;
     private CancellationTokenSource? _cancellationTokenSource;
     protected CancellationToken CancellationToken;
+    protected IFixture Fixture = new Fixture();
     
     public TestBase(ApiWebApplication factory)
     {
@@ -22,6 +24,14 @@ public class TestBase : IAsyncLifetime
     {
         var context = _scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         context.Add(entity);
+        await context.SaveChangesAsync(CancellationToken);
+        return entity;
+    }
+    
+    protected async Task<IEnumerable<TEntity>> AddRangeAsync<TEntity>(ICollection<TEntity> entity) where TEntity : class
+    {
+        var context = _scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        await context.AddRangeAsync(entity, CancellationToken);
         await context.SaveChangesAsync(CancellationToken);
         return entity;
     }
