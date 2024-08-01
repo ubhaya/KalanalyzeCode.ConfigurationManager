@@ -20,7 +20,8 @@ public class GetGetAllEndpointsTests : TestBase
         // Arrange
         
         // Act
-        var allProjectResponse = await _client.GetAllAsync(CancellationToken);
+        var allProjectResponse =
+            await _client.GetAllAsync(string.Empty, 0, 10, CustomSortDirection.None, string.Empty, CancellationToken);
 
         // Assert
         allProjectResponse.Should().NotBeNull();

@@ -42,6 +42,51 @@
           "Projects"
         ],
         "operationId": "Projects_GetAll",
+        "parameters": [
+          {
+            "name": "SearchString",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "Page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          },
+          {
+            "name": "SortDirection",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/CustomSortDirection"
+            },
+            "x-position": 4
+          },
+          {
+            "name": "SortColumnName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 5
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -314,6 +359,10 @@
             "items": {
               "$ref": "#/components/schemas/Project"
             }
+          },
+          "totalItem": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -329,6 +378,20 @@
             "type": "string"
           }
         }
+      },
+      "CustomSortDirection": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "None",
+          "Ascending",
+          "Descending"
+        ],
+        "enum": [
+          0,
+          1,
+          2
+        ]
       },
       "ResponseDataModelOfGetProjectByIdResponse": {
         "allOf": [

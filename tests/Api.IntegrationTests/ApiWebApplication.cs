@@ -3,9 +3,11 @@ using System.Security.Claims;
 using Identity.Shared.Authorization;
 using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
+using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence.Seeder;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
 using Respawn;
@@ -49,6 +51,8 @@ public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
         
         builder.ConfigureServices(services =>
         {
+            services.RemoveAll(typeof(IDatabaseSeeder));
+            services.AddScoped<IDatabaseSeeder, TestSeeder>();
             services.AddTestAuthentication();
             services.AddScoped(_ => _user);
             services.AddScoped(sp => new DbContextOptionsBuilder<ApplicationDbContext>()

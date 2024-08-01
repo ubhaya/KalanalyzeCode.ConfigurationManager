@@ -17,10 +17,10 @@ public class ProjectsController : ApiControllerBase
     [HttpGet]
     [Authorize(Permissions.Project | Permissions.Read)]
     public async Task<ActionResult<ResponseDataModel<GetAllProjectsResponse>>> GetAllAsync(
-        //[FromQuery] GetAllProjectsRequest request, 
+        [FromQuery] GetAllProjectsRequest request, 
         CancellationToken cancellationToken = default)
     {
-        var result = await Mediator.Send(new GetAllProjectsRequest(), cancellationToken);
+        var result = await Mediator.Send(request, cancellationToken);
         return Ok(result);
     }
 
