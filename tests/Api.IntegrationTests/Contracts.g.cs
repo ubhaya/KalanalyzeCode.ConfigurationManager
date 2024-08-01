@@ -66,11 +66,11 @@ namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests
         System.Threading.Tasks.Task PutAsync(System.Guid id, UpdateProjectRequest request, System.Threading.CancellationToken cancellationToken);
 
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteMotorAsync(System.Guid id);
+        System.Threading.Tasks.Task DeleteAsync(System.Guid id);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task DeleteMotorAsync(System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task DeleteAsync(System.Guid id, System.Threading.CancellationToken cancellationToken);
 
     }
 

@@ -1,3 +1,4 @@
+using Ardalis.GuardClauses;
 using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.Projects;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using MediatR;
@@ -13,8 +14,14 @@ public sealed class DeleteProjectRequestHandler : IRequestHandler<DeleteProjectR
         _context = context;
     }
 
-    public Task Handle(DeleteProjectRequest request, CancellationToken cancellationToken)
+    public async Task Handle(DeleteProjectRequest request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var entity = await _context.Projects.FindAsync([request.Id], cancellationToken);
+
+        Guard.Against.NotFound(request.Id, entity);
+
+        _context.Projects.Remove(entity);
+
+        await _context.SaveChangesAsync(cancellationToken);
     }
 }

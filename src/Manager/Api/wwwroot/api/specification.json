@@ -139,7 +139,7 @@
         "operationId": "Projects_GetById",
         "parameters": [
           {
-            "name": "Id",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
@@ -214,7 +214,7 @@
         "operationId": "Projects_Delete",
         "parameters": [
           {
-            "name": "Id",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {

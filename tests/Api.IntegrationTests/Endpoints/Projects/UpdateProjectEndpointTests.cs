@@ -18,29 +18,30 @@ public class UpdateProjectEndpointTests : TestBase
     public async Task PutProject_ShouldEditTheProjectInDatabase_WhenTheItemExistInDatabase()
     {
         // Arrange
-        var id = Guid.NewGuid();
+        var idInDatabase = Guid.NewGuid();
         var projectToUpdated = new UpdateProjectRequest()
         {
             ProjectName = "Updated Name",
-            Id = id,
+            Id = idInDatabase,
         };
         var projectInDatabase = new Entity.Entities.Project()
         {
-            Id = id,
-            Name = "Old Name"
+            Name = "Old Name",
+            Id = idInDatabase
         };
         await AddAsync(projectInDatabase);
         
-        
         // Act
-        await _client.PutAsync(id, projectToUpdated, CancellationToken);
+        await _client.PutAsync(idInDatabase, projectToUpdated, CancellationToken);
+        var updatedProjectResponse = await _client.GetByIdAsync(idInDatabase, CancellationToken);
 
         // Assert
-        var updatedProject = await Context.Projects.FindAsync([id], CancellationToken);
+        updatedProjectResponse.Should().NotBeNull();
+        var updatedProject = updatedProjectResponse.Data.Project;
         updatedProject.Should().NotBeNull();
         Debug.Assert(updatedProject is not null);
-        updatedProject.Id.Should().Be(id);
-        // updatedProject.Name.Should().Be(projectToUpdated.ProjectName);
-        // updatedProject.Name.Should().NotBe(projectInDatabase.Name);
+        updatedProject.Id.Should().Be(idInDatabase);
+        updatedProject.Name.Should().Be(projectToUpdated.ProjectName);
+        updatedProject.Name.Should().NotBe(projectInDatabase.Name);
     }
 }

@@ -27,9 +27,9 @@ public class ProjectsController : ApiControllerBase
     [HttpGet("{id:guid}")]
     [Authorize(Permissions.Project | Permissions.Read)]
     public async Task<ActionResult<ResponseDataModel<GetProjectByIdResponse>>> GetByIdAsync(
-        [FromRoute] GetProjectByIdRequest request, CancellationToken cancellationToken = default)
+        Guid id, CancellationToken cancellationToken = default)
     {
-        var result = await Mediator.Send(request, cancellationToken);
+        var result = await Mediator.Send(new GetProjectByIdRequest(id), cancellationToken);
         return Ok(result);
     }
 
@@ -58,9 +58,10 @@ public class ProjectsController : ApiControllerBase
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> DeleteAsync([FromRoute] DeleteProjectRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteAsync(
+        Guid id, CancellationToken cancellationToken = default)
     {
-        await Mediator.Send(request, cancellationToken);
+        await Mediator.Send(new DeleteProjectRequest(id), cancellationToken);
 
         return NoContent();
     }

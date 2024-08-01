@@ -486,6 +486,7 @@ namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client
                 
                     // Operation Path: "api/Projects/{id}"
                     urlBuilder_.Append("api/Projects/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -631,14 +632,14 @@ namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client
         }
 
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task DeleteMotorAsync(System.Guid id)
+        public virtual System.Threading.Tasks.Task DeleteAsync(System.Guid id)
         {
-            return DeleteMotorAsync(id, System.Threading.CancellationToken.None);
+            return DeleteAsync(id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task DeleteMotorAsync(System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task DeleteAsync(System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -655,6 +656,7 @@ namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client
                 
                     // Operation Path: "api/Projects/{id}"
                     urlBuilder_.Append("api/Projects/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture)));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
