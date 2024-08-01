@@ -58,7 +58,7 @@ public class ProjectsController : ApiControllerBase
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> DeleteMotor([FromRoute] DeleteProjectRequest request, CancellationToken cancellationToken)
+    public async Task<IActionResult> DeleteAsync([FromRoute] DeleteProjectRequest request, CancellationToken cancellationToken)
     {
         await Mediator.Send(request, cancellationToken);
 

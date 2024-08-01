@@ -211,7 +211,7 @@
         "tags": [
           "Projects"
         ],
-        "operationId": "Projects_DeleteMotor",
+        "operationId": "Projects_Delete",
         "parameters": [
           {
             "name": "Id",
