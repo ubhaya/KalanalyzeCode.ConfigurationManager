@@ -10,15 +10,11 @@ namespace KalanalyzeCode.ConfigurationManager.Api.Extensions;
 
 public static class WebApplicationBuilderExtensions
 {
-    public static void AddSerilog(this ConfigureHostBuilder host)
+    public static void AddSerilog(this WebApplicationBuilder builder)
     {
-        host.UseSerilog();
-
-        Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-            .Enrich.FromLogContext()
-            .WriteTo.Console()
-            .CreateLogger();
+        builder.Host.UseSerilog((context, configuration) => configuration
+            .ReadFrom.Configuration(builder.Configuration)
+            .Enrich.WithProperty("ApplicationName", builder.Environment.ApplicationName));
     }
 
     public static async Task<WebApplication> SeedDatabase(this WebApplication app)

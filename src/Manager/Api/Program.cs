@@ -5,7 +5,7 @@ using KalanalyzeCode.ConfigurationManager.Application.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.AddSerilog();
+builder.AddSerilog();
 builder.Services.AddWebApiConfig(builder.Configuration);
 builder.Services.AddApplicationCore();
 builder.Services.AddPersistence(builder.Configuration);
