@@ -28,7 +28,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseDataModelOfGetAppSettingsResponse"
+                  "$ref": "#/components/schemas/GetAppSettingsResponse"
                 }
               }
             }
@@ -93,7 +93,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseDataModelOfGetAllProjectsResponse"
+                  "$ref": "#/components/schemas/GetAllProjectsResponse"
                 }
               }
             }
@@ -118,12 +118,12 @@
           "x-position": 1
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseDataModelOfCreateProjectResponse"
+                  "$ref": "#/components/schemas/Project"
                 }
               }
             }
@@ -155,7 +155,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseDataModelOfGetProjectByIdResponse"
+                  "$ref": "#/components/schemas/GetProjectByIdResponse"
                 }
               }
             }
@@ -267,27 +267,6 @@
   },
   "components": {
     "schemas": {
-      "ResponseDataModelOfGetAppSettingsResponse": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/ResponseModel"
-          },
-          {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "data": {
-                "nullable": true,
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/GetAppSettingsResponse"
-                  }
-                ]
-              }
-            }
-          }
-        ]
-      },
       "GetAppSettingsResponse": {
         "type": "object",
         "additionalProperties": false,
@@ -312,43 +291,6 @@
             "nullable": true
           }
         }
-      },
-      "ResponseModel": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "errors": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "ResponseDataModelOfGetAllProjectsResponse": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/ResponseModel"
-          },
-          {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "data": {
-                "nullable": true,
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/GetAllProjectsResponse"
-                  }
-                ]
-              }
-            }
-          }
-        ]
       },
       "GetAllProjectsResponse": {
         "type": "object",
@@ -393,27 +335,6 @@
           2
         ]
       },
-      "ResponseDataModelOfGetProjectByIdResponse": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/ResponseModel"
-          },
-          {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "data": {
-                "nullable": true,
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/GetProjectByIdResponse"
-                  }
-                ]
-              }
-            }
-          }
-        ]
-      },
       "GetProjectByIdResponse": {
         "type": "object",
         "additionalProperties": false,
@@ -425,37 +346,6 @@
                 "$ref": "#/components/schemas/Project"
               }
             ]
-          }
-        }
-      },
-      "ResponseDataModelOfCreateProjectResponse": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/ResponseModel"
-          },
-          {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "data": {
-                "nullable": true,
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/CreateProjectResponse"
-                  }
-                ]
-              }
-            }
-          }
-        ]
-      },
-      "CreateProjectResponse": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "guid"
           }
         }
       },

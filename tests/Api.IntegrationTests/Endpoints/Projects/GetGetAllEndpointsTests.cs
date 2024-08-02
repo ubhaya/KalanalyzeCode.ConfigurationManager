@@ -26,8 +26,7 @@ public class GetGetAllEndpointsTests : TestBase
 
         // Assert
         allProjectResponse.Should().NotBeNull();
-        allProjectResponse.Data.Should().NotBeNull();
-        allProjectResponse.Data.Projects.Should().BeEmpty();
+        allProjectResponse.Projects.Should().BeEmpty();
     }
     
     [Fact]
@@ -51,8 +50,7 @@ public class GetGetAllEndpointsTests : TestBase
 
         // Assert
         allProjectResponse.Should().NotBeNull();
-        allProjectResponse.Data.Should().NotBeNull();
-        allProjectResponse.Data.Projects.Should().NotBeNull();
+        allProjectResponse.Projects.Should().NotBeNull();
         //allProjectResponse.Data.Projects.Should().AllBeEquivalentTo(projectList);
     }
 }

@@ -57,14 +57,14 @@ namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
 
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ResponseDataModelOfGetAppSettingsResponse> GetAsync(string settingName)
+        public virtual System.Threading.Tasks.Task<GetAppSettingsResponse> GetAsync(string settingName)
         {
             return GetAsync(settingName, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ResponseDataModelOfGetAppSettingsResponse> GetAsync(string settingName, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetAppSettingsResponse> GetAsync(string settingName, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -111,7 +111,7 @@ namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ResponseDataModelOfGetAppSettingsResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<GetAppSettingsResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -280,14 +280,14 @@ namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
 
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ResponseDataModelOfGetAllProjectsResponse> GetAllAsync(string searchString, int? page, int? pageSize, CustomSortDirection? sortDirection, string sortColumnName)
+        public virtual System.Threading.Tasks.Task<GetAllProjectsResponse> GetAllAsync(string searchString, int? page, int? pageSize, CustomSortDirection? sortDirection, string sortColumnName)
         {
             return GetAllAsync(searchString, page, pageSize, sortDirection, sortColumnName, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ResponseDataModelOfGetAllProjectsResponse> GetAllAsync(string searchString, int? page, int? pageSize, CustomSortDirection? sortDirection, string sortColumnName, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetAllProjectsResponse> GetAllAsync(string searchString, int? page, int? pageSize, CustomSortDirection? sortDirection, string sortColumnName, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -350,7 +350,7 @@ namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ResponseDataModelOfGetAllProjectsResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<GetAllProjectsResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -378,14 +378,14 @@ namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client
         }
 
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ResponseDataModelOfCreateProjectResponse> PostAsync(CreateProjectRequest request)
+        public virtual System.Threading.Tasks.Task<Project> PostAsync(CreateProjectRequest request)
         {
             return PostAsync(request, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ResponseDataModelOfCreateProjectResponse> PostAsync(CreateProjectRequest request, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<Project> PostAsync(CreateProjectRequest request, System.Threading.CancellationToken cancellationToken)
         {
             if (request == null)
                 throw new System.ArgumentNullException("request");
@@ -431,9 +431,9 @@ namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
+                        if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ResponseDataModelOfCreateProjectResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<Project>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -461,14 +461,14 @@ namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client
         }
 
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ResponseDataModelOfGetProjectByIdResponse> GetByIdAsync(System.Guid id)
+        public virtual System.Threading.Tasks.Task<GetProjectByIdResponse> GetByIdAsync(System.Guid id)
         {
             return GetByIdAsync(id, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ResponseDataModelOfGetProjectByIdResponse> GetByIdAsync(System.Guid id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GetProjectByIdResponse> GetByIdAsync(System.Guid id, System.Threading.CancellationToken cancellationToken)
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -513,7 +513,7 @@ namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ResponseDataModelOfGetProjectByIdResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<GetProjectByIdResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);

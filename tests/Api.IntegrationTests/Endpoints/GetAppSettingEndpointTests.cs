@@ -27,14 +27,11 @@ public class GetAppSettingEndpointTests : TestBase
 
         // Act
         var settings = await _client.GetAsync(testSettings, CancellationToken);
-
         // Assert
         settings.Should().NotBeNull();
         Debug.Assert(settings is not null);
-        settings.Success.Should().BeTrue();
-        settings.Data.Should().NotBeNull();
-        Debug.Assert(settings.Data is not null);
-        settings.Data.Settings.Should().NotBeEmpty();
+        Debug.Assert(settings.Settings is not null);
+        settings.Settings.Should().NotBeEmpty();
     }
     
     [Fact]
@@ -48,9 +45,7 @@ public class GetAppSettingEndpointTests : TestBase
         // Assert
         settings.Should().NotBeNull();
         Debug.Assert(settings is not null);
-        settings.Success.Should().BeFalse();
-        settings.Data.Should().NotBeNull();
-        Debug.Assert(settings.Data is not null);
-        settings.Data.Settings.Should().BeNullOrEmpty();
+        Debug.Assert(settings.Settings is not null);
+        settings.Settings.Should().BeNullOrEmpty();
     }
 }

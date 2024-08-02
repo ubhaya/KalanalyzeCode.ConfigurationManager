@@ -6,7 +6,7 @@ using MediatR;
 
 namespace KalanalyzeCode.ConfigurationManager.Application.Features.Projects.Queries;
 
-public sealed class GetProjectByIdRequestHandler : IRequestHandler<GetProjectByIdRequest, ResponseDataModel<GetProjectByIdResponse>>
+public sealed class GetProjectByIdRequestHandler : IRequestHandler<GetProjectByIdRequest, GetProjectByIdResponse>
 {
     private readonly IApplicationDbContext _context;
 
@@ -15,12 +15,12 @@ public sealed class GetProjectByIdRequestHandler : IRequestHandler<GetProjectByI
         _context = context;
     }
 
-    public async Task<ResponseDataModel<GetProjectByIdResponse>> Handle(GetProjectByIdRequest request, CancellationToken cancellationToken)
+    public async Task<GetProjectByIdResponse> Handle(GetProjectByIdRequest request, CancellationToken cancellationToken)
     {
         var result = await _context.Projects.FindAsync([request.Id], cancellationToken);
-        return ResponseModel.Create(new GetProjectByIdResponse()
+        return new GetProjectByIdResponse
         {
             Project = result
-        });
+        };
     }
 }

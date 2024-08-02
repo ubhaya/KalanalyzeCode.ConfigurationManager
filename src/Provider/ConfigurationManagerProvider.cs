@@ -73,7 +73,7 @@ public class ConfigurationManagerProvider : ConfigurationProvider, IDisposable
                 await _client.GetAsync("StarfishOptions"))
             .Result;
 
-        Data = result?.Data?.Settings
+        Data = result?.Settings
                    .ToDictionary<ApplicationSettings, string, string?>(c => c.Id, c => c.Value,
                        StringComparer.OrdinalIgnoreCase) ??
                [];

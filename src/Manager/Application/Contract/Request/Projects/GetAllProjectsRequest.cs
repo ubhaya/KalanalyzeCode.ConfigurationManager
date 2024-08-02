@@ -10,4 +10,4 @@ public sealed record GetAllProjectsRequest(
     int Page = 0,
     int PageSize = 0,
     CustomSortDirection SortDirection = CustomSortDirection.None,
-    string SortColumnName = "") : IRequest<ResponseDataModel<GetAllProjectsResponse>>;
+    string SortColumnName = "") : IRequest<GetAllProjectsResponse>;

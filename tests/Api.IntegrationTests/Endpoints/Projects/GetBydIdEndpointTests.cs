@@ -25,8 +25,7 @@ public class GetBydIdEndpointTests : TestBase
 
         // Assert
         project.Should().NotBeNull();
-        project.Data.Should().NotBeNull();
-        project.Data.Project.Should().BeNull();
+        project.Project.Should().BeNull();
     }
     
     [Fact]
@@ -46,8 +45,7 @@ public class GetBydIdEndpointTests : TestBase
 
         // Assert
         project.Should().NotBeNull();
-        project.Data.Should().NotBeNull();
-        project.Data.Project.Should().NotBeNull();
-        project.Data.Project.Should().BeEquivalentTo(projectToMatch);
+        project.Project.Should().NotBeNull();
+        project.Project.Should().BeEquivalentTo(projectToMatch);
     }
 }

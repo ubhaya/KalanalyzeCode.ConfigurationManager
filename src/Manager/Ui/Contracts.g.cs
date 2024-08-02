@@ -26,11 +26,11 @@ namespace KalanalyzeCode.ConfigurationManager.Ui
     public partial interface IAppSettingsClient : IClient
     {
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ResponseDataModelOfGetAppSettingsResponse> GetAsync(string settingName);
+        System.Threading.Tasks.Task<GetAppSettingsResponse> GetAsync(string settingName);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ResponseDataModelOfGetAppSettingsResponse> GetAsync(string settingName, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetAppSettingsResponse> GetAsync(string settingName, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -38,25 +38,25 @@ namespace KalanalyzeCode.ConfigurationManager.Ui
     public partial interface IProjectsClient : IClient
     {
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ResponseDataModelOfGetAllProjectsResponse> GetAllAsync(string searchString, int? page, int? pageSize, CustomSortDirection? sortDirection, string sortColumnName);
+        System.Threading.Tasks.Task<GetAllProjectsResponse> GetAllAsync(string searchString, int? page, int? pageSize, CustomSortDirection? sortDirection, string sortColumnName);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ResponseDataModelOfGetAllProjectsResponse> GetAllAsync(string searchString, int? page, int? pageSize, CustomSortDirection? sortDirection, string sortColumnName, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GetAllProjectsResponse> GetAllAsync(string searchString, int? page, int? pageSize, CustomSortDirection? sortDirection, string sortColumnName, System.Threading.CancellationToken cancellationToken);
 
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ResponseDataModelOfCreateProjectResponse> PostAsync(CreateProjectRequest request);
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ResponseDataModelOfCreateProjectResponse> PostAsync(CreateProjectRequest request, System.Threading.CancellationToken cancellationToken);
-
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ResponseDataModelOfGetProjectByIdResponse> GetByIdAsync(System.Guid id);
+        System.Threading.Tasks.Task<Project> PostAsync(CreateProjectRequest request);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ResponseDataModelOfGetProjectByIdResponse> GetByIdAsync(System.Guid id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<Project> PostAsync(CreateProjectRequest request, System.Threading.CancellationToken cancellationToken);
+
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetProjectByIdResponse> GetByIdAsync(System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetProjectByIdResponse> GetByIdAsync(System.Guid id, System.Threading.CancellationToken cancellationToken);
 
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task PutAsync(System.Guid id, UpdateProjectRequest request);
@@ -87,15 +87,6 @@ namespace KalanalyzeCode.ConfigurationManager.Ui
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ResponseDataModelOfGetAppSettingsResponse : ResponseModel
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("data")]
-        public GetAppSettingsResponse Data { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class GetAppSettingsResponse
     {
 
@@ -113,27 +104,6 @@ namespace KalanalyzeCode.ConfigurationManager.Ui
 
         [System.Text.Json.Serialization.JsonPropertyName("value")]
         public string Value { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ResponseModel
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("success")]
-        public bool Success { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("errors")]
-        public System.Collections.Generic.ICollection<string> Errors { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ResponseDataModelOfGetAllProjectsResponse : ResponseModel
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("data")]
-        public GetAllProjectsResponse Data { get; set; }
 
     }
 
@@ -174,38 +144,11 @@ namespace KalanalyzeCode.ConfigurationManager.Ui
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ResponseDataModelOfGetProjectByIdResponse : ResponseModel
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("data")]
-        public GetProjectByIdResponse Data { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class GetProjectByIdResponse
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("project")]
         public Project Project { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ResponseDataModelOfCreateProjectResponse : ResponseModel
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("data")]
-        public CreateProjectResponse Data { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateProjectResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("id")]
-        public System.Guid Id { get; set; }
 
     }
 

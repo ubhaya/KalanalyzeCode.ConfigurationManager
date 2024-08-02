@@ -3,6 +3,7 @@ using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.Projects;
 using KalanalyzeCode.ConfigurationManager.Application.Contract.Response;
 using KalanalyzeCode.ConfigurationManager.Application.Contract.Response.Projects;
 using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
+using KalanalyzeCode.ConfigurationManager.Entity.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ public class ProjectsController : ApiControllerBase
 
     [HttpGet]
     [Authorize(Permissions.Project | Permissions.Read)]
-    public async Task<ActionResult<ResponseDataModel<GetAllProjectsResponse>>> GetAllAsync(
+    public async Task<ActionResult<GetAllProjectsResponse>> GetAllAsync(
         [FromQuery] GetAllProjectsRequest request, 
         CancellationToken cancellationToken = default)
     {
@@ -26,7 +27,8 @@ public class ProjectsController : ApiControllerBase
 
     [HttpGet("{id:guid}")]
     [Authorize(Permissions.Project | Permissions.Read)]
-    public async Task<ActionResult<ResponseDataModel<GetProjectByIdResponse>>> GetByIdAsync(
+    [ProducesResponseType<GetProjectByIdResponse>(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetByIdAsync(
         Guid id, CancellationToken cancellationToken = default)
     {
         var result = await Mediator.Send(new GetProjectByIdRequest(id), cancellationToken);
@@ -35,10 +37,12 @@ public class ProjectsController : ApiControllerBase
 
     [HttpPost]
     [Authorize(Permissions.Project | Permissions.Write)]
-    public async Task<ActionResult<ResponseDataModel<CreateProjectResponse>>> PostAsync(
+    [ProducesResponseType<Project>(StatusCodes.Status201Created)]
+    public async Task<IActionResult> PostAsync(
         [FromBody] CreateProjectRequest request, CancellationToken cancellationToken = default)
     {
-        return await Mediator.Send(request, cancellationToken);
+        var result = await Mediator.Send(request, cancellationToken);
+        return CreatedAtAction("GetById", new {id = result.Project?.Id}, result.Project);
     }
 
     [HttpPut("{id:guid}")]

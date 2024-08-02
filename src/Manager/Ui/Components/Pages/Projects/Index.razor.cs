@@ -36,8 +36,8 @@ public partial class Index
             (CustomSortDirection)state.SortDirection, state.SortLabel, cancellationToken);
         return new TableData<Project>
         {
-            Items = result.Data.Projects,
-            TotalItems = result.Data.TotalItem
+            Items = result.Projects,
+            TotalItems = result.TotalItem
         };
     }
 

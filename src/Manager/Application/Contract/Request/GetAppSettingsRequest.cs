@@ -4,7 +4,7 @@ using MediatR;
 
 namespace KalanalyzeCode.ConfigurationManager.Application.Contract.Request;
 
-public class GetAppSettingsRequest : IRequest<ResponseDataModel<GetAppSettingsResponse>>
+public class GetAppSettingsRequest : IRequest<GetAppSettingsResponse>
 {
     public string SettingName { get; set; } = string.Empty;
 }

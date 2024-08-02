@@ -35,7 +35,7 @@ public partial class Add
         if (_form.IsValid)
         {
             var result = await Client.PostAsync(Model, CancellationToken);
-            if (result is not null && result.Success)
+            if (result is not null)
             {
                 Snackbar.Add("Submitted");
                 await Success.InvokeAsync(true);

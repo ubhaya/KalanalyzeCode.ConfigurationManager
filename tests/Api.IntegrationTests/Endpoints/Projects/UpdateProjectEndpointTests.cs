@@ -37,7 +37,7 @@ public class UpdateProjectEndpointTests : TestBase
 
         // Assert
         updatedProjectResponse.Should().NotBeNull();
-        var updatedProject = updatedProjectResponse.Data.Project;
+        var updatedProject = updatedProjectResponse.Project;
         updatedProject.Should().NotBeNull();
         Debug.Assert(updatedProject is not null);
         updatedProject.Id.Should().Be(idInDatabase);

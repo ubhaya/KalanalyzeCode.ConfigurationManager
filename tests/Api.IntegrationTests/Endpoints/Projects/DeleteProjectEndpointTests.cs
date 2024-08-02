@@ -31,7 +31,7 @@ public class DeleteProjectEndpointTests : TestBase
 
         // Assert
         deleteProjectResponse.Should().NotBeNull();
-        var deletedProject = deleteProjectResponse.Data.Project;
+        var deletedProject = deleteProjectResponse.Project;
         deletedProject.Should().BeNull();
     }
 }

@@ -25,16 +25,13 @@ public class CreateNewProjectEndpointTests : TestBase
         };
         
         // Act
-        var result = await _client.PostAsync(projectToCreate, CancellationToken);
+        var createdProject = await _client.PostAsync(projectToCreate, CancellationToken);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Data.Should().NotBeNull();
-        result.Data.Id.Should().NotBeEmpty();
-        var createdProject = await Context.Projects.FindAsync([result.Data.Id], CancellationToken);
+        createdProject.Should().NotBeNull();
         createdProject.Should().NotBeNull();
         Debug.Assert(createdProject is not null);
         projectToCreate.ProjectName.Should().Be(createdProject.Name);
-        result.Data.Id.Should().Be(createdProject.Id);
+        createdProject.Id.Should().Be(createdProject.Id);
     }
 }

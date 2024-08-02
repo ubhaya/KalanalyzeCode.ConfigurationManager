@@ -16,7 +16,7 @@ public class AppSettingsController : ApiControllerBase
 
     [HttpGet]
     [Authorize(Permissions.AppSettings | Permissions.Read)]
-    public async Task<ActionResult<ResponseDataModel<GetAppSettingsResponse>>> Get(
+    public async Task<ActionResult<GetAppSettingsResponse>> Get(
         [FromQuery] GetAppSettingsRequest request, CancellationToken cancellationToken = default)
     {
         var result = await Mediator.Send(request, cancellationToken);
