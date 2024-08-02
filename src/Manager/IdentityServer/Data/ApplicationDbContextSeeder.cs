@@ -1,7 +1,6 @@
 using System.Security.Claims;
 using Identity.Shared.Authorization;
 using IdentityModel;
-using IdentityServer.Infrastructure.Identity;
 using IdentityServer.Logging;
 using IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
@@ -47,7 +46,7 @@ public class ApplicationDbContextSeeder
     private readonly Dictionary<string, Permissions> _roles = new()
     {
         { "Administrator", Permissions.All },
-        { "ApiKey", Permissions.GetAppSettings }
+        { "ApiKey", Permissions.AppSettings }
     };
     private const string DefaultPassword = "Pass123$";
 

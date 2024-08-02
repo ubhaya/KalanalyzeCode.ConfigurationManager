@@ -12,7 +12,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\Provider\Provider.csproj" />
-      <ProjectReference Include="..\..\src\Shared\Shared.csproj" />
     </ItemGroup>
 
 </Project>

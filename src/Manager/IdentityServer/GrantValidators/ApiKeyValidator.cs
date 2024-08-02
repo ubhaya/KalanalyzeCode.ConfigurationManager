@@ -1,6 +1,5 @@
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Validation;
-using IdentityServer.Models;
 using IdentityServer.Models.Dto;
 using IdentityServer.Services.Interfaces;
 

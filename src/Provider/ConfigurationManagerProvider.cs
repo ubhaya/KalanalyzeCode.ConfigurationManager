@@ -1,12 +1,7 @@
 ﻿using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Text.Json;
-using System.Text.Json.Nodes;
-using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
+using KalanalyzeCode.ConfigurationManager.Provider.Client;
 using KalanalyzeCode.ConfigurationManager.Provider.Options;
-using KalanalyzeCode.ConfigurationManager.Shared;
-using KalanalyzeCode.ConfigurationManager.Shared.Contract.Request;
-using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
 using Microsoft.Extensions.Configuration;
 
 namespace KalanalyzeCode.ConfigurationManager.Provider;
@@ -14,7 +9,7 @@ namespace KalanalyzeCode.ConfigurationManager.Provider;
 public class ConfigurationManagerProvider : ConfigurationProvider, IDisposable
 {
     private readonly Timer? _timer;
-    private readonly HttpClient _client;
+    private IAppSettingsClient? _client;
     private readonly HttpClient _identityClient;
 
     public ConfigurationManagerProvider(ConfigurationManagerSource source)
@@ -32,11 +27,6 @@ public class ConfigurationManagerProvider : ConfigurationProvider, IDisposable
                 state: null
             );
         }
-        
-        _client = new HttpClient()
-        {
-            BaseAddress = Options.SecreteManagerOptions.BaseAddress
-        };
 
         _identityClient = new HttpClient()
         {
@@ -70,13 +60,20 @@ public class ConfigurationManagerProvider : ConfigurationProvider, IDisposable
 
         var accessToken = root.GetProperty("access_token").GetString();
 
-        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        _client ??= new AppSettingsClient(new HttpClient()
+        {
+            BaseAddress = Options.SecreteManagerOptions.BaseAddress,
+            DefaultRequestHeaders =
+            {
+                Authorization = new AuthenticationHeaderValue("Bearer", accessToken)
+            }
+        });
         
-        var result = Task.Run(async () => await _client.GetFromJsonAsync<ResponseDataModel<GetAppSettingsResponse>>(
-                $"{ProjectConstant.GetAppSettings}?{nameof(GetAppSettingsRequest.SettingName)}=StarfishOptions"))
+        var result = Task.Run(async () => 
+                await _client.GetAsync("StarfishOptions"))
             .Result;
 
-        Data = result?.Data?.Settings
+        Data = result?.Settings
                    .ToDictionary<ApplicationSettings, string, string?>(c => c.Id, c => c.Value,
                        StringComparer.OrdinalIgnoreCase) ??
                [];

@@ -7,6 +7,9 @@ namespace Identity.Shared.Authorization;
 public enum Permissions
 {
     None = 0,
-    GetAppSettings = 1,
-    All = ~None
+    Read = 1,
+    Write = 2,
+    AppSettings = 4,
+    Project = 8,
+    All = ~None,
 }

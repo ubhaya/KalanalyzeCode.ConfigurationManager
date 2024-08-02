@@ -1,8 +1,6 @@
 ﻿using Identity.Shared.Authorization;
 using KalanalyzeCode.ConfigurationManager.Api.Options;
-using KalanalyzeCode.ConfigurationManager.Application;
 using KalanalyzeCode.ConfigurationManager.Application.Helpers;
-using KalanalyzeCode.ConfigurationManager.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 
@@ -12,6 +10,7 @@ public static class DependencyConfig
 {
     public static IServiceCollection AddWebApiConfig(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddControllers();
         services.AddCors(options =>
         {
             options.AddPolicy(name: AppConstants.CorsPolicy,
@@ -63,6 +62,8 @@ public static class DependencyConfig
 
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.MapControllers();
 
         return app;
     }

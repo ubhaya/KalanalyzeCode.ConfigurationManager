@@ -1,10 +1,13 @@
 ﻿using System.Data.Common;
 using System.Security.Claims;
 using Identity.Shared.Authorization;
+using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
+using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence.Seeder;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
 using Respawn;
@@ -24,19 +27,20 @@ public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
         .WithPassword(DbPassword)
         .Build();
 
-    private readonly MockAuthUser _user = new(
+    private readonly MockAuthUser _user = new([
         new Claim("sub", Guid.NewGuid().ToString()),
         new Claim("email", "default-user@xyz.com"),
         new Claim("scope", "KalanalyzeCode.ConfigurationManager"),
         new Claim("scope", "profile"),
         new Claim("scope", "openid"),
-        new Claim(CustomClaimTypes.Permissions, ((int)Permissions.GetAppSettings).ToString()));
+        new Claim(CustomClaimTypes.Permissions, ((int)Permissions.All).ToString())]);
 
     private DbConnection _dbConnection = default!;
     private Respawner _respawner = default!;
     
     public HttpClient HttpClient { get; private set; } = default!;
     public IServiceScope Scope { get; private set; } = default!;
+    public IApplicationDbContext DatabaseContext { get; set; } = default!;
     
     protected override IHost CreateHost(IHostBuilder builder)
     {
@@ -47,6 +51,8 @@ public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
         
         builder.ConfigureServices(services =>
         {
+            services.RemoveAll(typeof(IDatabaseSeeder));
+            services.AddScoped<IDatabaseSeeder, TestSeeder>();
             services.AddTestAuthentication();
             services.AddScoped(_ => _user);
             services.AddScoped(sp => new DbContextOptionsBuilder<ApplicationDbContext>()
@@ -67,12 +73,13 @@ public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
     {
         await _dbContainer.StartAsync();
         Scope = Services.CreateScope();
-        await EnsureDatabase();
         _dbConnection = new NpgsqlConnection(_dbContainer.GetConnectionString());
+        DatabaseContext = Scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
+        await EnsureDatabase();
         HttpClient = CreateClient();
         await InitializeRespawner();
     }
-
+    
     private async Task InitializeRespawner()
     {
         await _dbConnection.OpenAsync();

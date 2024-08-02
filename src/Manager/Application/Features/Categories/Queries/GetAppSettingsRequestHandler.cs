@@ -1,12 +1,10 @@
-﻿using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
-using KalanalyzeCode.ConfigurationManager.Shared.Contract.Request;
-using KalanalyzeCode.ConfigurationManager.Shared.Contract.Response;
+﻿using KalanalyzeCode.ConfigurationManager.Application.Contract.Request;
+using KalanalyzeCode.ConfigurationManager.Application.Contract.Response;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 
 namespace KalanalyzeCode.ConfigurationManager.Application.Features.Categories.Queries;
 
-public class GetAppSettingsRequestHandler : IRequestHandler<GetAppSettingsRequest, IResult>
+public class GetAppSettingsRequestHandler : IRequestHandler<GetAppSettingsRequest, GetAppSettingsResponse>
 {
     private readonly RepositoryService _repository;
 
@@ -15,16 +13,12 @@ public class GetAppSettingsRequestHandler : IRequestHandler<GetAppSettingsReques
         _repository = repository;
     }
 
-    public async Task<IResult> Handle(GetAppSettingsRequest request, CancellationToken cancellationToken)
+    public async Task<GetAppSettingsResponse> Handle(GetAppSettingsRequest request, CancellationToken cancellationToken)
     {
         var result = await _repository.GetAllApplicationSettings(request.SettingName, cancellationToken);
-        return Results.Ok(new ResponseDataModel<GetAppSettingsResponse>
+        return new GetAppSettingsResponse()
         {
-            Data = new GetAppSettingsResponse()
-            {
-                Settings = result
-            },
-            Success = result.Count != 0,
-        });
+            Settings = result
+        };
     }
 }

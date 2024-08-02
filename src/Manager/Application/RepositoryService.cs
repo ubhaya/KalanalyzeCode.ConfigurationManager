@@ -1,5 +1,5 @@
-﻿using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
-using KalanalyzeCode.ConfigurationManager.Shared;
+﻿using KalanalyzeCode.ConfigurationManager.Application.Common.Dtos;
+using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace KalanalyzeCode.ConfigurationManager.Application;

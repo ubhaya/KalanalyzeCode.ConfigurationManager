@@ -1,6 +1,7 @@
 ﻿using KalanalyzeCode.ConfigurationManager.Application.Helpers;
 using KalanalyzeCode.ConfigurationManager.Entity.Abstract;
 using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
+using KalanalyzeCode.ConfigurationManager.Entity.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -11,6 +12,7 @@ namespace KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persist
 public interface IApplicationDbContext
 {
     DbSet<ConfigurationSettings> Settings { get; set; }
+    DbSet<Project> Projects { get; set; }
     Task BeginTransactionAsync(CancellationToken cancellationToken = default);
     Task CommitTransactionAsync(CancellationToken cancellationToken = default);
     Task RollbackTransaction(CancellationToken cancellationToken = default);
@@ -31,6 +33,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     }
     
     public DbSet<ConfigurationSettings> Settings { get; set; }
+    public DbSet<Project> Projects { get; set; }
 
     public async Task BeginTransactionAsync(CancellationToken cancellationToken = default)
     {
