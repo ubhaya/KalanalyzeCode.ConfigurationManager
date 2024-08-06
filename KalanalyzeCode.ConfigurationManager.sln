@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution-item", "solution-i
 		global.json = global.json
 		README.md = README.md
 		docker-compose.yml = docker-compose.yml
+		build-run.sh = build-run.sh
+		build-run.ps1 = build-run.ps1
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{E22EDA3D-A068-4A67-B07C-C31344FBEE99}"

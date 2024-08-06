@@ -24,4 +24,4 @@ jobs:
               run: dotnet build KalanalyzeCode.ConfigurationManager.sln --no-restore -c Release
 
             - name: Execute Tests
-              run: dotnet test KalanalyzeCode.ConfigurationManager.sln --no-build -c Release
+              run: ./build-run.sh
