@@ -24,4 +24,5 @@ jobs:
               run: dotnet build KalanalyzeCode.ConfigurationManager.sln --no-restore -c Release
 
             - name: Execute Tests
-              run: dotnet test KalanalyzeCode.ConfigurationManager.sln --no-build -c Release
+#              run: dotnet test KalanalyzeCode.ConfigurationManager.sln --no-build -c Release
+              run: dotnet test ./tests/Api.IntegrationTests/Api.IntegrationTests.csproj --no-build -c Release

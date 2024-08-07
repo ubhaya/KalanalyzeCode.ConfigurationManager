@@ -1,13 +1,13 @@
 <AuthorizeView>
     <Authorized>
-        <MudLink Href="profile">Hello, @context.User.Identity?.Name</MudLink>
+        <MudLink data-testid="profile" Href="profile">Hello, @context.User.Identity?.Name</MudLink>
 
         <form action="Account/Logout" method="post">
             <AntiforgeryToken/>
-            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text">Logout</MudButton>
+            <MudButton data-testid="logout" ButtonType="ButtonType.Submit" Variant="Variant.Text">Logout</MudButton>
         </form>
     </Authorized>
     <NotAuthorized>
-        <MudLink Href="Account/login?redirectUri=/">Login</MudLink>
+        <MudLink data-testid="login" Href="Account/login?redirectUri=/">Login</MudLink>
     </NotAuthorized>
 </AuthorizeView>
