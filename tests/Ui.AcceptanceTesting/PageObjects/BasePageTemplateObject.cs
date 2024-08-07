@@ -14,6 +14,7 @@ public abstract class BasePageTemplateObject : BasePageObject
     
     public async Task<bool> IsLoginButtonVisible() => await LoginButton.IsVisibleAsync();
     public async Task LoginButtonClicked() => await LoginButton.ClickAsync();
+    public async Task LogoutButtonClicked() => await LogoutButton.ClickAsync();
     
     public async Task<bool> IsLogoutButtonVisible() => await LogoutButton.IsVisibleAsync();
     public async Task<bool> IsProfileButtonVisible() => await ProfileButton.IsVisibleAsync();
