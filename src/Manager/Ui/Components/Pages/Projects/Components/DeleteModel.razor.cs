@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 
-namespace KalanalyzeCode.ConfigurationManager.Ui.Components.Pages.Projects;
+namespace KalanalyzeCode.ConfigurationManager.Ui.Components.Pages.Projects.Components;
 
 public partial class DeleteModel
 {
