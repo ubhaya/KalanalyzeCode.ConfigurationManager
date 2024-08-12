@@ -1,0 +1,13 @@
+@attribute [Route($$"""{{AppConstant.ProjectManager.Index.Route}}/{Id:guid}""")]
+
+<PageTitle>@($"{AppConstant.ProjectManager.Index.AppTitle} - {_project?.Name}")</PageTitle>
+
+<MudText Typo="Typo.h3">@_project?.Name</MudText>
+
+<MudExpansionPanels>
+    <MudExpansionPanel Text="Web Api">
+        <MudContainer>
+            <MudText>205d4237-5102-4e5a-b367-9f8d40536a41</MudText>
+        </MudContainer>
+    </MudExpansionPanel>
+</MudExpansionPanels>
