@@ -35,6 +35,18 @@ namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial interface IProjectManagerClient : IClient
+    {
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetProjectInformationResponse> GetByIdAsync(System.Guid id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetProjectInformationResponse> GetByIdAsync(System.Guid id, System.Threading.CancellationToken cancellationToken);
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial interface IProjectsClient : IClient
     {
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -108,14 +120,11 @@ namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetAllProjectsResponse
+    public partial class GetProjectInformationResponse
     {
 
-        [System.Text.Json.Serialization.JsonPropertyName("projects")]
-        public System.Collections.Generic.ICollection<Project> Projects { get; set; }
-
-        [System.Text.Json.Serialization.JsonPropertyName("totalItem")]
-        public int TotalItem { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("project")]
+        public Project Project { get; set; }
 
     }
 
@@ -129,35 +138,8 @@ namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests
         [System.Text.Json.Serialization.JsonPropertyName("name")]
         public string Name { get; set; }
 
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum CustomSortDirection
-    {
-
-        None = 0,
-
-        Ascending = 1,
-
-        Descending = 2,
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class GetProjectByIdResponse
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("project")]
-        public Project Project { get; set; }
-
-    }
-
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateProjectRequest
-    {
-
-        [System.Text.Json.Serialization.JsonPropertyName("projectName")]
-        public string ProjectName { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("apiKey")]
+        public System.Guid ApiKey { get; set; }
 
     }
 
@@ -188,6 +170,48 @@ namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests
             get { return _additionalProperties ?? (_additionalProperties = new System.Collections.Generic.Dictionary<string, object>()); }
             set { _additionalProperties = value; }
         }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetAllProjectsResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("projects")]
+        public System.Collections.Generic.ICollection<Project> Projects { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("totalItem")]
+        public int TotalItem { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public enum CustomSortDirection
+    {
+
+        None = 0,
+
+        Ascending = 1,
+
+        Descending = 2,
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class GetProjectByIdResponse
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("project")]
+        public Project Project { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.1.0.0 (NJsonSchema v11.0.2.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateProjectRequest
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("projectName")]
+        public string ProjectName { get; set; }
 
     }
 

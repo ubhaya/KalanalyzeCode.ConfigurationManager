@@ -6,7 +6,7 @@ public partial class Index
 {
     #region DependencyInjection
 
-    [Inject] private IProjectsClient ProjectsClient { get; set; } = default!;
+    [Inject] private IProjectManagerClient ProjectsClient { get; set; } = default!;
     
     #endregion
 

@@ -36,7 +36,8 @@ public class GetBydIdEndpointTests : TestBase
         var projectToMatch = new Project()
         {
             Id = projectInDatabase.Id,
-            Name = projectInDatabase.Name
+            Name = projectInDatabase.Name,
+            ApiKey = projectInDatabase.ApiKey
         };
         await AddAsync(projectInDatabase);
         

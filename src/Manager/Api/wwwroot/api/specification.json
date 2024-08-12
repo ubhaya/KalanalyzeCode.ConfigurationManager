@@ -36,6 +36,48 @@
         }
       }
     },
+    "/api/ProjectManager/{id}": {
+      "get": {
+        "tags": [
+          "ProjectManager"
+        ],
+        "operationId": "ProjectManager_GetById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProjectInformationResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Projects": {
       "get": {
         "tags": [
@@ -292,19 +334,12 @@
           }
         }
       },
-      "GetAllProjectsResponse": {
+      "GetProjectInformationResponse": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "projects": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Project"
-            }
-          },
-          "totalItem": {
-            "type": "integer",
-            "format": "int32"
+          "project": {
+            "$ref": "#/components/schemas/Project"
           }
         }
       },
@@ -318,6 +353,55 @@
           },
           "name": {
             "type": "string"
+          },
+          "apiKey": {
+            "type": "string",
+            "format": "guid"
+          }
+        }
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "additionalProperties": {
+          "nullable": true
+        },
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "GetAllProjectsResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "projects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Project"
+            }
+          },
+          "totalItem": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -355,35 +439,6 @@
         "properties": {
           "projectName": {
             "type": "string"
-          }
-        }
-      },
-      "ProblemDetails": {
-        "type": "object",
-        "additionalProperties": {
-          "nullable": true
-        },
-        "properties": {
-          "type": {
-            "type": "string",
-            "nullable": true
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "status": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "detail": {
-            "type": "string",
-            "nullable": true
-          },
-          "instance": {
-            "type": "string",
-            "nullable": true
           }
         }
       },
