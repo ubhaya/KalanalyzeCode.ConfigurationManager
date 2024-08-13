@@ -46,7 +46,7 @@ public class ApplicationDbContextSeeder
     private readonly Dictionary<string, Permissions> _roles = new()
     {
         { "Administrator", Permissions.All },
-        { "ApiKey", Permissions.AppSettings }
+        { "ApiKey", Permissions.AppSettingsRead }
     };
     private const string DefaultPassword = "Pass123$";
 
