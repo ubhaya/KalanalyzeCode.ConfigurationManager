@@ -3,6 +3,7 @@
 public class AppConstants
 {
     public const string CorsPolicy = nameof(CorsPolicy);
+    public const string IdentityServerClient = nameof(IdentityServerClient);
     
     public class LoggingMessages
     {

@@ -6,6 +6,39 @@
     "version": "v1"
   },
   "paths": {
+    "/api/ApiKeyManager": {
+      "post": {
+        "tags": [
+          "ApiKeyManager"
+        ],
+        "operationId": "ApiKeyManager_Post",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateApiKeyForProjectRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "guid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/AppSettings": {
       "get": {
         "tags": [
@@ -309,6 +342,16 @@
   },
   "components": {
     "schemas": {
+      "CreateApiKeyForProjectRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "projectId": {
+            "type": "string",
+            "format": "guid"
+          }
+        }
+      },
       "GetAppSettingsResponse": {
         "type": "object",
         "additionalProperties": false,

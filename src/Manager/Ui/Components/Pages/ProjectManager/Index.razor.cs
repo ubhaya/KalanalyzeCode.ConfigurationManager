@@ -7,6 +7,7 @@ public partial class Index
     #region DependencyInjection
 
     [Inject] private IProjectManagerClient ProjectsClient { get; set; } = default!;
+    [Inject] private IApiKeyManagerClient ApiKeyManagerClient { get; set; } = default!;
     
     #endregion
 
@@ -26,5 +27,15 @@ public partial class Index
     {
         var response = await ProjectsClient.GetByIdAsync(Id, CancellationToken);
         _project = response.Project;
+    }
+    
+    private async Task OnApiKeyAddClick()
+    {
+        if (_project is null)
+            return;
+        _project.ApiKey = await ApiKeyManagerClient.PostAsync(new CreateApiKeyForProjectRequest
+        {
+            ProjectId = _project?.Id ?? Guid.Empty
+        });
     }
 }

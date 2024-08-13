@@ -11,6 +11,10 @@
             {
                 <MudText>@_project?.ApiKey</MudText>
             }
+            else
+            {
+                <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="@(async ()=> await OnApiKeyAddClick())"/>
+            }
         </MudContainer>
     </MudExpansionPanel>
 </MudExpansionPanels>
