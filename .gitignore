@@ -482,3 +482,6 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+src\Provider\ApiClient.g.cs
+src\Provider\Contracts.g.cs
