@@ -39,6 +39,31 @@
         }
       }
     },
+    "/api/ApiKeyManager/{id}": {
+      "delete": {
+        "tags": [
+          "ApiKeyManager"
+        ],
+        "operationId": "ApiKeyManager_Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/api/AppSettings": {
       "get": {
         "tags": [

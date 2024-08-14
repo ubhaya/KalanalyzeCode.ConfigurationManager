@@ -22,9 +22,9 @@
   - [ ] Modify
   - [ ] Delete
 - [ ] Manage Api keys
-   - [ ] Add
+   - [x] Add
    - [ ] Modify
-   - [ ] Delete
+   - [x] Delete
 
 ## Api Functions
 - 
@@ -38,6 +38,6 @@
    - [ ] Modify
    - [ ] Delete
 - [ ] Manage Api keys
-   - [ ] Add
+   - [x] Add
    - [ ] Modify
-   - [ ] Delete
+   - [x] Delete

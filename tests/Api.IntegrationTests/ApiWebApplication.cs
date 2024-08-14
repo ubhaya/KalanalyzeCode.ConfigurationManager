@@ -1,4 +1,5 @@
 ﻿using System.Data.Common;
+using System.Net;
 using System.Security.Claims;
 using Identity.Shared.Authorization;
 using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
@@ -95,6 +96,10 @@ public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
                                        """,
                     }
                 }).WithStatusCode(200));
+            
+            identityServer.Given(Request.Create().WithPath("/api/Account/*").UsingDelete())
+                .RespondWith(Response.Create().WithStatusCode(HttpStatusCode.NoContent));
+            
             services.AddHttpClient(AppConstants.IdentityServerClient,
                 client => client.BaseAddress = new Uri(identityServer.Url?? throw new NullReferenceException()));
         });

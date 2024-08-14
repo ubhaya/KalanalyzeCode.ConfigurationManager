@@ -9,11 +9,15 @@
         <MudContainer>
             @if (_project?.ApiKey != Guid.Empty)
             {
-                <MudText>@_project?.ApiKey</MudText>
+                <MudToolBar>
+                    <MudText>@_project?.ApiKey</MudText>
+                    <MudSpacer/>
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(async ()=> await OnApiKeyDelete())"/>
+                </MudToolBar>
             }
             else
             {
-                <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="@(async ()=> await OnApiKeyAddClick())"/>
+                <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="@(async () => await OnApiKeyAddClick())"/>
             }
         </MudContainer>
     </MudExpansionPanel>

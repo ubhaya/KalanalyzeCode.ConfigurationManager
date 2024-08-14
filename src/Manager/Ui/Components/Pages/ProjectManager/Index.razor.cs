@@ -38,4 +38,11 @@ public partial class Index
             ProjectId = _project?.Id ?? Guid.Empty
         });
     }
+
+    private async Task OnApiKeyDelete()
+    {
+        await ApiKeyManagerClient.DeleteAsync(_project?.Id ?? Guid.Empty);
+        var response = await ProjectsClient.GetByIdAsync(Id, CancellationToken);
+        _project = response.Project;
+    }
 }

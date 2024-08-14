@@ -52,6 +52,20 @@ public sealed class AccountController : ControllerBase
 
         return Ok(apiKeyUser);
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteAsync(string id, CancellationToken cancellationToken)
+    {
+        var isApiKeyExists =
+            await _context.Users.SingleOrDefaultAsync(u => u.ApiKey == id, cancellationToken);
+
+        if (isApiKeyExists is null)
+            return NoContent();
+
+        _context.Users.Remove(isApiKeyExists);
+        await _context.SaveChangesAsync(cancellationToken);
+        return NoContent();
+    }
 }
 
 public static class Password
