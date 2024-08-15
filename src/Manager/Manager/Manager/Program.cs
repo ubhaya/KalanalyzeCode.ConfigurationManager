@@ -1,6 +1,5 @@
 using KalanalyzeCode.ConfigurationManager.Ui;
 using MudBlazor.Services;
-using KalanalyzeCode.ConfigurationManager.Ui.Client.Pages;
 using KalanalyzeCode.ConfigurationManager.Ui.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add MudBlazor services
 builder.Services.AddMudServices();
 
-builder.Services.AddIdentityServerFunction();
+builder.AddIdentityServerFunction();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -45,9 +44,11 @@ app.Run();
 
 public static class Extension
 {
-    public static IServiceCollection AddIdentityServerFunction(this IServiceCollection service)
+    public static WebApplicationBuilder AddIdentityServerFunction(this WebApplicationBuilder builder)
     {
-        service
+        builder.Services.AddRazorPages();
+
+        builder.Services
             .AddIdentityServer(options =>
             {
                 options.Events.RaiseErrorEvents = true;
@@ -60,14 +61,22 @@ public static class Extension
             })
             .AddInMemoryIdentityResources(Config.IdentityResources)
             .AddInMemoryApiScopes(Config.ApiScopes)
-            .AddInMemoryClients(Config.Clients);
+            .AddInMemoryClients(Config.Clients)
+            .AddTestUsers(TestUsers.Users);
 
-        return service;
+        return builder;
     }
 
     public static WebApplication UseIdentityServerFunction(this WebApplication app)
     {
+        app.UseStaticFiles();
+        app.UseRouting();
+        
         app.UseIdentityServer();
+        
+        app.UseAuthorization();
+        app.UseAntiforgery();
+        app.MapRazorPages().RequireAuthorization();
 
         return app;
     }

@@ -7,9 +7,9 @@
 
 
     <ItemGroup>
-        <ProjectReference Include="..\Manager.Client\Manager.Client.csproj"/>
+        <ProjectReference Include="..\Manager.Client\Manager.Client.csproj" />
         <PackageReference Include="Duende.IdentityServer" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" />
     </ItemGroup>
 
 </Project>
