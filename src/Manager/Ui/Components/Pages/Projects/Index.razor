@@ -1,10 +1,11 @@
 @attribute [Route(AppConstant.Projects.Index.Route)]
+@attribute [Authorize(Permissions.ProjectRead)]
 
 <PageTitle>@AppConstant.Projects.Index.AppTitle</PageTitle>
 
 <h3>@AppConstant.Projects.Index.Name</h3>
 
-<PermissionAuthorizeView Permissions="Permissions.Project | Permissions.Write">
+<PermissionAuthorizeView Permissions="Permissions.ProjectWrite">
     <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="@(async () => await Add())"/>
 </PermissionAuthorizeView>
 
@@ -26,9 +27,13 @@
         <MudTh>Action</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Name">
+            <MudLink Href="@($"{AppConstant.ProjectManager.Index.Route}/{context.Id}")">
+                @context.Name
+            </MudLink>
+        </MudTd>
         <MudTd DataLabel="Action">
-            <PermissionAuthorizeView Permissions="Permissions.Project | Permissions.Write" Context="authorizationContext">
+            <PermissionAuthorizeView Permissions="Permissions.ProjectWrite" Context="authorizationContext">
                 <MudIconButton ButtonType="ButtonType.Button" Variant="Variant.Text" Color="Color.Warning"
                                Icon="@Icons.Material.Outlined.Edit" OnClick="@(async () => await Edit(context))"/>
                 <MudIconButton ButtonType="ButtonType.Button" Variant="Variant.Text" Color="Color.Error"

@@ -1,0 +1,24 @@
+@attribute [Route($$"""{{AppConstant.ProjectManager.Index.Route}}/{Id:guid}""")]
+
+<PageTitle>@($"{AppConstant.ProjectManager.Index.AppTitle} - {_project?.Name}")</PageTitle>
+
+<MudText Typo="Typo.h3">@_project?.Name</MudText>
+
+<MudExpansionPanels>
+    <MudExpansionPanel Text="Web Api">
+        <MudContainer>
+            @if (_project?.ApiKey != Guid.Empty)
+            {
+                <MudToolBar>
+                    <MudText>@_project?.ApiKey</MudText>
+                    <MudSpacer/>
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(async ()=> await OnApiKeyDelete())"/>
+                </MudToolBar>
+            }
+            else
+            {
+                <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="@(async () => await OnApiKeyAddClick())"/>
+            }
+        </MudContainer>
+    </MudExpansionPanel>
+</MudExpansionPanels>

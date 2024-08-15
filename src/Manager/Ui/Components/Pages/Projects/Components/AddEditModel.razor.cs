@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace KalanalyzeCode.ConfigurationManager.Ui.Components.Pages.Projects;
+namespace KalanalyzeCode.ConfigurationManager.Ui.Components.Pages.Projects.Components;
 
 public partial class AddEditModel
 {

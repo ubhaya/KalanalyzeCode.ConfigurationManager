@@ -23,11 +23,11 @@ internal class ApplicationDbContextSeeder : IDatabaseSeeder
 
     private readonly List<Project> _projectList =
     [
-        new Project {Id = Guid.NewGuid(), Name = "Project 1"},
-        new Project {Id = Guid.NewGuid(), Name = "Project 2"},
+        new Project {Id = Guid.NewGuid(), Name = "Project 1", ApiKey = Guid.NewGuid()},
+        new Project {Id = Guid.NewGuid(), Name = "Project 2", ApiKey = Guid.NewGuid()},
         new Project {Id = Guid.NewGuid(), Name = "Project 3"},
         new Project {Id = Guid.NewGuid(), Name = "Project 4"},
-        new Project {Id = Guid.NewGuid(), Name = "Project 5"},
+        new Project {Id = Guid.NewGuid(), Name = "Project 5", ApiKey = Guid.NewGuid()},
         new Project {Id = Guid.NewGuid(), Name = "Project 6"},
         new Project {Id = Guid.NewGuid(), Name = "Project 7"},
         new Project {Id = Guid.NewGuid(), Name = "Project 8"},

@@ -49,6 +49,9 @@ public static class DependencyConfig
         services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
         services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
 
+        services.AddHttpClient(AppConstants.IdentityServerClient,
+            client => client.BaseAddress = new Uri("https://localhost:5001"));
+
         return services;
     }
 

@@ -16,7 +16,7 @@ public class ProjectsController : ApiControllerBase
     }
 
     [HttpGet]
-    [Authorize(Permissions.Project | Permissions.Read)]
+    [Authorize(Permissions.ProjectRead)]
     public async Task<ActionResult<GetAllProjectsResponse>> GetAllAsync(
         [FromQuery] GetAllProjectsRequest request, 
         CancellationToken cancellationToken = default)
@@ -26,7 +26,7 @@ public class ProjectsController : ApiControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    [Authorize(Permissions.Project | Permissions.Read)]
+    [Authorize(Permissions.ProjectRead)]
     [ProducesResponseType<GetProjectByIdResponse>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetByIdAsync(
         Guid id, CancellationToken cancellationToken = default)
@@ -36,7 +36,7 @@ public class ProjectsController : ApiControllerBase
     }
 
     [HttpPost]
-    [Authorize(Permissions.Project | Permissions.Write)]
+    [Authorize(Permissions.ProjectWrite)]
     [ProducesResponseType<Project>(StatusCodes.Status201Created)]
     public async Task<IActionResult> PostAsync(
         [FromBody] CreateProjectRequest request, CancellationToken cancellationToken = default)
@@ -48,7 +48,7 @@ public class ProjectsController : ApiControllerBase
     [HttpPut("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [Authorize(Permissions.Project | Permissions.Write)]
+    [Authorize(Permissions.ProjectWrite)]
     public async Task<IActionResult> PutAsync(Guid id, [FromBody] UpdateProjectRequest request,
         CancellationToken cancellationToken = default)
     {
@@ -62,6 +62,7 @@ public class ProjectsController : ApiControllerBase
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesDefaultResponseType]
+    [Authorize(Permissions.ProjectWrite)]
     public async Task<IActionResult> DeleteAsync(
         Guid id, CancellationToken cancellationToken = default)
     {

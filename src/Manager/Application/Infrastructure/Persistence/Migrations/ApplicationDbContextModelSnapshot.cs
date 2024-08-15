@@ -41,6 +41,9 @@ namespace KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persist
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("ApiKey")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");

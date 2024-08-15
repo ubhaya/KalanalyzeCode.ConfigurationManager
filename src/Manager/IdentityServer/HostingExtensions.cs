@@ -19,6 +19,7 @@ namespace IdentityServer
         public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddRazorPages();
+            builder.Services.AddControllers();
             
             var connectionString = builder.Configuration["PostgreSql:ConnectionString"];
             var dbPassword = builder.Configuration["PostgreSql:DbPassword"];
@@ -93,6 +94,8 @@ namespace IdentityServer
 
             app.MapRazorPages()
                 .RequireAuthorization();
+
+            app.MapControllers();
 
             return app;
         }
