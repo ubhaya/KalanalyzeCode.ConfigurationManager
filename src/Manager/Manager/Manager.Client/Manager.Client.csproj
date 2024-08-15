@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+    <PropertyGroup>
+        <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+        <StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
+        <AssemblyName>KalanalyzeCode.ConfigurationManager.Ui.Client</AssemblyName>
+        <RootNamespace>KalanalyzeCode.ConfigurationManager.Ui.Client</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.*"/>
+        <PackageReference Include="MudBlazor" Version="7.*"/>
+    </ItemGroup>
+
+</Project>
