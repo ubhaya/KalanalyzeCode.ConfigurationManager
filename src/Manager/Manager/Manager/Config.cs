@@ -70,8 +70,8 @@ public static class Config
                 ],
                 AllowOfflineAccess = true,
                     
-                RedirectUris = {"https://localhost:7015/swagger/oauth2-redirect.html"},
-                AllowedCorsOrigins = {"https://localhost:7015"},
+                RedirectUris = {"https://localhost:7206/swagger/oauth2-redirect.html"},
+                AllowedCorsOrigins = {"https://localhost:7206"},
                 
                 RefreshTokenUsage = TokenUsage.OneTimeOnly,
                 RefreshTokenExpiration = TokenExpiration.Sliding
