@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add MudBlazor services
 builder.Services.AddMudServices();
 
+builder.Services.AddControllers();
+
 builder.Services.AddSwaggerService();
 
 builder.AddIdentityServerFunction();
@@ -52,5 +54,7 @@ app.MapRazorComponents<App>()
 app.UseIdentityServerFunction();
 
 app.UseOpenIdConnectEndpoint();
+
+app.MapControllers();
 
 app.Run();
