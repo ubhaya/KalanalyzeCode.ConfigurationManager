@@ -1,10 +1,8 @@
+using KalanalyzeCode.ConfigurationManager.Ui.Extension;
 using KalanalyzeCode.ConfigurationManager.Ui.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor.Services;
 using Manager.Components.Account;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,15 +47,6 @@ app.MapRazorComponents<App>()
 
 app.UseIdentityServerFunction();
 
-app.MapPost("/logout", async (HttpContext context) =>
-{
-    await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-    await context.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
-});
-
-app.MapGet("/login", async (string returnUrl, HttpContext context) =>
-{
-    await context.ChallengeAsync(OpenIdConnectDefaults.AuthenticationScheme, new AuthenticationProperties { RedirectUri = returnUrl });
-});
+app.UseOpenIdConnectEndpoint();
 
 app.Run();

@@ -1,47 +1,12 @@
-using KalanalyzeCode.ConfigurationManager.Ui;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 
-public static class Extension
+namespace KalanalyzeCode.ConfigurationManager.Ui.Extension;
+
+public static class OpenIdConnectExtension
 {
-    public static WebApplicationBuilder AddIdentityServerFunction(this WebApplicationBuilder builder)
-    {
-        builder.Services.AddRazorPages();
-
-        builder.Services
-            .AddIdentityServer(options =>
-            {
-                options.Events.RaiseErrorEvents = true;
-                options.Events.RaiseInformationEvents = true;
-                options.Events.RaiseFailureEvents = true;
-                options.Events.RaiseSuccessEvents = true;
-
-                // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
-                options.EmitStaticAudienceClaim = true;
-            })
-            .AddInMemoryIdentityResources(Config.IdentityResources)
-            .AddInMemoryApiScopes(Config.ApiScopes)
-            .AddInMemoryClients(Config.Clients)
-            .AddTestUsers(TestUsers.Users);
-
-        return builder;
-    }
-
-    public static WebApplication UseIdentityServerFunction(this WebApplication app)
-    {
-        app.UseStaticFiles();
-        app.UseRouting();
-
-        app.UseIdentityServer();
-        
-        app.UseAuthorization();
-        app.UseAntiforgery();
-        app.MapRazorPages().RequireAuthorization();
-
-        return app;
-    }
-    
     public static IServiceCollection AddOpenIdConnect(this IServiceCollection services)
     {
         // services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
@@ -95,30 +60,22 @@ public static class Extension
                     }
                 };
             });
-        
+
         return services;
     }
 
-    public static IServiceCollection AddSwaggerService(this IServiceCollection services)
+    public static WebApplication UseOpenIdConnectEndpoint(this WebApplication app)
     {
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
-        services.AddOpenApiDocument(c =>
+        app.MapPost("/logout", async (HttpContext context) =>
         {
-            c.Title = "Minimal APIs";
-            c.Version = "v1";
+            await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await context.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
         });
 
-        return services;
-    }
-    
-    public static WebApplication MapSwagger(this WebApplication app)
-    {
-        if (app.Environment.IsDevelopment())
+        app.MapGet("/login", async (string returnUrl, HttpContext context) =>
         {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
+            await context.ChallengeAsync(OpenIdConnectDefaults.AuthenticationScheme, new AuthenticationProperties { RedirectUri = returnUrl });
+        });
 
         return app;
     }
