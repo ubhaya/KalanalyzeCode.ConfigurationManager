@@ -1,3 +1,4 @@
+using KalanalyzeCode.ConfigurationManager.Ui.Client.Extension;
 using KalanalyzeCode.ConfigurationManager.Ui.Extension;
 using KalanalyzeCode.ConfigurationManager.Ui.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -24,6 +25,8 @@ builder.Services.AddOpenIdConnect();
 
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<AuthenticationStateProvider, PersistingAuthenticationStateProvider>();
+
+builder.Services.AddServerSideServices();
 
 var app = builder.Build();
 
@@ -53,7 +56,7 @@ app.MapRazorComponents<App>()
 
 app.UseIdentityServerFunction();
 
-app.UseOpenIdConnectEndpoint();
+// app.UseOpenIdConnectEndpoint();
 
 app.MapControllers();
 

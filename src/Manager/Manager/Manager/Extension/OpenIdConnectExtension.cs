@@ -1,3 +1,4 @@
+using KalanalyzeCode.ConfigurationManager.Ui.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,7 +19,6 @@ public static class OpenIdConnectExtension
             .AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultAuthenticateScheme = 
                 options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
             })
             .AddCookie(options =>
@@ -40,6 +40,7 @@ public static class OpenIdConnectExtension
 
                 options.Scope.Add("openid");
                 options.Scope.Add("profile");
+                options.Scope.Add("offline_access");
 
                 options.Scope.Add(AppConstants.Identity.ScopeName);
 

@@ -1,3 +1,7 @@
+using KalanalyzeCode.ConfigurationManager.Ui.Contract.Request;
+using KalanalyzeCode.ConfigurationManager.Ui.Features.WeatherForecast;
+using MediatR;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -5,30 +9,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace KalanalyzeCode.ConfigurationManager.Ui.Controllers;
 
 [ApiController]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+[Authorize(AuthenticationSchemes = $"{JwtBearerDefaults.AuthenticationScheme}, {CookieAuthenticationDefaults.AuthenticationScheme}")]
 [Route("api/[controller]")]
-public class WeatherForecastController : ControllerBase
+public sealed class WeatherForecastController : ControllerBase
 {
-    private readonly string[] _summaries =
-    [
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    ];
-    
-    [HttpGet]
-    public IEnumerable<WeatherForecast> Get()
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    100,
-                    _summaries[Random.Shared.Next(_summaries.Length)]
-                ));
-        return forecast;
-    }
-}
+    private readonly IMediator _mediator;
 
-public record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    public WeatherForecastController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
+    [HttpGet]
+    public async Task<IEnumerable<WeatherForecast>> Get(CancellationToken cancellationToken = default)
+    {
+        return await _mediator.Send(new GetWeatherForecastRequest(), cancellationToken);
+    }
 }
