@@ -1,4 +1,4 @@
-namespace KalanalyzeCode.ConfigurationManager.Ui.Client.Authorization;
+namespace KalanalyzeCode.ConfigurationManager.Ui.Authorization;
 
 public class PermissionsProvider
 {

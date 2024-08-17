@@ -1,4 +1,4 @@
-namespace KalanalyzeCode.ConfigurationManager.Ui.Client;
+namespace KalanalyzeCode.ConfigurationManager.Ui;
 
 public class AppConstants
 {
@@ -10,6 +10,4 @@ public class AppConstants
         public const string ClientId = "KalanalyzeCode.ConfigurationManager.Ui";
         public const string ClientName = "KalanalyzeCode ConfigurationManager";
     }
-
-    public const string HttpClient = "KalanalyzeCode.ConfigurationManager.HttpClient";
 }

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Logout
+namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Account.Logout
 {
     [SecurityHeaders]
     [AllowAnonymous]

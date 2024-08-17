@@ -4,7 +4,7 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
-namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Logout
+namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Account.Logout
 {
     public class LoggedOutViewModel
     {

@@ -1,4 +1,3 @@
-using KalanalyzeCode.ConfigurationManager.Ui.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

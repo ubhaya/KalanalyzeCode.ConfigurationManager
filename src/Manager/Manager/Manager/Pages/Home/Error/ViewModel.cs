@@ -3,7 +3,7 @@
 
 using Duende.IdentityServer.Models;
 
-namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Error
+namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Home.Error
 {
     public class ViewModel
     {

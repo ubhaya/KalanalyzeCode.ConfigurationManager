@@ -5,7 +5,7 @@ using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Error
+namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Home.Error
 {
     [AllowAnonymous]
     [SecurityHeaders]

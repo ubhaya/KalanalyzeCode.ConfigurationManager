@@ -1,7 +1,7 @@
 // Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
-namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Login
+namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Account.Login
 {
     public class ViewModel
     {

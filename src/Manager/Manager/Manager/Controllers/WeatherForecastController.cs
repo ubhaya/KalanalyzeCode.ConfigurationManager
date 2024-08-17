@@ -1,4 +1,4 @@
-using KalanalyzeCode.ConfigurationManager.Ui.Client.Authorization;
+using KalanalyzeCode.ConfigurationManager.Ui.Authorization;
 using KalanalyzeCode.ConfigurationManager.Ui.Contract.Request;
 using KalanalyzeCode.ConfigurationManager.Ui.Features.WeatherForecast;
 using MediatR;
@@ -10,8 +10,7 @@ namespace KalanalyzeCode.ConfigurationManager.Ui.Controllers;
 
 [ApiController]
 [PermissionAuthorize(
-    AuthenticationSchemes =
-        $"{JwtBearerDefaults.AuthenticationScheme}, {CookieAuthenticationDefaults.AuthenticationScheme}",
+    AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
     Permissions = Permissions.All)]
 [Route("api/[controller]")]
 public sealed class WeatherForecastController : ControllerBase

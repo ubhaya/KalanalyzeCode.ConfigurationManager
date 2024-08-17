@@ -2,7 +2,7 @@
 // See LICENSE in the project root for license information.
 
 
-namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Logout
+namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Account.Logout
 {
     public static class LogoutOptions
     {

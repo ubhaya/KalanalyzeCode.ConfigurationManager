@@ -1,6 +1,5 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
-using KalanalyzeCode.ConfigurationManager.Ui.Client;
 
 namespace KalanalyzeCode.ConfigurationManager.Ui;
 

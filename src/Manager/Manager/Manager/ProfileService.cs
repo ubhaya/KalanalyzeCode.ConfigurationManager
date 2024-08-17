@@ -3,7 +3,7 @@ using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using IdentityModel;
-using KalanalyzeCode.ConfigurationManager.Ui.Client.Authorization;
+using KalanalyzeCode.ConfigurationManager.Ui.Authorization;
 using KalanalyzeCode.ConfigurationManager.Ui.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

@@ -1,4 +1,3 @@
-using KalanalyzeCode.ConfigurationManager.Ui.Data;
 using KalanalyzeCode.ConfigurationManager.Ui.Models;
 
 namespace KalanalyzeCode.ConfigurationManager.Ui.Extension;

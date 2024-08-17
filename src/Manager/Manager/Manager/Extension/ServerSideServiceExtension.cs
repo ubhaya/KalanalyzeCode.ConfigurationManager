@@ -1,4 +1,3 @@
-using KalanalyzeCode.ConfigurationManager.Ui.Client.Handlers.Interfaces;
 using KalanalyzeCode.ConfigurationManager.Ui.Handlers.ServerSide;
 
 namespace KalanalyzeCode.ConfigurationManager.Ui.Extension;

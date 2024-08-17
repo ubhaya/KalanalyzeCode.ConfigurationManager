@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 
-namespace KalanalyzeCode.ConfigurationManager.Ui.Client.Authorization;
+namespace KalanalyzeCode.ConfigurationManager.Ui.Authorization;
 
 public class PermissionAuthorizationPolicyProvider : DefaultAuthorizationPolicyProvider
 {

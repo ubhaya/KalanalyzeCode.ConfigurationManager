@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <PackageReference Include="Duende.IdentityServer.AspNetIdentity" />
+        <PackageReference Include="MediatR" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
@@ -15,6 +16,8 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="MudBlazor" />
+        <PackageReference Include="NetEscapades.EnumGenerators" />
         <PackageReference Include="Npgsql" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
         <PackageReference Include="NSwag.AspNetCore" />
@@ -22,24 +25,16 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Riok.Mapperly" />
         <PackageReference Include="Swashbuckle.AspNetCore" />
-        <ProjectReference Include="..\Manager.Client\Manager.Client.csproj" />
         <PackageReference Include="Duende.IdentityServer" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" />
     </ItemGroup>
 
-
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="Components\Layout\MainLayout.razor" />
-      <_ContentIncludedByDefault Remove="Components\Layout\NavMenu.razor" />
-    </ItemGroup>
-
     <Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
         <Message Importance="High" Text="$(NSwagExe_Net80) run nswag.json /variables:Configuration=$(Configuration)" />
-        <Exec WorkingDirectory="$(ProjectDir)"
-              EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development"
-              Command="$(NSwagExe_Net80) run ui.json /variables:Configuration=$(Configuration)" />
+<!--        <Exec WorkingDirectory="$(ProjectDir)"-->
+<!--              EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development"-->
+<!--              Command="$(NSwagExe_Net80) run ui.json /variables:Configuration=$(Configuration)" />-->
 <!--        <Exec WorkingDirectory="$(ProjectDir)"-->
 <!--              EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development"-->
 <!--              Command="$(NSwagExe_Net80) run integration-tests.json /variables:Configuration=$(Configuration)" />-->

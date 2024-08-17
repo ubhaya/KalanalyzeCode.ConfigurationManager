@@ -3,7 +3,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Login
+namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Account.Login
 {
     public class InputModel
     {

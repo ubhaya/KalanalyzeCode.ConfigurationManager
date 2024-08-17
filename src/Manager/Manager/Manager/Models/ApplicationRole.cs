@@ -1,4 +1,4 @@
-using KalanalyzeCode.ConfigurationManager.Ui.Client.Authorization;
+using KalanalyzeCode.ConfigurationManager.Ui.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 namespace KalanalyzeCode.ConfigurationManager.Ui.Models;

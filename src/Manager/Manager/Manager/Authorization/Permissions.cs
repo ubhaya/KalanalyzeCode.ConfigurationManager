@@ -1,6 +1,6 @@
 using NetEscapades.EnumGenerators;
 
-namespace KalanalyzeCode.ConfigurationManager.Ui.Client.Authorization;
+namespace KalanalyzeCode.ConfigurationManager.Ui.Authorization;
 
 [Flags]
 [EnumExtensions]

@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Login
+namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Account.Login
 {
     [SecurityHeaders]
     [AllowAnonymous]
