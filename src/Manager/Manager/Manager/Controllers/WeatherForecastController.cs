@@ -1,15 +1,18 @@
+using KalanalyzeCode.ConfigurationManager.Ui.Client.Authorization;
 using KalanalyzeCode.ConfigurationManager.Ui.Contract.Request;
 using KalanalyzeCode.ConfigurationManager.Ui.Features.WeatherForecast;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KalanalyzeCode.ConfigurationManager.Ui.Controllers;
 
 [ApiController]
-[Authorize(AuthenticationSchemes = $"{JwtBearerDefaults.AuthenticationScheme}, {CookieAuthenticationDefaults.AuthenticationScheme}")]
+[Authorize(
+    AuthenticationSchemes =
+        $"{JwtBearerDefaults.AuthenticationScheme}, {CookieAuthenticationDefaults.AuthenticationScheme}",
+    Permissions = Permissions.All)]
 [Route("api/[controller]")]
 public sealed class WeatherForecastController : ControllerBase
 {
