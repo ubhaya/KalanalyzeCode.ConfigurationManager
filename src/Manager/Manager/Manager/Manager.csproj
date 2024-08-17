@@ -7,19 +7,13 @@
 
 
     <ItemGroup>
-        <PackageReference Include="Duende.IdentityServer.AspNetIdentity" />
-        <PackageReference Include="MediatR" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="MudBlazor" />
-        <PackageReference Include="NetEscapades.EnumGenerators" />
-        <PackageReference Include="Npgsql" />
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
         <PackageReference Include="NSwag.AspNetCore" />
         <PackageReference Include="NSwag.MSBuild">
           <PrivateAssets>all</PrivateAssets>
@@ -28,6 +22,11 @@
         <PackageReference Include="Swashbuckle.AspNetCore" />
         <PackageReference Include="Duende.IdentityServer" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Application\Application.csproj" />
     </ItemGroup>
 
     <Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">

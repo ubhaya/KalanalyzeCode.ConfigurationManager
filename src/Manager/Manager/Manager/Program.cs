@@ -1,3 +1,4 @@
+using KalanalyzeCode.ConfigurationManager.Application;
 using KalanalyzeCode.ConfigurationManager.Ui.Extension;
 using KalanalyzeCode.ConfigurationManager.Ui.Components;
 using MudBlazor.Services;
@@ -11,7 +12,9 @@ builder.Services.AddControllers();
 
 builder.Services.AddSwaggerService();
 
-builder.AddDatabaseConnect();
+builder.Services.AddApplicationCore();
+
+builder.Services.AddPersistence(builder.Configuration);
 
 builder.AddIdentityService();
 

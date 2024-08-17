@@ -1,5 +1,7 @@
 @page "/weather"
-@using KalanalyzeCode.ConfigurationManager.Ui.Features.WeatherForecast
+@using KalanalyzeCode.ConfigurationManager.Application.Authorization
+@using KalanalyzeCode.ConfigurationManager.Application.Features.WeatherForecast
+@using KalanalyzeCode.ConfigurationManager.Ui.Services.Interfaces
 @attribute [PermissionAuthorize(Permissions.WeatherForecast)]
 @inject IWeatherForecastHandler WeatherForecastHandler
 

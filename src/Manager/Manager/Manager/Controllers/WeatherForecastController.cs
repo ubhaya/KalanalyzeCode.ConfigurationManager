@@ -1,8 +1,7 @@
-using KalanalyzeCode.ConfigurationManager.Ui.Authorization;
-using KalanalyzeCode.ConfigurationManager.Ui.Contract.Request;
-using KalanalyzeCode.ConfigurationManager.Ui.Features.WeatherForecast;
+using KalanalyzeCode.ConfigurationManager.Application.Authorization;
+using KalanalyzeCode.ConfigurationManager.Application.Contract.Request;
+using KalanalyzeCode.ConfigurationManager.Application.Features.WeatherForecast;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,18 +12,15 @@ namespace KalanalyzeCode.ConfigurationManager.Ui.Controllers;
     AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
     Permissions = Permissions.All)]
 [Route("api/[controller]")]
-public sealed class WeatherForecastController : ControllerBase
+public sealed class WeatherForecastController : ApiControllerBase
 {
-    private readonly IMediator _mediator;
-
-    public WeatherForecastController(IMediator mediator)
+    public WeatherForecastController(IMediator mediator) : base(mediator)
     {
-        _mediator = mediator;
     }
 
     [HttpGet]
     public async Task<IEnumerable<WeatherForecast>> Get(CancellationToken cancellationToken = default)
     {
-        return await _mediator.Send(new GetWeatherForecastRequest(), cancellationToken);
+        return await Mediator.Send(new GetWeatherForecastRequest(), cancellationToken);
     }
 }

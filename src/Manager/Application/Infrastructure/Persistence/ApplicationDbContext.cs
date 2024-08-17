@@ -1,8 +1,11 @@
-﻿using KalanalyzeCode.ConfigurationManager.Application.Helpers;
+﻿using KalanalyzeCode.ConfigurationManager.Application.Common.Models;
+using KalanalyzeCode.ConfigurationManager.Application.Helpers;
 using KalanalyzeCode.ConfigurationManager.Entity.Abstract;
 using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
 using KalanalyzeCode.ConfigurationManager.Entity.Entities;
+using KalanalyzeCode.ConfigurationManager.Ui.Models;
 using MediatR;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
@@ -19,7 +22,7 @@ public interface IApplicationDbContext
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
 
-public class ApplicationDbContext : DbContext, IApplicationDbContext
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>, IApplicationDbContext
 {
     private readonly IPublisher _publisher;
     private readonly ILogger<ApplicationDbContext> _logger;

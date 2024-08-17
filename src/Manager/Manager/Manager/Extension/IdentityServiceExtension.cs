@@ -1,5 +1,6 @@
-using KalanalyzeCode.ConfigurationManager.Ui.Authorization;
-using KalanalyzeCode.ConfigurationManager.Ui.Data;
+using KalanalyzeCode.ConfigurationManager.Application.Authorization;
+using KalanalyzeCode.ConfigurationManager.Application.Common.Models;
+using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using KalanalyzeCode.ConfigurationManager.Ui.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
