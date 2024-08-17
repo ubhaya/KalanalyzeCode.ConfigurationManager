@@ -1,4 +1,3 @@
-using IdentityServer.Data;
 using KalanalyzeCode.ConfigurationManager.Ui.Data;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;

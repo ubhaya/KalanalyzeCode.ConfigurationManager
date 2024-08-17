@@ -11,10 +11,6 @@ public static class OpenIdConnectExtension
 {
     public static IServiceCollection AddOpenIdConnect(this IServiceCollection services)
     {
-        // services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
-        // services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
-        // services.AddTransient<AuthenticationDelegatingHandler>();
-
         services.AddAntiforgery(options => options.Cookie.Name = "ClientBlazorAppAntiForgeryCookie")
             .AddAuthentication(options =>
             {

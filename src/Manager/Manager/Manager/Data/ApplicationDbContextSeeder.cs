@@ -1,11 +1,11 @@
 using System.Security.Claims;
 using IdentityModel;
-using KalanalyzeCode.ConfigurationManager.Ui.Data;
+using KalanalyzeCode.ConfigurationManager.Ui.Client.Authorization;
 using KalanalyzeCode.ConfigurationManager.Ui.Logging;
 using KalanalyzeCode.ConfigurationManager.Ui.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace IdentityServer.Data;
+namespace KalanalyzeCode.ConfigurationManager.Ui.Data;
 
 public class ApplicationDbContextSeeder
 {
@@ -42,18 +42,12 @@ public class ApplicationDbContextSeeder
             ], ["ApiKey"], "674e2a077bd64d669340af69c460767c")
         }
     };
-
-    // private readonly Dictionary<string, Permissions> _roles = new()
-    // {
-    //     { "Administrator", Permissions.All },
-    //     { "ApiKey", Permissions.AppSettingsRead }
-    // };
-
-    private readonly IEnumerable<string> _roles =
-    [
-        "Administrator",
-        "ApiKey"
-    ];
+    
+    private readonly Dictionary<string, Permissions> _roles = new()
+    {
+        { "Administrator", Permissions.All },
+        { "ApiKey", Permissions.AppSettingsRead }
+    };
     
     private const string DefaultPassword = "Pass123$";
 
@@ -69,14 +63,9 @@ public class ApplicationDbContextSeeder
 
     public async Task SeedDataAsync()
     {
-        // foreach (var (roleName, permissions) in _roles)
-        // {
-        //     await EnsureRoles(roleName, permissions);
-        // }
-        
-        foreach (var roleName in _roles)
+        foreach (var (roleName, permissions) in _roles)
         {
-            await EnsureRoles(roleName);
+            await EnsureRoles(roleName, permissions);
         }
 
         foreach (var (userName, data) in _seedUsers)
@@ -85,8 +74,7 @@ public class ApplicationDbContextSeeder
         }
     }
 
-    // private async Task EnsureRoles(string roleName, Permissions permissions)
-    private async Task EnsureRoles(string roleName)
+    private async Task EnsureRoles(string roleName, Permissions permissions)
     {
         var isExists = await _roleManager.RoleExistsAsync(roleName);
 
@@ -95,7 +83,7 @@ public class ApplicationDbContextSeeder
             var role = new ApplicationRole()
             {
                 Name = roleName,
-                //Permissions = permissions
+                Permissions = permissions
             };
 
             var result = await _roleManager.CreateAsync(role);
