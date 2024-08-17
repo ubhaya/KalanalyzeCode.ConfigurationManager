@@ -1,5 +1,7 @@
+using KalanalyzeCode.ConfigurationManager.Ui.Client.Authorization;
 using KalanalyzeCode.ConfigurationManager.Ui.Client.Handlers.Interfaces;
 using KalanalyzeCode.ConfigurationManager.Ui.Client.Handlers.WebAssembly;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -23,6 +25,16 @@ public static class AddApplicationServices
 
         builder.Services.AddScoped<IWeatherForecastHandler, WeatherForecastApiHandler>();
 
+        builder.Services.AddPermissionBaseAuthorizationService();
+
         return builder;
+    }
+
+    private static IServiceCollection AddPermissionBaseAuthorizationService(this IServiceCollection services)
+    {
+        services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+        services.AddScoped<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
+
+        return services;
     }
 }

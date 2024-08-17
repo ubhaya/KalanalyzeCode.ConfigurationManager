@@ -1,9 +1,8 @@
-using KalanalyzeCode.ConfigurationManager.Ui.Client.Extension;
+using KalanalyzeCode.ConfigurationManager.Ui;
 using KalanalyzeCode.ConfigurationManager.Ui.Extension;
 using KalanalyzeCode.ConfigurationManager.Ui.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor.Services;
-using Manager.Components.Account;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +27,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddOpenIdConnect();
 
 builder.Services.AddCascadingAuthenticationState();
-builder.Services.AddScoped<AuthenticationStateProvider, PersistingAuthenticationStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider, PersistingServerAuthenticationStateProvider>();
 
 builder.Services.AddServerSideServices();
 

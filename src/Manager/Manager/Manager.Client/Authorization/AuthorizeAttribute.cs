@@ -1,13 +1,13 @@
 namespace KalanalyzeCode.ConfigurationManager.Ui.Client.Authorization;
 
-public sealed class AuthorizeAttribute : Microsoft.AspNetCore.Authorization.AuthorizeAttribute
+public sealed class PermissionAuthorizeAttribute : Microsoft.AspNetCore.Authorization.AuthorizeAttribute
 {
-    public AuthorizeAttribute()
+    public PermissionAuthorizeAttribute()
     {
-        
+        Permissions = Permissions.None;
     }
     
-    public AuthorizeAttribute(Permissions permission)
+    public PermissionAuthorizeAttribute(Permissions permission)
     {
         Permissions = permission;
     }

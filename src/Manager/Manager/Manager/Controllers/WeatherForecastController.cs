@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace KalanalyzeCode.ConfigurationManager.Ui.Controllers;
 
 [ApiController]
-[Authorize(
+[PermissionAuthorize(
     AuthenticationSchemes =
         $"{JwtBearerDefaults.AuthenticationScheme}, {CookieAuthenticationDefaults.AuthenticationScheme}",
     Permissions = Permissions.All)]

@@ -11,5 +11,6 @@ public enum Permissions
     AppSettingsWrite = 2,
     ProjectRead = 4,
     ProjectWrite = 8,
+    WeatherForecast = 16,
     All = ~None,
 }

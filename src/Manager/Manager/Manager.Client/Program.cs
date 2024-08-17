@@ -1,5 +1,5 @@
+using KalanalyzeCode.ConfigurationManager.Ui.Client;
 using KalanalyzeCode.ConfigurationManager.Ui.Client.Extension;
-using Manager.Client;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
