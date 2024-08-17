@@ -57,7 +57,8 @@ namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.ServerSideSessions
         {
             ArgumentNullException.ThrowIfNull(_sessionManagementService);
 
-            await _sessionManagementService.RemoveSessionsAsync(new RemoveSessionsContext { 
+            await _sessionManagementService.RemoveSessionsAsync(new RemoveSessionsContext
+            {
                 SessionId = SessionId,
             });
             return RedirectToPage("/ServerSideSessions/Index", new { Token, DisplayNameFilter, SessionIdFilter, SubjectIdFilter, Prev });

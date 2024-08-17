@@ -4,13 +4,14 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Device;
-
-[SecurityHeaders]
-[Authorize]
-public class SuccessModel : PageModel
+namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Device
 {
-    public void OnGet()
+    [SecurityHeaders]
+    [Authorize]
+    public class SuccessModel : PageModel
     {
+        public void OnGet()
+        {
+        }
     }
 }

@@ -1,3 +1,6 @@
+using KalanalyzeCode.ConfigurationManager.Ui.Data;
+using KalanalyzeCode.ConfigurationManager.Ui.Models;
+
 namespace KalanalyzeCode.ConfigurationManager.Ui.Extension;
 
 public static class IdentityServerExtension
@@ -20,7 +23,7 @@ public static class IdentityServerExtension
             .AddInMemoryIdentityResources(Config.IdentityResources)
             .AddInMemoryApiScopes(Config.ApiScopes)
             .AddInMemoryClients(Config.Clients)
-            .AddTestUsers(TestUsers.Users);
+            .AddAspNetIdentity<ApplicationUser>();
 
         return builder;
     }

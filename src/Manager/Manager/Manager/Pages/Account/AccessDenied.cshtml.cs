@@ -3,11 +3,12 @@
 
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Account;
-
-public class AccessDeniedModel : PageModel
+namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Account
 {
-    public void OnGet()
+    public class AccessDeniedModel : PageModel
     {
+        public void OnGet()
+        {
+        }
     }
 }

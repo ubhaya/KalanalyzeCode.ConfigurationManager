@@ -14,6 +14,10 @@ builder.Services.AddControllers();
 
 builder.Services.AddSwaggerService();
 
+builder.AddDatabaseConnect();
+
+builder.AddIdentityService();
+
 builder.AddIdentityServerFunction();
 
 // Add services to the container.
@@ -29,6 +33,8 @@ builder.Services.AddScoped<AuthenticationStateProvider, PersistingAuthentication
 builder.Services.AddServerSideServices();
 
 var app = builder.Build();
+
+await app.SeedData();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -60,4 +66,4 @@ app.UseIdentityServerFunction();
 
 app.MapControllers();
 
-app.Run();
+await app.RunAsync();

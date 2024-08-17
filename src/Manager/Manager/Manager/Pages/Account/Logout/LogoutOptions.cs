@@ -2,10 +2,11 @@
 // See LICENSE in the project root for license information.
 
 
-namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Logout;
-
-public static class LogoutOptions
+namespace KalanalyzeCode.ConfigurationManager.Ui.Pages.Logout
 {
-    public static readonly bool ShowLogoutPrompt = true;
-    public static readonly bool AutomaticRedirectAfterSignOut = false;
+    public static class LogoutOptions
+    {
+        public static readonly bool ShowLogoutPrompt = true;
+        public static readonly bool AutomaticRedirectAfterSignOut = false;
+    }
 }
