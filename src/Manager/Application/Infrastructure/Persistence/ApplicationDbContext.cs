@@ -3,7 +3,6 @@ using KalanalyzeCode.ConfigurationManager.Application.Helpers;
 using KalanalyzeCode.ConfigurationManager.Entity.Abstract;
 using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
 using KalanalyzeCode.ConfigurationManager.Entity.Entities;
-using KalanalyzeCode.ConfigurationManager.Ui.Models;
 using MediatR;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +13,8 @@ namespace KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persist
 
 public interface IApplicationDbContext
 {
+    DbSet<ApplicationUser> Users { get; set; }
+    
     DbSet<ConfigurationSettings> Settings { get; set; }
     DbSet<Project> Projects { get; set; }
     Task BeginTransactionAsync(CancellationToken cancellationToken = default);

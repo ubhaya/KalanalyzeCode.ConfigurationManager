@@ -1,0 +1,54 @@
+@using KalanalyzeCode.ConfigurationManager.Entity.Entities
+@attribute [Route(AppConstants.Projects.Index.Route)]
+@attribute [PermissionAuthorize(Permissions.ProjectRead)]
+
+<PageTitle>@AppConstants.Projects.Index.AppTitle</PageTitle>
+
+<h3>@AppConstants.Projects.Index.Name</h3>
+
+<PermissionAuthorizeView Permissions="Permissions.ProjectWrite">
+    <MudIconButton Icon="@Icons.Material.Filled.Add" OnClick="@(async () => await Add())"/>
+</PermissionAuthorizeView>
+
+<MudTable T="Project" ServerData="@(new Func<TableState, CancellationToken, Task<TableData<Project>>>(ServerReload))"
+          Dense="true" Hover="true" @ref="_projectTable">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">
+            @(string.IsNullOrWhiteSpace(_searchString) ? "All Projects" : $"Projects contains {_searchString}");
+        </MudText>
+        <MudSpacer/>
+        <MudTextField T="string" ValueChanged="@(OnSearch)" Placeholder="Search" Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0">
+        </MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>
+            <MudTableSortLabel SortLabel="name_field" T="Project">Name</MudTableSortLabel>
+        </MudTh>
+        <MudTh>Action</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Name">
+            <MudLink Href="@($"{AppConstants.ProjectManager.Index.Route}/{context.Id}")">
+                @context.Name
+            </MudLink>
+        </MudTd>
+        <MudTd DataLabel="Action">
+            <PermissionAuthorizeView Permissions="Permissions.ProjectWrite" Context="authorizationContext">
+                <MudIconButton ButtonType="ButtonType.Button" Variant="Variant.Text" Color="Color.Warning"
+                               Icon="@Icons.Material.Outlined.Edit" OnClick="@(async () => await Edit(context))"/>
+                <MudIconButton ButtonType="ButtonType.Button" Variant="Variant.Text" Color="Color.Error"
+                               Icon="@Icons.Material.Outlined.Delete" OnClick="@(async () => await Delete(context))"/>
+            </PermissionAuthorizeView>
+        </MudTd>
+    </RowTemplate>
+    <NoRecordsContent>
+        <MudText>No matching record found</MudText>
+    </NoRecordsContent>
+    <LoadingContent>
+        <MudText>Loading...</MudText>
+    </LoadingContent>
+    <PagerContent>
+        <MudTablePager/>
+    </PagerContent>
+</MudTable>

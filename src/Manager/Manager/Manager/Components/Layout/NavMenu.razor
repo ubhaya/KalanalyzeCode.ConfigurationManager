@@ -4,9 +4,10 @@
 
 <MudNavMenu>
     <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-    <MudNavLink Href="counter" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Counter</MudNavLink>
     <MudNavLink Href="weather" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Weather</MudNavLink>
-    <MudNavLink Href="auth" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Lock">Auth Required</MudNavLink>
+    <MudNavGroup Title="Projects" Icon="@Icons.Material.Filled.Newspaper">
+        <MudNavLink Href="@AppConstants.Projects.Index.Route" Icon="@Icons.Material.Filled.List">@AppConstants.Projects.Index.Name</MudNavLink>
+    </MudNavGroup>
     <AuthorizeView>
         <Authorized>
             <MudNavLink Href="/diagnostics" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person">@context.User.Identity?.Name</MudNavLink>

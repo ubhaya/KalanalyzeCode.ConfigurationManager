@@ -3,6 +3,7 @@ using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.ApiKeyMan
 using KalanalyzeCode.ConfigurationManager.Application.Helpers;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace KalanalyzeCode.ConfigurationManager.Application.Features.ApiKeyManager.Command;
 
@@ -26,14 +27,24 @@ public sealed class DeleteApiKeyForProjectRequestHandler : IRequestHandler<Delet
 
         var client = _clientFactory.CreateClient(AppConstants.IdentityServerClient);
 
-        var result = await client.DeleteAsync($"api/Account/{project.ApiKey:N}", cancellationToken);
-
-        result.EnsureSuccessStatusCode();
+        await DeleteApiKey(project.ApiKey, cancellationToken);
         
         project.ApiKey = Guid.Empty;
 
         _context.Projects.Update(project);
 
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
+    private async Task DeleteApiKey(Guid id, CancellationToken cancellationToken = default)
+    {
+        var isApiKeyExists =
+            await _context.Users.SingleOrDefaultAsync(u => u.Id == id, cancellationToken);
+
+        if (isApiKeyExists is null)
+            return;
+
+        _context.Users.Remove(isApiKeyExists);
         await _context.SaveChangesAsync(cancellationToken);
     }
 }

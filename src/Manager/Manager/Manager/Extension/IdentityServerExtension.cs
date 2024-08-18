@@ -1,4 +1,4 @@
-using KalanalyzeCode.ConfigurationManager.Ui.Models;
+using KalanalyzeCode.ConfigurationManager.Application.Common.Models;
 
 namespace KalanalyzeCode.ConfigurationManager.Ui.Extension;
 

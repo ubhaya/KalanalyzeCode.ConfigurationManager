@@ -1,6 +1,3 @@
-using KalanalyzeCode.ConfigurationManager.Ui.Services.Implementations;
-using KalanalyzeCode.ConfigurationManager.Ui.Services.Interfaces;
-
 namespace KalanalyzeCode.ConfigurationManager.Ui.Extension;
 
 public static class ServerSideServiceExtension
@@ -11,8 +8,6 @@ public static class ServerSideServiceExtension
         {
             config.RegisterServicesFromAssembly(typeof(Program).Assembly);
         });
-        
-        services.AddScoped<IWeatherForecastHandler, WeatherForecastServiceHandler>();
 
         return services;
     }

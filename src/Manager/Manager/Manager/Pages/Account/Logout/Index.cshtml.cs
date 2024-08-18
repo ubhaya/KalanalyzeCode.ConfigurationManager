@@ -5,7 +5,7 @@ using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Services;
 using IdentityModel;
-using KalanalyzeCode.ConfigurationManager.Ui.Models;
+using KalanalyzeCode.ConfigurationManager.Application.Common.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

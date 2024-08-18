@@ -1,7 +1,6 @@
 using System.Security.Claims;
 using KalanalyzeCode.ConfigurationManager.Application.Authorization;
 using KalanalyzeCode.ConfigurationManager.Application.Common.Models;
-using KalanalyzeCode.ConfigurationManager.Ui.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
