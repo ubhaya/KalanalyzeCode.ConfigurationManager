@@ -36,12 +36,6 @@ public class GetBydIdEndpointTests : TestBase
     {
         // Arrange
         var projectInDatabase = Fixture.Create<Project>();
-        var projectToMatch = new Project()
-        {
-            Id = projectInDatabase.Id,
-            Name = projectInDatabase.Name,
-            ApiKey = projectInDatabase.ApiKey
-        };
         await AddAsync(projectInDatabase);
         var request = new GetProjectByIdRequest(projectInDatabase.Id);
         
@@ -51,6 +45,6 @@ public class GetBydIdEndpointTests : TestBase
         // Assert
         project.Should().NotBeNull();
         project.Project.Should().NotBeNull();
-        project.Project.Should().BeEquivalentTo(projectToMatch);
+        project.Project.Should().BeEquivalentTo(projectInDatabase);
     }
 }

@@ -1,8 +1,11 @@
 using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.ApiKeyManager;
+using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.Configurations;
 using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.Projects;
+using KalanalyzeCode.ConfigurationManager.Application.Helpers;
 using KalanalyzeCode.ConfigurationManager.Entity.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace KalanalyzeCode.ConfigurationManager.Ui.Components.Pages.ProjectManager;
 
@@ -17,6 +20,8 @@ public partial class Index
     #region Fields
 
     private Project? _project;
+    private MudTable<Configuration> _configurationTable = default!;
+    private string _searchString = string.Empty;
 
     #endregion
 
@@ -45,5 +50,35 @@ public partial class Index
         await Mediator.Send(new DeleteApiKeyForProjectRequest(_project?.Id ?? Guid.Empty), CancellationToken);
         var response = await Mediator.Send(new GetProjectByIdRequest(Id), CancellationToken);
         _project = response.Project;
+    }
+
+    private async Task<GridData<Configuration>> ServerReload(GridState<Configuration> state)
+    {
+        var sortDefinition = state.SortDefinitions.FirstOrDefault();
+        var sortDirection = sortDefinition?.Descending ?? false
+            ? CustomSortDirection.Descending
+            : CustomSortDirection.Ascending;
+        var result = await Mediator.Send(new GetAllConfigurationRequest(
+            _searchString, state.Page, state.PageSize,
+            sortDirection, sortDefinition?.SortBy ?? string.Empty,
+            _project!.Id), CancellationToken);
+
+        return new GridData<Configuration>()
+        {
+            Items = result.Configurations,
+            TotalItems = result.TotalItems
+        };
+    }
+    
+    private async Task OnSearch(string text)
+    {
+        _searchString = text;
+        await _configurationTable.ReloadServerData();
+    }
+
+    private Task OnItemChanged(Configuration configuration)
+    {
+        Console.WriteLine(configuration.Value);
+        return Task.CompletedTask;
     }
 }

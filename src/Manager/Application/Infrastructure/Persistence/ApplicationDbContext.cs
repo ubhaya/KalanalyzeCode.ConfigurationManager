@@ -17,6 +17,8 @@ public interface IApplicationDbContext
     
     DbSet<ConfigurationSettings> Settings { get; set; }
     DbSet<Project> Projects { get; set; }
+    DbSet<Configuration> Configurations { get; set; }
+    
     Task BeginTransactionAsync(CancellationToken cancellationToken = default);
     Task CommitTransactionAsync(CancellationToken cancellationToken = default);
     Task RollbackTransaction(CancellationToken cancellationToken = default);
@@ -38,6 +40,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     
     public DbSet<ConfigurationSettings> Settings { get; set; }
     public DbSet<Project> Projects { get; set; }
+    public DbSet<Configuration> Configurations { get; set; }
 
     public async Task BeginTransactionAsync(CancellationToken cancellationToken = default)
     {
