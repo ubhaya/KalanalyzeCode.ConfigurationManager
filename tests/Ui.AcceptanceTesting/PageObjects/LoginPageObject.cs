@@ -20,6 +20,7 @@ public sealed class LoginPageObject : BasePageTemplateObject
     public ILocator Password => Page.GetByTestId("Input.Password");
     public ILocator SignInButton => Page.GetByTestId("Input.Login");
     public ILocator CancelButton => Page.GetByTestId("Input.Cancel");
+    public ILocator Error => Page.GetByTestId("Error");
 
     public async Task SetUsername(string email) => await Username.FillAsync(email);
     public async Task SetPassword(string password) => await Password.FillAsync(password);
@@ -31,4 +32,5 @@ public sealed class LoginPageObject : BasePageTemplateObject
     }
 
     public async Task SignInButtonClicked() => await SignInButton.ClickAsync();
+    public async Task<bool> IsError()=> await Error.IsVisibleAsync();
 }

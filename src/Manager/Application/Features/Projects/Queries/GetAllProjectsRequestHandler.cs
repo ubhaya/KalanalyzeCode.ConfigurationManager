@@ -23,7 +23,7 @@ public class GetAllProjectsRequestHandler : IRequestHandler<GetAllProjectsReques
         if (!string.IsNullOrWhiteSpace(request.SearchString))
         {
             projects = from project in projects
-                where project.Name.Contains(request.SearchString, StringComparison.OrdinalIgnoreCase)
+                where EF.Functions.Like(project.Name, $"%{request.SearchString}%")
                 select project;
         }
 

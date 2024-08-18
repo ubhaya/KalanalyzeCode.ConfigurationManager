@@ -28,7 +28,7 @@ public class TestBase : IAsyncLifetime
         return entity;
     }
     
-    protected async Task<IEnumerable<TEntity>> AddRangeAsync<TEntity>(ICollection<TEntity> entity) where TEntity : class
+    protected async Task<IEnumerable<TEntity>> AddRangeAsync<TEntity>(IEnumerable<TEntity> entity) where TEntity : class
     {
         var context = _scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         await context.AddRangeAsync(entity, CancellationToken);

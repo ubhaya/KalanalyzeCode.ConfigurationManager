@@ -57,4 +57,27 @@ public class GetGetAllEndpointsTests : TestBase
         allProjectResponse.Projects.Should().NotBeNull();
         //allProjectResponse.Data.Projects.Should().AllBeEquivalentTo(projectList);
     }
+
+    [Fact]
+    public async Task GetAllProject_ShouldReturnFilteredProject_WhenValidSearchString()
+    {
+        // Arange
+        var seachString = "Project 1";
+        var projects = Enumerable.Range(1, 10).Select(x => new Project()
+        {
+            Name = $"Project {x}",
+        }).ToList();
+        await AddRangeAsync(projects);
+        var returnList = projects.Where(x=>x.Name.Contains(seachString, StringComparison.OrdinalIgnoreCase)).ToList();
+        var request = new GetAllProjectsRequest(seachString, 0, 10, CustomSortDirection.None, string.Empty);
+
+        // Act
+        var response = await _mediator.Send(request, CancellationToken);
+        
+        // Assert
+        response.Should().NotBeNull();
+        response.TotalItem.Should().Be(returnList.Count);
+        response.Projects.Should().NotBeNull();
+        response.Projects.Count().Should().Be(returnList.Count);
+    }
 }
