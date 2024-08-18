@@ -4,4 +4,7 @@ using MediatR;
 
 namespace KalanalyzeCode.ConfigurationManager.Application.Contract.Request.Projects;
 
-public sealed record CreateProjectRequest(string ProjectName) : IRequest<CreateProjectResponse>;
+public sealed class CreateProjectRequest : IRequest<CreateProjectResponse>
+{
+    public string ProjectName { get; set; } = string.Empty;
+}

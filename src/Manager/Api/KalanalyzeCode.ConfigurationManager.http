@@ -1,6 +1,0 @@
-@KalanalyzeCode.ConfigurationManager_HostAddress = http://localhost:5125
-
-GET {{KalanalyzeCode.ConfigurationManager_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

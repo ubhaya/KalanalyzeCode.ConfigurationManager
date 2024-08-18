@@ -1,19 +1,19 @@
 using AutoFixture;
 using FluentAssertions;
-using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client;
 using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
+using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.ApiKeyManager;
+using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.ProjectManager;
+using MediatR;
 
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Endpoints.ApiKeyManager;
 
 [Collection(Collections.ApiWebApplicationCollection)]
 public sealed class PostApiKeyEndpointTests : TestBase
 {
-    private readonly IApiKeyManagerClient _client;
-    private readonly IProjectManagerClient _projectManagerClient;
+    private readonly IMediator _mediator;
     public PostApiKeyEndpointTests(ApiWebApplication factory) : base(factory)
     {
-        _client = new ApiKeyManagerClient(factory.HttpClient);
-        _projectManagerClient = new ProjectManagerClient(factory.HttpClient);
+        _mediator = factory.Mediator;
     }
 
     [Fact]
@@ -24,21 +24,24 @@ public sealed class PostApiKeyEndpointTests : TestBase
             .Without(x => x.ApiKey)
             .Create();
         await AddAsync(projectInDatabase);
+        var getRequest = new GetProjectInformationRequest(projectInDatabase.Id);
 
         // Act
-        var result = await _client.PostAsync(new CreateApiKeyForProjectRequest()
-        {
-            ProjectId = projectInDatabase.Id
-        });
-        var updatedProjectResponse = await _projectManagerClient.GetByIdAsync(projectInDatabase.Id, CancellationToken);
+        var result = await _mediator.Send(new CreateApiKeyForProjectRequest(projectInDatabase.Id), CancellationToken);
+        var updatedProjectResponseOption = await _mediator.Send(getRequest, CancellationToken);
 
         // Assert
-        result.Should().NotBeEmpty();
-        var project = updatedProjectResponse.Project;
+        result.IsSuccess.Should().BeTrue();
+
+        var createdApiKey = result.Match(x => x,
+            exception => throw exception);
+
+        var project = updatedProjectResponseOption.Match(project => project, () => throw new NullReferenceException());
         project.Should().NotBeNull();
         project.Id.Should().Be(projectInDatabase.Id);
         project.Name.Should().Be(projectInDatabase.Name);
-        project.ApiKey.Should().Be(result);
+        project.ApiKey.Should().Be(createdApiKey);  
+
     }
     
     [Fact]
@@ -48,21 +51,24 @@ public sealed class PostApiKeyEndpointTests : TestBase
         var projectInDatabase = Fixture.Build<Entity.Entities.Project>()
             .Create();
         await AddAsync(projectInDatabase);
-
+        var getRequest = new GetProjectInformationRequest(projectInDatabase.Id);
+    
         // Act
-        var result = await _client.PostAsync(new CreateApiKeyForProjectRequest()
-        {
-            ProjectId = projectInDatabase.Id
-        });
-        var updatedProjectResponse = await _projectManagerClient.GetByIdAsync(projectInDatabase.Id, CancellationToken);
-
+        var result = await _mediator.Send(new CreateApiKeyForProjectRequest(projectInDatabase.Id));
+        var updatedProjectResponseOption = await _mediator.Send(getRequest, CancellationToken);
+    
         // Assert
-        result.Should().NotBeEmpty();
-        result.Should().Be(projectInDatabase.ApiKey);
-        var project = updatedProjectResponse.Project;
+        result.IsSuccess.Should().BeTrue();
+
+        var createdApiKey = result.Match(x => x,
+            exception => throw exception);
+        
+        createdApiKey.Should().NotBeEmpty();
+        createdApiKey.Should().Be(projectInDatabase.ApiKey);
+        var project = updatedProjectResponseOption.Match(project => project, () => throw new NullReferenceException());
         project.Should().NotBeNull();
         project.Id.Should().Be(projectInDatabase.Id);
         project.Name.Should().Be(projectInDatabase.Name);
-        project.ApiKey.Should().Be(result);
+        project.ApiKey.Should().Be(createdApiKey);
     }
 }

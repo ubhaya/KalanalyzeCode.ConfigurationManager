@@ -1,27 +1,30 @@
 using AutoFixture;
 using FluentAssertions;
-using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client;
 using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
+using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.Projects;
+using KalanalyzeCode.ConfigurationManager.Entity.Entities;
+using MediatR;
 
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Endpoints.Projects;
 
 [Collection(Collections.ApiWebApplicationCollection)]
 public class GetBydIdEndpointTests : TestBase
 {
-    private readonly IProjectsClient _client;
+    private readonly IMediator _mediator;
 
     public GetBydIdEndpointTests(ApiWebApplication factory) : base(factory)
     {
-        _client = new ProjectsClient(factory.HttpClient);
+        _mediator = factory.Mediator;
     }
 
     [Fact]
     public async Task GetProjectById_ShouldReturn404_WhenNoProjectInDatabase()
     {
         // Arrange
+        var request = new GetProjectByIdRequest(Guid.NewGuid());
         
         // Act
-        var project = await _client.GetByIdAsync(Guid.NewGuid(), CancellationToken);
+        var project = await _mediator.Send(request, CancellationToken);
 
         // Assert
         project.Should().NotBeNull();
@@ -32,7 +35,7 @@ public class GetBydIdEndpointTests : TestBase
     public async Task GetProjectById_ShouldReturnOneProject_WhenValidProjectInDatabase()
     {
         // Arrange
-        var projectInDatabase = Fixture.Create<Entity.Entities.Project>();
+        var projectInDatabase = Fixture.Create<Project>();
         var projectToMatch = new Project()
         {
             Id = projectInDatabase.Id,
@@ -40,9 +43,10 @@ public class GetBydIdEndpointTests : TestBase
             ApiKey = projectInDatabase.ApiKey
         };
         await AddAsync(projectInDatabase);
+        var request = new GetProjectByIdRequest(projectInDatabase.Id);
         
         // Act
-        var project = await _client.GetByIdAsync(projectInDatabase.Id, CancellationToken);
+        var project = await _mediator.Send(request, CancellationToken);
 
         // Assert
         project.Should().NotBeNull();

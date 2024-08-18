@@ -1,11 +1,12 @@
 ﻿using System.Data.Common;
 using System.Net;
 using System.Security.Claims;
-using Identity.Shared.Authorization;
 using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
+using KalanalyzeCode.ConfigurationManager.Application.Authorization;
 using KalanalyzeCode.ConfigurationManager.Application.Helpers;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence.Seeder;
+using MediatR;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +23,7 @@ using WireMock.Util;
 
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests;
 
-public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
+public class ApiWebApplication : WebApplicationFactory<Ui.Api>, IAsyncLifetime
 {
     private const string DatabaseName = "myDatabaseTest";
     private const string Username = "postgres";
@@ -45,7 +46,7 @@ public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
     private DbConnection _dbConnection = default!;
     private Respawner _respawner = default!;
     
-    public HttpClient HttpClient { get; private set; } = default!;
+    public IMediator Mediator { get; private set; } = default!;
     public IServiceScope Scope { get; private set; } = default!;
     public IApplicationDbContext DatabaseContext { get; set; } = default!;
     
@@ -66,42 +67,6 @@ public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
                 .UseNpgsql(connectionStringBuilder.ConnectionString)
                 .UseApplicationServiceProvider(sp)
                 .Options);
-
-            var identityServer = WireMockServer.Start();
-            
-            identityServer.Given(Request.Create().WithPath("/api/Account").UsingPost())
-                .RespondWith(Response.Create(() => new ResponseMessage()
-                {
-                    BodyData = new BodyData
-                    {
-                        BodyAsString = """
-                                       {
-                                           "apiKey": "c948a66762b8493eafd706e64efc31c6",
-                                           "id": "0edc7b85-a6bc-4135-8ab0-99307ff85713",
-                                           "userName": "c948a66762b8493eafd706e64efc31c6",
-                                           "normalizedUserName": "C948A66762B8493EAFD706E64EFC31C6",
-                                           "email": "c948a66762b8493eafd706e64efc31c6@c948a66762b8493eafd706e64efc31c6.c948a66762b8493eafd706e64efc31c6",
-                                           "normalizedEmail": "C948A66762B8493EAFD706E64EFC31C6@C948A66762B8493EAFD706E64EFC31C6.C948A66762B8493EAFD706E64EFC31C6",
-                                           "emailConfirmed": true,
-                                           "passwordHash": "AQAAAAIAAYagAAAAEFXkDYTRC1PnkC/ZCi88N2rmu4nBs3I2UPVlAhJhqbaQUrrJe6D+PqC+7q5mhZxgMQ==",
-                                           "securityStamp": "HLOCQCEA7J7S5QT74WABBSWJD5E45RZA",
-                                           "concurrencyStamp": "5131b4c8-b53f-4d9e-a5cf-986f7365ecce",
-                                           "phoneNumber": null,
-                                           "phoneNumberConfirmed": false,
-                                           "twoFactorEnabled": false,
-                                           "lockoutEnd": null,
-                                           "lockoutEnabled": true,
-                                           "accessFailedCount": 0
-                                       }
-                                       """,
-                    }
-                }).WithStatusCode(200));
-            
-            identityServer.Given(Request.Create().WithPath("/api/Account/*").UsingDelete())
-                .RespondWith(Response.Create().WithStatusCode(HttpStatusCode.NoContent));
-            
-            services.AddHttpClient(AppConstants.IdentityServerClient,
-                client => client.BaseAddress = new Uri(identityServer.Url?? throw new NullReferenceException()));
         });
 
         return base.CreateHost(builder);
@@ -119,7 +84,7 @@ public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
         _dbConnection = new NpgsqlConnection(_dbContainer.GetConnectionString());
         DatabaseContext = Scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
         await EnsureDatabase();
-        HttpClient = CreateClient();
+        Mediator = Scope.ServiceProvider.GetRequiredService<IMediator>();
         await InitializeRespawner();
     }
     
@@ -139,6 +104,9 @@ public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
     {
         var context = Scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         await context.Database.MigrateAsync();
+
+        var contextSeeder = Scope.ServiceProvider.GetRequiredService<IDatabaseSeeder>();
+        await contextSeeder.SeedDataAsync();
     }
 
     public new async Task DisposeAsync()

@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <AssemblyName>KalanalyzeCode.ConfigurationManager.Ui</AssemblyName>
+        <RootNamespace>KalanalyzeCode.ConfigurationManager.Ui</RootNamespace>
+    </PropertyGroup>
+
+
+    <ItemGroup>
+        <PackageReference Include="Humanizer.Core" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="MudBlazor" />
+        <PackageReference Include="NSwag.AspNetCore" />
+        <PackageReference Include="NSwag.MSBuild">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Swashbuckle.AspNetCore" />
+        <PackageReference Include="Duende.IdentityServer" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <ProjectReference Include="..\Application\Application.csproj" />
+    </ItemGroup>
+
+    <Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
+        <Message Importance="High" Text="$(NSwagExe_Net80) run nswag.json /variables:Configuration=$(Configuration)" />
+<!--        <Exec WorkingDirectory="$(ProjectDir)"-->
+<!--              EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development"-->
+<!--              Command="$(NSwagExe_Net80) run ui.json /variables:Configuration=$(Configuration)" />-->
+<!--        <Exec WorkingDirectory="$(ProjectDir)"-->
+<!--              EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development"-->
+<!--              Command="$(NSwagExe_Net80) run integration-tests.json /variables:Configuration=$(Configuration)" />-->
+<!--        <Exec WorkingDirectory="$(ProjectDir)"-->
+<!--              EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development"-->
+<!--              Command="$(NSwagExe_Net80) run provider.json /variables:Configuration=$(Configuration)" />-->
+        <Delete Files="$(ProjectDir)\obj\$(MSBuildProjectFile).NSwag.targets" />
+        <!-- This thingy trigger project rebuild -->
+    </Target>
+
+</Project>
