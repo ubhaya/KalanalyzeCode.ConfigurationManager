@@ -5,11 +5,17 @@
     <IsTestProject>true</IsTestProject>
     <AssemblyName>KalanalyzeCode.ConfigurationManager.Api.IntegrationTests</AssemblyName>
     <RootNamespace>KalanalyzeCode.ConfigurationManager.Api.IntegrationTests</RootNamespace>
+    <CollectCoverage>true</CollectCoverage>
+    <CoverletOutputFormat>opencover</CoverletOutputFormat>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoFixture"/>
     <PackageReference Include="coverlet.collector">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.msbuild">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

@@ -26,18 +26,18 @@
 
                             <div class="form-group">
                                 <label asp-for="Input.Username"></label>
-                                <input class="form-control" placeholder="Username" asp-for="Input.Username" autofocus>
+                                <input class="form-control" placeholder="Username" asp-for="Input.Username" data-testid="Input.Username" autofocus>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Input.Password"></label>
-                                <input type="password" class="form-control" placeholder="Password" asp-for="Input.Password" autocomplete="off">
+                                <input type="password" class="form-control" placeholder="Password" asp-for="Input.Password" data-testid="Input.Password" autocomplete="off">
                             </div>
                             
                             @if (Model.View.AllowRememberLogin)
                             {
                                 <div class="form-group">
                                     <div class="form-check">
-                                        <input class="form-check-input" asp-for="Input.RememberLogin">
+                                        <input class="form-check-input" asp-for="Input.RememberLogin" data-testid="Input.RememberLogin">
                                         <label class="form-check-label" asp-for="Input.RememberLogin">
                                             Remember My Login
                                         </label>
@@ -45,8 +45,8 @@
                                 </div>
                             }
                             
-                            <button class="btn btn-primary" name="Input.Button" value="login">Login</button>
-                            <button class="btn btn-secondary" name="Input.Button" value="cancel">Cancel</button>
+                            <button class="btn btn-primary" name="Input.Button" value="login" data-testid="Input.Login">Login</button>
+                            <button class="btn btn-secondary" name="Input.Button" value="cancel" data-testid="Input.Cancel">Cancel</button>
                         </form>
                     </div>
                 </div>

@@ -31,5 +31,16 @@ jobs:
             - name: Build Solution
               run: dotnet build KalanalyzeCode.ConfigurationManager.sln --no-restore -c Release
 
+            - name: Install playwright browsers
+              shell: pwsh
+              working-directory: tests/Ui.AcceptanceTesting
+              run: ./bin/Release/net8.0/playwright.ps1 install
+
             - name: Execute Tests
-              run: dotnet test KalanalyzeCode.ConfigurationManager.sln --no-build -c Release
+              run: dotnet test KalanalyzeCode.ConfigurationManager.sln --no-build -c Release --collect:"XPlat Code Coverage"
+            
+            - name: Upload Coverage to Codecov
+              uses: codecov/codecov-action@v4.2.0
+              env:
+                CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+

@@ -10,7 +10,7 @@ public static class SeedDataExtension
     {
         using var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        await context.Database.MigrateAsync();
+        await context.Database.EnsureCreatedAsync();
 
         var contextSeeder = scope.ServiceProvider.GetRequiredService<IDatabaseSeeder>();
         await contextSeeder.SeedDataAsync();

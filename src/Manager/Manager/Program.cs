@@ -4,7 +4,7 @@ using KalanalyzeCode.ConfigurationManager.Ui.Components;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Configuration.AddEnvironmentVariables("ConfigurationManager_");
 // Add MudBlazor services
 builder.Services.AddMudServices();
 
@@ -29,8 +29,10 @@ builder.Services.AddOpenIdConnect();
 builder.Services.AddCascadingAuthenticationState();
 
 var app = builder.Build();
-
-await app.SeedData();
+if (args.Contains("/seed"))
+{
+    await app.SeedData();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
