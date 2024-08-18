@@ -1,9 +1,12 @@
 ﻿using System.Data.Common;
+using System.Net;
 using System.Security.Claims;
-using Identity.Shared.Authorization;
 using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
+using KalanalyzeCode.ConfigurationManager.Application.Authorization;
+using KalanalyzeCode.ConfigurationManager.Application.Helpers;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence.Seeder;
+using MediatR;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,10 +15,15 @@ using Microsoft.Extensions.Hosting;
 using Npgsql;
 using Respawn;
 using Testcontainers.PostgreSql;
+using WireMock;
+using WireMock.RequestBuilders;
+using WireMock.ResponseBuilders;
+using WireMock.Server;
+using WireMock.Util;
 
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests;
 
-public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
+public class ApiWebApplication : WebApplicationFactory<Ui.Api>, IAsyncLifetime
 {
     private const string DatabaseName = "myDatabaseTest";
     private const string Username = "postgres";
@@ -38,7 +46,7 @@ public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
     private DbConnection _dbConnection = default!;
     private Respawner _respawner = default!;
     
-    public HttpClient HttpClient { get; private set; } = default!;
+    public IMediator Mediator { get; private set; } = default!;
     public IServiceScope Scope { get; private set; } = default!;
     public IApplicationDbContext DatabaseContext { get; set; } = default!;
     
@@ -76,7 +84,7 @@ public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
         _dbConnection = new NpgsqlConnection(_dbContainer.GetConnectionString());
         DatabaseContext = Scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
         await EnsureDatabase();
-        HttpClient = CreateClient();
+        Mediator = Scope.ServiceProvider.GetRequiredService<IMediator>();
         await InitializeRespawner();
     }
     
@@ -96,6 +104,9 @@ public class ApiWebApplication : WebApplicationFactory<Api>, IAsyncLifetime
     {
         var context = Scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         await context.Database.MigrateAsync();
+
+        var contextSeeder = Scope.ServiceProvider.GetRequiredService<IDatabaseSeeder>();
+        await contextSeeder.SeedDataAsync();
     }
 
     public new async Task DisposeAsync()

@@ -115,5 +115,5 @@ This solution is provide a much safe way to manage your dotnet configuration tha
     - Collect feedback from users and continuously improve the system.
 
 [api-limitation]: ./docs/Limitation.md/#api-limitation
-[api-functions]: ./docs/Limitation.md/#api-functions
+[api-functions]: ./docs/Functions.md/#api-functions
 [ui-functions]: ./docs/Functions.md/#ui-functions

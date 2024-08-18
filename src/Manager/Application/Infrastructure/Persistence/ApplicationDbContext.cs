@@ -1,8 +1,10 @@
-﻿using KalanalyzeCode.ConfigurationManager.Application.Helpers;
+﻿using KalanalyzeCode.ConfigurationManager.Application.Common.Models;
+using KalanalyzeCode.ConfigurationManager.Application.Helpers;
 using KalanalyzeCode.ConfigurationManager.Entity.Abstract;
 using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
 using KalanalyzeCode.ConfigurationManager.Entity.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
@@ -11,6 +13,8 @@ namespace KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persist
 
 public interface IApplicationDbContext
 {
+    DbSet<ApplicationUser> Users { get; set; }
+    
     DbSet<ConfigurationSettings> Settings { get; set; }
     DbSet<Project> Projects { get; set; }
     Task BeginTransactionAsync(CancellationToken cancellationToken = default);
@@ -19,7 +23,7 @@ public interface IApplicationDbContext
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
 
-public class ApplicationDbContext : DbContext, IApplicationDbContext
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>, IApplicationDbContext
 {
     private readonly IPublisher _publisher;
     private readonly ILogger<ApplicationDbContext> _logger;

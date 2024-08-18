@@ -1,18 +1,19 @@
 using System.Diagnostics;
 using FluentAssertions;
-using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client;
 using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
+using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.Projects;
+using MediatR;
 
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Endpoints.Projects;
 
 [Collection(Collections.ApiWebApplicationCollection)]
 public class CreateNewProjectEndpointTests : TestBase
 {
-    private readonly IProjectsClient _client;
+    private readonly IMediator _mediator;
 
     public CreateNewProjectEndpointTests(ApiWebApplication factory) : base(factory)
     {
-        _client = new ProjectsClient(factory.HttpClient);
+        _mediator = factory.Mediator;
     }
 
     [Fact]
@@ -25,10 +26,11 @@ public class CreateNewProjectEndpointTests : TestBase
         };
         
         // Act
-        var createdProject = await _client.PostAsync(projectToCreate, CancellationToken);
+        var createdProjectResponse = await _mediator.Send(projectToCreate, CancellationToken);
 
         // Assert
-        createdProject.Should().NotBeNull();
+        createdProjectResponse.Should().NotBeNull();
+        var createdProject = createdProjectResponse.Project;
         createdProject.Should().NotBeNull();
         Debug.Assert(createdProject is not null);
         projectToCreate.ProjectName.Should().Be(createdProject.Name);
