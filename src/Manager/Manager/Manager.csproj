@@ -27,7 +27,7 @@
 
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Application\Application.csproj" />
+      <ProjectReference Include="..\Application\Application.csproj" />
     </ItemGroup>
 
     <Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
