@@ -1,4 +1,7 @@
+using Duende.IdentityServer.Validation;
 using KalanalyzeCode.ConfigurationManager.Application.Common.Models;
+using KalanalyzeCode.ConfigurationManager.Ui.GrantValidators;
+using KalanalyzeCode.ConfigurationManager.Ui.Services.Interfaces;
 
 namespace KalanalyzeCode.ConfigurationManager.Ui.Extension;
 
@@ -7,6 +10,10 @@ public static class IdentityServerExtension
     public static WebApplicationBuilder AddIdentityServerFunction(this WebApplicationBuilder builder)
     {
         builder.Services.AddRazorPages();
+
+        builder.Services.AddTransient<IExtensionGrantValidator, ApiKeyValidator>();
+        
+        builder.Services.AddTransient<IApiKeyValidatorService, ApiKeyValidatorService>();
 
         builder.Services
             .AddIdentityServer(options =>
