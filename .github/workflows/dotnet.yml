@@ -32,7 +32,9 @@ jobs:
               run: dotnet build KalanalyzeCode.ConfigurationManager.sln --no-restore -c Release
 
             - name: Install playwright browsers
-              run: pwsh bin/Release/net8.0/playwright.ps1 install
+              shell: pwsh
+              working-directory: tests/Ui.AcceptanceTesting
+              run: ./bin/Release/net8.0/playwright.ps1 install
 
             - name: Execute Tests
               run: dotnet test KalanalyzeCode.ConfigurationManager.sln --no-build -c Release --collect:"XPlat Code Coverage"
