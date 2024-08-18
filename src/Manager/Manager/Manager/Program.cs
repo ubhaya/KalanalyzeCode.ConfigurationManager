@@ -28,8 +28,6 @@ builder.Services.AddOpenIdConnect();
 
 builder.Services.AddCascadingAuthenticationState();
 
-builder.Services.AddServerSideServices();
-
 var app = builder.Build();
 
 await app.SeedData();

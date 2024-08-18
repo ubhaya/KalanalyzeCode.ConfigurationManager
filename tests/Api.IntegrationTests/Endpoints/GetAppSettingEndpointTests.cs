@@ -1,19 +1,20 @@
 using System.Diagnostics;
 using FluentAssertions;
-using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client;
 using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
+using KalanalyzeCode.ConfigurationManager.Application.Contract.Request;
 using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
+using MediatR;
 
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Endpoints;
 
 [Collection(Collections.ApiWebApplicationCollection)]
 public class GetAppSettingEndpointTests : TestBase
 {
-    private readonly IAppSettingsClient _client;
+    private readonly IMediator _mediator;
 
     public GetAppSettingEndpointTests(ApiWebApplication factory) : base(factory)
     {
-        _client = new AppSettingsClient(factory.HttpClient);
+        _mediator = factory.Mediator;
     }
 
     
@@ -24,9 +25,13 @@ public class GetAppSettingEndpointTests : TestBase
         // Arrange
         var testSettings = "TestSettings";
         await AddAsync(new ConfigurationSettings() { Id = testSettings, Value = "true" });
+        var request = new GetAppSettingsRequest()
+        {
+            SettingName = testSettings
+        };
 
         // Act
-        var settings = await _client.GetAsync(testSettings, CancellationToken);
+        var settings = await _mediator.Send(request, CancellationToken);
         // Assert
         settings.Should().NotBeNull();
         Debug.Assert(settings is not null);
@@ -38,10 +43,14 @@ public class GetAppSettingEndpointTests : TestBase
     public async Task GetAppSettingEndpoint_ReturnResult_WhenInvalidSettingNamesParse()
     {
         // Arrange
-
+        var request = new GetAppSettingsRequest()
+        {
+            SettingName = "invalidName"
+        };
+    
         // Act
-        var settings = await _client.GetAsync("invalidName", CancellationToken);
-
+        var settings = await _mediator.Send(request, CancellationToken);
+    
         // Assert
         settings.Should().NotBeNull();
         Debug.Assert(settings is not null);

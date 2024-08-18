@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence.Seeder;
 
-internal class ApplicationDbContextSeeder : IDatabaseSeeder
+public class ApplicationDbContextSeeder : IDatabaseSeeder
 {
     private readonly ILogger<ApplicationDbContextSeeder> _logger;
     private readonly IApplicationDbContext _context;
@@ -60,7 +60,7 @@ internal class ApplicationDbContextSeeder : IDatabaseSeeder
         }
     };
 
-    private readonly Dictionary<string, Permissions> _roles = new()
+    public static readonly Dictionary<string, Permissions> Roles = new()
     {
         { "Administrator", Permissions.All },
         { "ApiKey", Permissions.AppSettingsRead }
@@ -98,7 +98,7 @@ internal class ApplicationDbContextSeeder : IDatabaseSeeder
 
     public async Task SeedDataAsync(CancellationToken cancellationToken = default)
     {
-        foreach (var (roleName, permissions) in _roles)
+        foreach (var (roleName, permissions) in Roles)
         {
             await EnsureRoles(roleName, permissions);
         }

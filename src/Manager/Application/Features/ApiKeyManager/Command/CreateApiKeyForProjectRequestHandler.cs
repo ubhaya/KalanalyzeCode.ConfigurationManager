@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using KalanalyzeCode.ConfigurationManager.Application.Authorization;
 using KalanalyzeCode.ConfigurationManager.Application.Common.Models;
 using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.ApiKeyManager;
 using KalanalyzeCode.ConfigurationManager.Application.Helpers;
@@ -14,17 +15,17 @@ namespace KalanalyzeCode.ConfigurationManager.Application.Features.ApiKeyManager
 
 public sealed class CreateApiKeyForProjectRequestHandler : IRequestHandler<CreateApiKeyForProjectRequest, Result<Guid>>
 {
-    private readonly IHttpClientFactory _clientFactory;
     private readonly IApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly PasswordOptions _passwordOptions;
 
-    public CreateApiKeyForProjectRequestHandler(IHttpClientFactory clientFactory, IApplicationDbContext context, 
-        UserManager<ApplicationUser> userManager, IOptions<PasswordOptions> passwordOptions)
+    public CreateApiKeyForProjectRequestHandler(IApplicationDbContext context,  IOptions<PasswordOptions> passwordOptions,
+        UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
     {
-        _clientFactory = clientFactory;
         _context = context;
         _userManager = userManager;
+        _roleManager = roleManager;
         _passwordOptions = passwordOptions.Value;
     }
 
@@ -39,8 +40,6 @@ public sealed class CreateApiKeyForProjectRequestHandler : IRequestHandler<Creat
         {
             return project.ApiKey;
         }
-        
-        var client = _clientFactory.CreateClient(AppConstants.IdentityServerClient);
 
         var newApiKey = Guid.NewGuid();
 
@@ -76,12 +75,27 @@ public sealed class CreateApiKeyForProjectRequestHandler : IRequestHandler<Creat
         if (!identityResult.Succeeded)
             return new Result<Guid>(new Exception(identityResult.Errors.First().Description));
 
+        await VeryfingRoleExists(); 
+
         identityResult = await _userManager.AddToRoleAsync(apiKeyUser, "ApiKey");
 
         if (!identityResult.Succeeded)
             return new Result<Guid>(new Exception(identityResult.Errors.First().Description));
 
         return newKey;
+    }
+
+    private async Task VeryfingRoleExists()
+    {
+        var isExists = await _roleManager.RoleExistsAsync("ApiKey");
+        if (!isExists)
+        {
+            await _roleManager.CreateAsync(new ApplicationRole()
+            {
+                Name = "ApiKey",
+                Permissions = Permissions.AppSettingsRead
+            });
+        }
     }
 }
 

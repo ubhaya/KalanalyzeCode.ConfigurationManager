@@ -1,18 +1,20 @@
 using AutoFixture;
 using FluentAssertions;
-using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client;
 using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
+using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.ProjectManager;
+using KalanalyzeCode.ConfigurationManager.Entity.Entities;
+using MediatR;
 
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Endpoints.ProjectManager;
 
 [Collection(Collections.ApiWebApplicationCollection)]
 public sealed class GetProjectInformationEndpointTests : TestBase
 {
-    private readonly IProjectManagerClient _client;
+    private readonly IMediator _mediator;
     
     public GetProjectInformationEndpointTests(ApiWebApplication factory) : base(factory)
     {
-        _client = new ProjectManagerClient(factory.HttpClient);
+        _mediator = factory.Mediator;
     }
 
     [Fact]
@@ -20,26 +22,24 @@ public sealed class GetProjectInformationEndpointTests : TestBase
     {
         // Arange
         var id = Guid.NewGuid();
-        var projectInDatabase = Fixture.Build<Entity.Entities.Project>()
+        var projectInDatabase = Fixture.Build<Project>()
             .With(x => x.Id, id)
             .Without(x=>x.ApiKey)
             .Create();
-        var projectToMatch = new Project()
-        {
-            Name = projectInDatabase.Name,
-            Id = projectInDatabase.Id
-        };
         await AddAsync(projectInDatabase);
+        var request = new GetProjectInformationRequest(id);
 
         // Act
-        var response = await _client.GetByIdAsync(id, CancellationToken);
+        var response = await _mediator.Send(request, CancellationToken);
 
         // Assert
-        response.Should().NotBeNull();
-        response.Project.Should().NotBeNull();
-        response.Project.Id.Should().Be(projectInDatabase.Id);
-        response.Project.Name.Should().Be(projectInDatabase.Name);
-        response.Project.ApiKey.Should().Be(projectInDatabase.ApiKey);
+        var project = response.Match(x => x,
+            () => throw new NullReferenceException());
+        
+        project.Should().NotBeNull();
+        project.Id.Should().Be(projectInDatabase.Id);
+        project.Name.Should().Be(projectInDatabase.Name);
+        project.ApiKey.Should().Be(projectInDatabase.ApiKey);
     }
     
     [Fact]
@@ -47,7 +47,7 @@ public sealed class GetProjectInformationEndpointTests : TestBase
     {
         // Arange
         var id = Guid.NewGuid();
-        var projectInDatabase = Fixture.Build<Entity.Entities.Project>()
+        var projectInDatabase = Fixture.Build<Project>()
             .With(x => x.Id, id)
             .Create();
         var projectToMatch = new Project()
@@ -56,15 +56,17 @@ public sealed class GetProjectInformationEndpointTests : TestBase
             Id = projectInDatabase.Id
         };
         await AddAsync(projectInDatabase);
+        var request = new GetProjectInformationRequest(id);
 
         // Act
-        var response = await _client.GetByIdAsync(id, CancellationToken);
+        var response = await _mediator.Send(request, CancellationToken);
 
         // Assert
-        response.Should().NotBeNull();
-        response.Project.Should().NotBeNull();
-        response.Project.Id.Should().Be(projectInDatabase.Id);
-        response.Project.Name.Should().Be(projectInDatabase.Name);
-        response.Project.ApiKey.Should().Be(projectInDatabase.ApiKey);
+        var project = response.Match(x => x,
+            () => throw new NullReferenceException());
+        project.Should().NotBeNull();
+        project.Id.Should().Be(projectInDatabase.Id);
+        project.Name.Should().Be(projectInDatabase.Name);
+        project.ApiKey.Should().Be(projectInDatabase.ApiKey);
     }
 }

@@ -1,16 +1,17 @@
 using FluentAssertions;
-using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client;
 using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
+using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.Projects;
+using MediatR;
 
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Endpoints.Projects;
 
 [Collection(Collections.ApiWebApplicationCollection)]
 public class DeleteProjectEndpointTests : TestBase
 {
-    private readonly IProjectsClient _client;
+    private readonly IMediator _mediator;
     public DeleteProjectEndpointTests(ApiWebApplication factory) : base(factory)
     {
-        _client = new ProjectsClient(factory.HttpClient);
+        _mediator = factory.Mediator;
     }
 
     [Fact]
@@ -24,10 +25,12 @@ public class DeleteProjectEndpointTests : TestBase
             Name = "Project Deleted"
         };
         await AddAsync(project);
+        var request = new DeleteProjectRequest(id);
+        var getRequest = new GetProjectByIdRequest(id);
 
         // Act
-        await _client.DeleteAsync(id, CancellationToken);
-        var deleteProjectResponse = await _client.GetByIdAsync(id, CancellationToken);
+        await _mediator.Send(request, CancellationToken);
+        var deleteProjectResponse = await _mediator.Send(getRequest, CancellationToken);
 
         // Assert
         deleteProjectResponse.Should().NotBeNull();

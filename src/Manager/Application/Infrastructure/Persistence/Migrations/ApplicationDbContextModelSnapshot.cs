@@ -62,7 +62,7 @@ namespace KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persist
 
                     b.HasKey("Id");
 
-                    b.ToTable("Settings");
+                    b.ToTable("Settings", (string)null);
                 });
 
             modelBuilder.Entity("KalanalyzeCode.ConfigurationManager.Entity.Entities.Project", b =>
@@ -80,7 +80,7 @@ namespace KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persist
 
                     b.HasKey("Id");
 
-                    b.ToTable("Projects");
+                    b.ToTable("Projects", (string)null);
                 });
 
             modelBuilder.Entity("KalanalyzeCode.ConfigurationManager.Ui.Models.ApplicationUser", b =>
