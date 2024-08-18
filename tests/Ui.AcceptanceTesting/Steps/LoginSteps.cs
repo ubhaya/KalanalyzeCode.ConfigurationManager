@@ -84,4 +84,19 @@ public class LoginSteps
     {
         _pageObject.Page.Url.Should().Contain("Account/Logout/LoggedOut");
     }
+
+    [WhenAttribute(@"User input incorrect credential")]
+    public async Task WhenUserInputIncorrectCredential(Table table)
+    {
+        var loginModel = table.CreateSet<LoginModel>().First();
+        await _pageObject.SetLoginData(loginModel);
+        await _pageObject.SignInButtonClicked();
+    }
+
+    [ThenAttribute(@"User should see a error")]
+    public async Task ThenUserShouldSeeAError()
+    {
+        var isError = await _pageObject.IsError();
+        isError.Should().BeTrue();
+    }
 }
