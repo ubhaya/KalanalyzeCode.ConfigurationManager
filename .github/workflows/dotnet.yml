@@ -40,10 +40,7 @@ jobs:
               run: dotnet test KalanalyzeCode.ConfigurationManager.sln --no-build -c Release --collect:"XPlat Code Coverage"
             
             - name: Upload Coverage to Codecov
-              uses: codecov/codecov-action@v3
-              with: 
-                token: ${{ secrets.CODECOV_TOKEN }}
-                files: ./TestResults/**/*.xml
-                flags: unittests
-                name: codecov-umbrella
+              uses: codecov/codecov-action@v4.2.0
+              env:
+                CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
