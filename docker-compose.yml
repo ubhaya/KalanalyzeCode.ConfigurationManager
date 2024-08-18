@@ -5,22 +5,24 @@ services:
       - POSTGRES_PASSWORD=mysecretpassword
     networks:
       - configuration-manager
-  identity-server:
-    image: identity-server
+  
+  configuration-manager:
+    image: configuration-manager
     build:
       context: .
-      dockerfile: src/Manager/IdentityServer/Dockerfile
+      dockerfile: src/Manager/Manager/Dockerfile
     ports:
-      - 5001:5001
-      - 5000:5000
+      - 7206:7206
+      - 5225:5225
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - IdentityServer_PostgreSql__ConnectionString=Host=postgresql;Username=postgres;Database=myDatabase
+      - ConfigurationManager_PostgreSql__ConnectionString=Host=postgresql;Username=postgres;Database=myDatabase
+      - ConfigurationManager_PostgreSql__DbPassword=mysecretpassword
       - ASPNETCORE_Kestrel__Certificates__Default__Password=KalanalyzeCode.ConfigurationManager@753951
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/kalanalyzecode.configurationmanager.pfx
     volumes:
-      - ${USERPROFILE}/.aspnet/https:/https:ro
-      - ${APPDATA}/microsoft/UserSecrets/:/root/.microsoft/usersecrets
+        - ./https:/https:ro
+        - ${APPDATA}/microsoft/UserSecrets/:/root/.microsoft/usersecrets
     networks:
       - configuration-manager
     depends_on:

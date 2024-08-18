@@ -4,7 +4,7 @@ using KalanalyzeCode.ConfigurationManager.Ui.Components;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Configuration.AddEnvironmentVariables("ConfigurationManager_");
 // Add MudBlazor services
 builder.Services.AddMudServices();
 
