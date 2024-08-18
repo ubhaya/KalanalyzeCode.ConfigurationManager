@@ -20,7 +20,7 @@ public partial class Index
     #region Fields
 
     private Project? _project;
-    private MudTable<Configuration> _configurationTable = default!;
+    private MudDataGrid<Configuration> _configurationDataGrid = default!;
     private string _searchString = string.Empty;
 
     #endregion
@@ -73,7 +73,7 @@ public partial class Index
     private async Task OnSearch(string text)
     {
         _searchString = text;
-        await _configurationTable.ReloadServerData();
+        await _configurationDataGrid.ReloadServerData();
     }
 
     private Task OnItemChanged(Configuration configuration)
