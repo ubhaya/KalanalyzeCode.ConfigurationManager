@@ -1,3 +1,4 @@
+using Ardalis.GuardClauses;
 using BoDi;
 using KalanalyzeCode.ConfigurationManager.Ui.AcceptanceTesting.PageObjects;
 using Microsoft.Playwright;
@@ -13,26 +14,26 @@ public sealed class LoginHooks
     {
         var playwright = await Playwright.CreateAsync();
 
-        var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+        var context = await playwright.Chromium.LaunchPersistentContextAsync("", new BrowserTypeLaunchPersistentContextOptions
         {
+            IgnoreHTTPSErrors = true,
 #if DEBUG
             Headless = false,
             SlowMo = 1000,
 #endif
         });
-
-        var page = await browser.NewPageAsync();
-        var pageObject = new LoginPageObject(browser, page);
+        
+        var pageObject = new LoginPageObject(context, context.Pages[0]);
         
         container.RegisterInstanceAs(playwright);
-        container.RegisterInstanceAs(browser);
-        container.RegisterInstanceAs(page);
+        container.RegisterInstanceAs(context);
+        container.RegisterInstanceAs(context.Pages[0]);
         container.RegisterInstanceAs(pageObject);
     }
     [AfterScenario]
     public async Task AfterScenarioAsync(IObjectContainer container)
     {
-        var browser = container.Resolve<IBrowser>();
+        var browser = container.Resolve<IBrowserContext>();
         await browser.CloseAsync();
         var playwright = container.Resolve<IPlaywright>();
         playwright.Dispose();

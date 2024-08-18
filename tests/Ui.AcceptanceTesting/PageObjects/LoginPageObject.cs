@@ -7,14 +7,14 @@ public sealed class LoginPageObject : BasePageTemplateObject
 {
     public override string PagePath => "Account/Login";
 
-    public LoginPageObject(IBrowser browser, IPage page)
+    public LoginPageObject(IBrowserContext browser, IPage page)
     {
         Page = page;
         Browser = browser;
     }
     
     public override IPage Page { get; set; }
-    public override IBrowser Browser { get; }
+    public override IBrowserContext Browser { get; }
 
     public ILocator Username => Page.GetByTestId("Input.Username");
     public ILocator Password => Page.GetByTestId("Input.Password");
