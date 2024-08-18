@@ -4,7 +4,7 @@ namespace KalanalyzeCode.ConfigurationManager.Ui.AcceptanceTesting.PageObjects;
 
 public abstract class BasePageObject
 {
-    private readonly string _basePath = "https://localhost:7089/";
+    private readonly string _basePath = "https://localhost:7206/";
     
     public abstract string PagePath { get; }
     public abstract IPage Page { get; set; }

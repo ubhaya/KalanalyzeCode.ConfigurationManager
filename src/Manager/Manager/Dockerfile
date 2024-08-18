@@ -13,6 +13,8 @@ COPY ["src/Manager/Manager/Manager.csproj", "src/Manager/Manager/"]
 COPY ["src/Manager/Application/Application.csproj", "src/Manager/Application/"]
 COPY ["src/Manager/Entity/Entity.csproj", "src/Manager/Entity/"]
 
+ENV DOTNET_NUGET_SIGNATURE_VERIFICATION=false
+
 RUN dotnet restore "src/Manager/Entity/Entity.csproj"
 RUN dotnet restore "src/Manager/Application/Application.csproj"
 RUN dotnet restore "src/Manager/Manager/Manager.csproj"
@@ -30,4 +32,3 @@ COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "KalanalyzeCode.ConfigurationManager.Ui.dll"]
 
 ENV ASPNETCORE_URLS="https://+:7206;http://+:5225"
-ENV DOTNET_NUGET_SIGNATURE_VERIFICATION=false

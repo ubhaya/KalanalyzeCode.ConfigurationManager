@@ -3,25 +3,32 @@
 @inject NavigationManager NavigationManager
 
 <MudNavMenu>
-    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-    <MudNavLink Href="weather" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Weather</MudNavLink>
-    <MudNavGroup Title="Projects" Icon="@Icons.Material.Filled.Newspaper">
-        <MudNavLink Href="@AppConstants.Projects.Index.Route" Icon="@Icons.Material.Filled.List">@AppConstants.Projects.Index.Name</MudNavLink>
+    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home"
+                data-testid="home">Home</MudNavLink>
+    <MudNavLink Href="weather" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List"
+                data-testid="weather">Weather</MudNavLink>
+    <MudNavGroup Title="Projects" Icon="@Icons.Material.Filled.Newspaper"
+                 data-testid="projects">
+        <MudNavLink Href="@AppConstants.Projects.Index.Route" Icon="@Icons.Material.Filled.List"
+                    data-testid="projects-index">@AppConstants.Projects.Index.Name</MudNavLink>
     </MudNavGroup>
     <AuthorizeView>
         <Authorized>
-            <MudNavLink Href="/diagnostics" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person">@context.User.Identity?.Name</MudNavLink>
+            <MudNavLink Href="/diagnostics" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person"
+                        data-testid="profile">@context.User.Identity?.Name</MudNavLink>
             <form action="Account/Logout" method="post">
                 <AntiforgeryToken/>
                 <input type="hidden" name="ReturnUrl" value="@currentUrl"/>
-                <button type="submit" class="mud-nav-link mud-ripple">
+                <button type="submit" class="mud-nav-link mud-ripple" data-testid="logout">
                     <MudIcon Icon="@Icons.Material.Filled.Logout" Color="Color.Info" Class="mr-3"></MudIcon> Logout
                 </button>
             </form>
         </Authorized>
         <NotAuthorized>
-            <MudNavLink Href="Account/Register" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person">Register</MudNavLink>
-            <MudNavLink Href="Account/Login" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Password">Login</MudNavLink>
+            <MudNavLink Href="Account/Register" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Person"
+                        data-testid="register">Register</MudNavLink>
+            <MudNavLink Href="Account/Login" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Password"
+                        data-testid="login">Login</MudNavLink>
         </NotAuthorized>
     </AuthorizeView>
 </MudNavMenu>
