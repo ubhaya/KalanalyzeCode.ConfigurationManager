@@ -25,13 +25,15 @@
     </MudExpansionPanel>
 </MudExpansionPanels>
 
-<MudTable T="Configuration" Dense="true" Hover="true" ReadOnly="false" CanCancelEdit="true"
+<MudTable T="Configuration" Dense="true" Hover="true" ReadOnly="false" CanCancelEdit="true" @ref="_configurationTable"
           ServerData="@(new Func<TableState, CancellationToken, Task<TableData<Configuration>>>(ServerReload))"
           CommitEditTooltip="Commit Edit" RowEditPreview="RowEditPreview" RowEditCancel="ResetItemToOriginalValues"
           RowEditCommit="@(async(configuration) => await CommitEdit(configuration))" EditTrigger="TableEditTrigger.EditButton">
     <ToolBarContent>
         <MudTextField T="string" ValueChanged="@(OnSearch)" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0" DebounceInterval="500"/>
+        <MudSpacer/>
+        <MudIconButton Size="Size.Medium" Icon="@Icons.Material.Outlined.Add" OnClick="CreateConfiguration"></MudIconButton>
     </ToolBarContent>
 
     <HeaderContent>

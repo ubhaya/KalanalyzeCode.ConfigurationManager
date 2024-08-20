@@ -15,15 +15,20 @@ public partial class Index
     #region DependencyInjection
 
     [Inject] private IMediator Mediator { get; set; } = default!;
+    [Inject] private IDialogService DialogService { get; set; } = default!;
     
     #endregion
 
     #region Fields
 
     private Project? _project;
-    private MudDataGrid<Configuration> _configurationDataGrid = default!;
+    private MudTable<Configuration> _configurationTable= default!;
     private Configuration? _configurationBeforeEditing;
     private string _searchString = string.Empty;
+    private readonly DialogOptions _dialogOptions = new()
+    {
+        CloseButton = true
+    };
 
     #endregion
 
@@ -56,22 +61,26 @@ public partial class Index
 
     private async Task<TableData<Configuration>> ServerReload(TableState state, CancellationToken cancellationToken)
     {
-        var result = await Mediator.Send(new GetAllConfigurationRequest(
-            _searchString, state.Page, state.PageSize,
-            (CustomSortDirection)state.SortDirection, state.SortLabel ?? string.Empty,
-            _project!.Id), CancellationToken);
-
+        var result = await Mediator.Send(CreateRequest(), CancellationToken);
         return new TableData<Configuration>()
         {
             Items = result.Configurations,
             TotalItems = result.TotalItems
         };
+
+        GetAllConfigurationRequest CreateRequest()
+        {
+            return new GetAllConfigurationRequest(
+                _searchString, state.Page, state.PageSize,
+                (CustomSortDirection)state.SortDirection, state.SortLabel ?? string.Empty,
+                _project!.Id);
+        }
     }
     
     private async Task OnSearch(string text)
     {
         _searchString = text;
-        await _configurationDataGrid.ReloadServerData();
+        await _configurationTable.ReloadServerData();
     }
 
     private async Task OnItemDeleted(Configuration? configuration)
@@ -110,5 +119,21 @@ public partial class Index
         Guard.Against.Null(configuration);
         var request = new UpdateConfigurationRequest(configuration.Id, configuration.Name, configuration.Value);
         await Mediator.Send(request, CancellationToken);
+    }
+
+    private async Task CreateConfiguration()
+    {
+        var parameters = new DialogParameters<Add>
+        {
+            { x => x.ProjectId, _project!.Id }
+        };
+        var dialog = await DialogService.ShowAsync<Add>("Add Configuration", parameters, _dialogOptions);
+
+        var result = await dialog.Result;
+
+        if (!result?.Canceled ?? false)
+        {
+            await _configurationTable.ReloadServerData();
+        }
     }
 }
