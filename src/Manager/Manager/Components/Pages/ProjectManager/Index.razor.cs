@@ -74,6 +74,13 @@ public partial class Index
         await _configurationDataGrid.ReloadServerData();
     }
 
+    private async Task OnItemDeleted(Configuration? configuration)
+    {
+        Guard.Against.Null(configuration);
+        var request = new DeleteConfigurationRequest(configuration.Id);
+        await Mediator.Send(request, CancellationToken);
+    }
+
     private void RowEditPreview(object? obj)
     {
         var configuration = obj as Configuration;
