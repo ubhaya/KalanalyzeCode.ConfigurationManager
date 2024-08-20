@@ -19,8 +19,8 @@
    - [x] Delete
 - [ ] **Manage Configuration**
   - [ ] Add
-  - [ ] Modify
-  - [ ] Delete
+  - [x] Modify
+  - [x] Delete
 - [ ] Manage Api keys
    - [x] Add
    - [ ] Modify
@@ -35,8 +35,8 @@
    - [x] Delete
 - [ ] **Manage Configuration**
    - [ ] Add
-   - [ ] Modify
-   - [ ] Delete
+   - [x] Modify
+   - [x] Delete
 - [ ] Manage Api keys
    - [x] Add
    - [ ] Modify
