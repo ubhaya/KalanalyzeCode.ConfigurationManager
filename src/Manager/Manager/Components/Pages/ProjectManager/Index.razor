@@ -25,20 +25,58 @@
     </MudExpansionPanel>
 </MudExpansionPanels>
 
-<MudDataGrid T="Configuration" ReadOnly="false" ServerData="@(new Func<GridState<Configuration>, Task<GridData<Configuration>>>(ServerReload))"
-             CommittedItemChanges="@(async (configuration) => await OnItemChanged(configuration))"
-             Bordered="true" EditTrigger="DataGridEditTrigger.Manual" EditMode="DataGridEditMode.Form" @ref="_configurationDataGrid">
+<MudTable T="Configuration" Dense="true" Hover="true" ReadOnly="false" CanCancelEdit="true"
+          ServerData="@(new Func<TableState, CancellationToken, Task<TableData<Configuration>>>(ServerReload))"
+          CommitEditTooltip="Commit Edit" RowEditPreview="RowEditPreview" RowEditCancel="ResetItemToOriginalValues"
+          RowEditCommit="@(async(configuration) => await CommitEdit(configuration))" EditTrigger="TableEditTrigger.EditButton">
     <ToolBarContent>
         <MudTextField T="string" ValueChanged="@(OnSearch)" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0" DebounceInterval="500"/>
     </ToolBarContent>
-    <Columns>
-        <PropertyColumn Property="x => x.Name" Title="Name"/>
-        <PropertyColumn Property="x => x.Value" Title="Value"/>
-        <TemplateColumn CellClass="d-flex justify-end">
-            <CellTemplate>
-                <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Edit" OnClick="@context.Actions.StartEditingItemAsync"/>
-            </CellTemplate>
-        </TemplateColumn>
-    </Columns>
-</MudDataGrid>
+
+    <HeaderContent>
+        <MudTh>
+            <MudTableSortLabel SortBy="@(new Func<Configuration, object>(x => x.Name))">Name</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="@(new Func<Configuration, object>(x => x.Value))">Value</MudTableSortLabel>
+        </MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Value">@context.Value</MudTd>
+    </RowTemplate>
+    <RowEditingTemplate>
+        <MudTd DataLabel="Name">
+            <MudTextField @bind-Value="@context.Name" Required="true"/>
+        </MudTd>
+        <MudTd DataLabel="Value">
+            <MudTextField @bind-Value="@context.Value" Required="true"/>
+        </MudTd>
+    </RowEditingTemplate>
+    <PagerContent>
+        <MudTablePager/>
+    </PagerContent>
+    <EditButtonContent Context="button">
+        <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Edit" Class="pa-o" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled"/>
+    </EditButtonContent>
+</MudTable>
+
+@* <MudDataGrid T="Configuration" ReadOnly="false" ServerData="@(new Func<GridState<Configuration>, Task<GridData<Configuration>>>(ServerReload))" *@
+@*              CommittedItemChanges="@(async (configuration) => await OnItemChanged(configuration))" *@
+@*              Bordered="true" EditTrigger="DataGridEditTrigger.Manual" EditMode="DataGridEditMode.Form" @ref="_configurationDataGrid"> *@
+@*     <ToolBarContent> *@
+@*         <MudTextField T="string" ValueChanged="@(OnSearch)" Placeholder="Search" Adornment="Adornment.Start" Immediate="true" *@
+@*                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0" DebounceInterval="500"/> *@
+@*     </ToolBarContent> *@
+@*     <Columns> *@
+@*         <PropertyColumn Property="x => x.Name" Title="Name"/> *@
+@*         <PropertyColumn Property="x => x.Value" Title="Value"/> *@
+@*         <TemplateColumn CellClass="d-flex justify-end"> *@
+@*             <CellTemplate> *@
+@*                 <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Edit" OnClick="@context.Actions.StartEditingItemAsync"/> *@
+@*                 <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Delete" OnClick="@(async () => await OnItemDeleted(@context.Item))"/> *@
+@*             </CellTemplate> *@
+@*         </TemplateColumn> *@
+@*     </Columns> *@
+@* </MudDataGrid> *@

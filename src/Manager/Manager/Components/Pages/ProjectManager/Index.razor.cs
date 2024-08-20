@@ -1,3 +1,4 @@
+using Ardalis.GuardClauses;
 using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.ApiKeyManager;
 using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.Configurations;
 using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.Projects;
@@ -21,6 +22,7 @@ public partial class Index
 
     private Project? _project;
     private MudDataGrid<Configuration> _configurationDataGrid = default!;
+    private Configuration? _configurationBeforeEditing;
     private string _searchString = string.Empty;
 
     #endregion
@@ -52,18 +54,14 @@ public partial class Index
         _project = response.Project;
     }
 
-    private async Task<GridData<Configuration>> ServerReload(GridState<Configuration> state)
+    private async Task<TableData<Configuration>> ServerReload(TableState state, CancellationToken cancellationToken)
     {
-        var sortDefinition = state.SortDefinitions.FirstOrDefault();
-        var sortDirection = sortDefinition?.Descending ?? false
-            ? CustomSortDirection.Descending
-            : CustomSortDirection.Ascending;
         var result = await Mediator.Send(new GetAllConfigurationRequest(
             _searchString, state.Page, state.PageSize,
-            sortDirection, sortDefinition?.SortBy ?? string.Empty,
+            (CustomSortDirection)state.SortDirection, state.SortLabel ?? string.Empty,
             _project!.Id), CancellationToken);
 
-        return new GridData<Configuration>()
+        return new TableData<Configuration>()
         {
             Items = result.Configurations,
             TotalItems = result.TotalItems
@@ -76,9 +74,34 @@ public partial class Index
         await _configurationDataGrid.ReloadServerData();
     }
 
-    private Task OnItemChanged(Configuration configuration)
+    private void RowEditPreview(object? obj)
     {
-        Console.WriteLine(configuration.Value);
-        return Task.CompletedTask;
+        var configuration = obj as Configuration;
+        Guard.Against.Null(configuration);
+        _configurationBeforeEditing = new Configuration
+        {
+            Id = configuration.Id,
+            Name = configuration.Name,
+            Value = configuration.Value,
+            ProjectId = configuration.ProjectId
+        };
+    }
+
+    private void ResetItemToOriginalValues(object? configuration)
+    {
+        Guard.Against.Null(configuration);
+        Guard.Against.Null(_configurationBeforeEditing);
+        ((Configuration)configuration).Id = _configurationBeforeEditing.Id;
+        ((Configuration)configuration).Name = _configurationBeforeEditing.Name;
+        ((Configuration)configuration).Value = _configurationBeforeEditing.Value;
+        ((Configuration)configuration).ProjectId = _configurationBeforeEditing.ProjectId;
+    }
+
+    private async Task CommitEdit(object? configurationAsObject)
+    {
+        var configuration = configurationAsObject as Configuration;
+        Guard.Against.Null(configuration);
+        var request = new UpdateConfigurationRequest(configuration.Id, configuration.Name, configuration.Value);
+        await Mediator.Send(request, CancellationToken);
     }
 }
