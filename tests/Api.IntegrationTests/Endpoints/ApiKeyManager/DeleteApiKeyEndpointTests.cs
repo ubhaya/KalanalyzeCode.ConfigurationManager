@@ -4,7 +4,7 @@ using FluentAssertions;
 using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
 using KalanalyzeCode.ConfigurationManager.Application.Common.Models;
 using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.ApiKeyManager;
-using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.ProjectManager;
+using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.Projects;
 using KalanalyzeCode.ConfigurationManager.Entity.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -39,14 +39,16 @@ public class DeleteApiKeyEndpointTests : TestBase
         await AddAsync(projectInDatabase);
         await _userManager.CreateAsync(user, "Pass123$");
         var request = new DeleteApiKeyForProjectRequest(projectInDatabase.Id);
-        var getRequest = new GetProjectInformationRequest(projectInDatabase.Id);
+        var getRequest = new GetProjectByIdRequest(projectInDatabase.Id);
 
         // Act
         await _mediator.Send(request, CancellationToken);
         var deletedKeyProjectOption = await _mediator.Send(getRequest, CancellationToken);
 
         // Assert
-        var project = deletedKeyProjectOption.Match<Project?>(p => p, () => null);
+        //var project = deletedKeyProjectOption.Match<Project?>(p => p, () => null);
+        var project = deletedKeyProjectOption.Project;
+        Debug.Assert(project is not null);
         project.Should().NotBeNull();
         Debug.Assert(project is not null);
         project.ApiKey.Should().NotBe(apiKey);
