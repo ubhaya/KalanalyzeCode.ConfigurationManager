@@ -4,9 +4,11 @@
 
 <instance-profile id="kcm"
                  name="KalanalyzeCode Configuration Manager"
-                 start-page="overview.md">
+                 start-page="discover.md">
 
-    <toc-element topic="overview.md">
+    <toc-element topic="discover.md">
+        <toc-element topic="documentation-structure.md"/>
         <toc-element topic="roadmap.md" toc-title="Road Map"/>
     </toc-element>
+    <toc-element topic="getting-started.md"/>
 </instance-profile>
