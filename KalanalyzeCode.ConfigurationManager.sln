@@ -35,8 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\Manager\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{309A2165-0FEF-4041-96AC-AACE7DD417FB}"
 	ProjectSection(SolutionItems) = preProject
-		docs\Limitation.md = docs\Limitation.md
-		docs\Functions.md = docs\Functions.md
+		docs\RoadMap.md = docs\RoadMap.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manager", "src\Manager\Manager\Manager.csproj", "{FBE3DA04-34AF-4C0D-8958-61858CB04BB9}"
