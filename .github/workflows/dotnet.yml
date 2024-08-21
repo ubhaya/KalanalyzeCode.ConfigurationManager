@@ -13,12 +13,7 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@v4
-              
-            - name: Set .NetSdk version
-              uses: actions/setup-dotnet@v4
-              with:
-                global-json-file: global.json
-                
+
             - name: Set environment variable for NuGet signature verification
               run: echo "DOTNET_NUGET_SIGNATURE_VERIFICATION=false" >> $GITHUB_ENV
 
