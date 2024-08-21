@@ -1,8 +1,9 @@
+using System.Diagnostics;
 using AutoFixture;
 using FluentAssertions;
 using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
 using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.ApiKeyManager;
-using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.ProjectManager;
+using KalanalyzeCode.ConfigurationManager.Application.Contract.Request.Projects;
 using MediatR;
 
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Endpoints.ApiKeyManager;
@@ -24,7 +25,7 @@ public sealed class PostApiKeyEndpointTests : TestBase
             .Without(x => x.ApiKey)
             .Create();
         await AddAsync(projectInDatabase);
-        var getRequest = new GetProjectInformationRequest(projectInDatabase.Id);
+        var getRequest = new GetProjectByIdRequest(projectInDatabase.Id);
 
         // Act
         var result = await _mediator.Send(new CreateApiKeyForProjectRequest(projectInDatabase.Id), CancellationToken);
@@ -36,7 +37,9 @@ public sealed class PostApiKeyEndpointTests : TestBase
         var createdApiKey = result.Match(x => x,
             exception => throw exception);
 
-        var project = updatedProjectResponseOption.Match(project => project, () => throw new NullReferenceException());
+        // var project = updatedProjectResponseOption.Match(project => project, () => throw new NullReferenceException());
+        var project = updatedProjectResponseOption.Project;
+        Debug.Assert(project is not null);
         project.Should().NotBeNull();
         project.Id.Should().Be(projectInDatabase.Id);
         project.Name.Should().Be(projectInDatabase.Name);
@@ -51,7 +54,7 @@ public sealed class PostApiKeyEndpointTests : TestBase
         var projectInDatabase = Fixture.Build<Entity.Entities.Project>()
             .Create();
         await AddAsync(projectInDatabase);
-        var getRequest = new GetProjectInformationRequest(projectInDatabase.Id);
+        var getRequest = new GetProjectByIdRequest(projectInDatabase.Id);
     
         // Act
         var result = await _mediator.Send(new CreateApiKeyForProjectRequest(projectInDatabase.Id));
@@ -65,7 +68,9 @@ public sealed class PostApiKeyEndpointTests : TestBase
         
         createdApiKey.Should().NotBeEmpty();
         createdApiKey.Should().Be(projectInDatabase.ApiKey);
-        var project = updatedProjectResponseOption.Match(project => project, () => throw new NullReferenceException());
+        // var project = updatedProjectResponseOption.Match(project => project, () => throw new NullReferenceException());
+        var project = updatedProjectResponseOption.Project;
+        Debug.Assert(project is not null);
         project.Should().NotBeNull();
         project.Id.Should().Be(projectInDatabase.Id);
         project.Name.Should().Be(projectInDatabase.Name);

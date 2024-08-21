@@ -40,13 +40,9 @@ public class GetGetAllEndpointsTests : TestBase
         var projectsInDatabase = Fixture.Build<Project>()
             .CreateMany(100)
             .ToList();
-        var projectList = projectsInDatabase.Select(x => new Project()
-        {
-            Name = x.Name,
-            Id = x.Id
-        });
+        
         await AddRangeAsync(projectsInDatabase);
-        var request = new GetAllProjectsRequest(string.Empty, 0, 10, CustomSortDirection.None, string.Empty);
+        var request = new GetAllProjectsRequest(string.Empty, 0, 100, CustomSortDirection.None, string.Empty);
         
         // Act
         var allProjectResponse =
@@ -55,7 +51,7 @@ public class GetGetAllEndpointsTests : TestBase
         // Assert
         allProjectResponse.Should().NotBeNull();
         allProjectResponse.Projects.Should().NotBeNull();
-        //allProjectResponse.Data.Projects.Should().AllBeEquivalentTo(projectList);
+        allProjectResponse.Projects.Should().BeEquivalentTo(projectsInDatabase);
     }
 
     [Fact]

@@ -1,0 +1,27 @@
+<MudDialog>
+    <DialogContent>
+        <MudCard>
+            <MudForm Model="Model"
+                     @ref="_form"
+                     Validation="@(_validator.ValidateValue)"
+                     ValidationDelay="0">
+                <MudCardContent>
+                    <MudTextField @bind-Value="@Model.Name"
+                                  For="@(()=>Model.Name)"
+                                  Immediate="true"
+                                  Label="Configuration Name"/>
+                    <MudTextField @bind-Value="@Model.Value"
+                                  For="@(()=>Model.Value)"
+                                  Immediate="true"
+                                  Label="Configuration Name"/>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               Class="ml-auto"
+                               OnClick="@(async ()=> await Submit())">Create</MudButton>
+                </MudCardActions>
+            </MudForm>
+        </MudCard>
+    </DialogContent>
+</MudDialog>

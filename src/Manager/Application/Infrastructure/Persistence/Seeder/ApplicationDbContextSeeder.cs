@@ -66,9 +66,11 @@ public class ApplicationDbContextSeeder : IDatabaseSeeder
         { "ApiKey", Permissions.AppSettingsRead }
     };
 
+    private static readonly Guid ProjectOneId = Guid.NewGuid();
+    
     private readonly List<Project> _projectList =
     [
-        new Project {Id = Guid.NewGuid(), Name = "Project 1", ApiKey = Guid.NewGuid()},
+        new Project {Id = ProjectOneId, Name = "Project 1", ApiKey = Guid.NewGuid()},
         new Project {Id = Guid.NewGuid(), Name = "Project 2", ApiKey = Guid.NewGuid()},
         new Project {Id = Guid.NewGuid(), Name = "Project 3"},
         new Project {Id = Guid.NewGuid(), Name = "Project 4"},
@@ -83,6 +85,12 @@ public class ApplicationDbContextSeeder : IDatabaseSeeder
         new Project {Id = Guid.NewGuid(), Name = "Project 13"},
         new Project {Id = Guid.NewGuid(), Name = "Project 14"},
         new Project {Id = Guid.NewGuid(), Name = "Project 15"},
+    ];
+
+    private readonly List<Configuration> _configurations =
+    [
+        new Configuration { Name = "PostgreSql__ConnectionString", Value = "TestString", ProjectId = ProjectOneId },
+        new Configuration { Name = "PostgreSql__DbPassword", Value = "Password", ProjectId = ProjectOneId },
     ];
     
     private const string DefaultPassword = "Pass123$";
@@ -127,6 +135,13 @@ public class ApplicationDbContextSeeder : IDatabaseSeeder
                 _projectList.Count);
         }
 
+        if (!_context.Configurations.Any())
+        {
+            await _context.Configurations.AddRangeAsync(_configurations, cancellationToken);
+            _logger.LogInformation(AppConstants.LoggingMessages.DatabaseSeed, nameof(_context.Configurations),
+                _configurations.Count);
+        }
+
         await _context.SaveChangesAsync(cancellationToken);
         _logger.LogInformation(AppConstants.LoggingMessages.DatabaseSaved, DateOnly.FromDateTime(DateTime.UtcNow),
             TimeOnly.FromDateTime(DateTime.UtcNow));
@@ -138,7 +153,7 @@ public class ApplicationDbContextSeeder : IDatabaseSeeder
 
         if (!isExists)
         {
-            var role = new ApplicationRole()
+            var role = new ApplicationRole
             {
                 Name = roleName,
                 Permissions = permissions

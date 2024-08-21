@@ -1,3 +1,5 @@
+@using KalanalyzeCode.ConfigurationManager.Entity.Entities
+
 @attribute [Route($$"""{{AppConstants.ProjectManager.Index.Route}}/{Id:guid}""")]
 
 <PageTitle>@($"{AppConstants.ProjectManager.Index.AppTitle} - {_project?.Name}")</PageTitle>
@@ -12,7 +14,7 @@
                 <MudToolBar>
                     <MudText>@_project?.ApiKey</MudText>
                     <MudSpacer/>
-                    <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(async ()=> await OnApiKeyDelete())"/>
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(async () => await OnApiKeyDelete())"/>
                 </MudToolBar>
             }
             else
@@ -22,3 +24,43 @@
         </MudContainer>
     </MudExpansionPanel>
 </MudExpansionPanels>
+
+<MudTable T="Configuration" Dense="true" Hover="true" ReadOnly="false" CanCancelEdit="true" @ref="_configurationTable"
+          ServerData="@(new Func<TableState, CancellationToken, Task<TableData<Configuration>>>(ServerReload))"
+          CommitEditTooltip="Commit Edit" RowEditPreview="RowEditPreview" RowEditCancel="ResetItemToOriginalValues"
+          RowEditCommit="@(async(configuration) => await CommitEdit(configuration))" EditTrigger="TableEditTrigger.EditButton">
+    <ToolBarContent>
+        <MudTextField T="string" ValueChanged="@(OnSearch)" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
+                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0" DebounceInterval="500"/>
+        <MudSpacer/>
+        <MudIconButton Size="Size.Medium" Icon="@Icons.Material.Outlined.Add" OnClick="CreateConfiguration"></MudIconButton>
+    </ToolBarContent>
+
+    <HeaderContent>
+        <MudTh>
+            <MudTableSortLabel SortBy="@(new Func<Configuration, object>(x => x.Name))">Name</MudTableSortLabel>
+        </MudTh>
+        <MudTh>
+            <MudTableSortLabel SortBy="@(new Func<Configuration, object>(x => x.Value))">Value</MudTableSortLabel>
+        </MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Value">@context.Value</MudTd>
+    </RowTemplate>
+    <RowEditingTemplate>
+        <MudTd DataLabel="Name">
+            <MudTextField @bind-Value="@context.Name" Required="true"/>
+        </MudTd>
+        <MudTd DataLabel="Value">
+            <MudTextField @bind-Value="@context.Value" Required="true"/>
+        </MudTd>
+    </RowEditingTemplate>
+    <PagerContent>
+        <MudTablePager/>
+    </PagerContent>
+    <EditButtonContent Context="button">
+        <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Edit" Class="pa-o" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled"/>
+        <MudIconButton Size="Size.Small" Icon="@Icons.Material.Outlined.Delete" Class="pa-0" OnClick="(async ()=>await OnItemDeleted(button.Item as Configuration))"></MudIconButton>
+    </EditButtonContent>
+</MudTable>

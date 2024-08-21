@@ -11,7 +11,10 @@ public class TestBase : IAsyncLifetime
     protected readonly IApplicationDbContext Context;
     private CancellationTokenSource? _cancellationTokenSource;
     protected CancellationToken CancellationToken;
-    protected IFixture Fixture = new Fixture();
+    protected IFixture Fixture = new Fixture()
+    {
+        Behaviors = { new OmitOnRecursionBehavior() }
+    };
     
     public TestBase(ApiWebApplication factory)
     {
