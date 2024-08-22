@@ -12,6 +12,10 @@ public class ConfigurationManagerProvider : ConfigurationProvider, IDisposable
     private IAppSettingsClient? _client;
     private readonly HttpClient _identityClient;
 
+    private readonly string _scopes = "KalanalyzeCode.ConfigurationManager profile openid";
+    private readonly string _clientId = "postman.apikey";
+    private readonly string _clientSecrete = "secret";
+
     public ConfigurationManagerProvider(ConfigurationManagerSource source)
     {
         Source = source;
@@ -41,9 +45,9 @@ public class ConfigurationManagerProvider : ConfigurationProvider, IDisposable
     {
         var formData = new FormUrlEncodedContent([
             new KeyValuePair<string, string>("grant_type", "api_key"),
-            new KeyValuePair<string, string>("scope", Options.SecreteManagerOptions.Scope),
-            new KeyValuePair<string, string>("client_id", Options.SecreteManagerOptions.ClientId),
-            new KeyValuePair<string, string>("client_secret", Options.SecreteManagerOptions.ClientSecrete),
+            new KeyValuePair<string, string>("scope", _scopes),
+            new KeyValuePair<string, string>("client_id", _clientId),
+            new KeyValuePair<string, string>("client_secret", _clientSecrete),
             new KeyValuePair<string, string>("api_key", Options.SecreteManagerOptions.ApiKey),
         ]);
         var identityResult = Task.Run(async () => 

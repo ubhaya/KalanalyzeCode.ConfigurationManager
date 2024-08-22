@@ -14,9 +14,6 @@ builder.Configuration.AddConfigurationManager(options =>
     options.SecreteManagerOptions = new()
     {
         BaseAddress = new Uri("https://localhost:7206"),
-        Scopes = ["KalanalyzeCode.ConfigurationManager", "profile", "openid"],
-        ClientId = "postman.apikey",
-        ClientSecrete = "secret",
         ApiKey = "f05285ec-838c-444d-9323-e56aced7a7cb"
     };
         
