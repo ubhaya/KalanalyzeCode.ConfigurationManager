@@ -64,7 +64,7 @@ Before you begin, ensure you have the following installed on your system:
 6. **Configure Your Application**
    In your .NET application, configure the provider to retrieve settings from the Configuration Manager. Here’s a basic example of how to do this in your `Program.cs`:
 
-   ```csharp
+   ```
    var builder = WebApplication.CreateBuilder(args);
    
    builder.Configuration.AddConfigurationManager(options =>
