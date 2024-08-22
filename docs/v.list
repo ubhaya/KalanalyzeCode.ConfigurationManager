@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE vars SYSTEM "https://resources.jetbrains.com/writerside/1.0/vars.dtd">
+<vars>
+    <var name="product" value="Configuration Manager"/>
+    <var name="managerDockerRepo" value="ubhaya123/configurationManager:latest"/>
+    <var name="postgresqlDockerRepo" value="postgres:latest"/>
+    <var name="providerNugetPackage" value="YourConfigurationProviderPackage"/>
+</vars>
