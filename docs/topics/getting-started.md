@@ -72,7 +72,12 @@ Before you begin, ensure you have the following installed on your system:
         options.SecreteManagerOptions = new()
         {
              BaseAddress = new Uri("https://localhost:7206"),
-             Scopes = ["KalanalyzeCode.ConfigurationManager", "profile", "openid"],
+             Scopes = 
+                     [
+                         "KalanalyzeCode.ConfigurationManager", 
+                         "profile", 
+                         "openid"
+                     ],
              ClientId = "postman.apikey",
              ClientSecrete = "secret",
              ApiKey = "f05285ec-838c-444d-9323-e56aced7a7cb"
@@ -82,5 +87,6 @@ Before you begin, ensure you have the following installed on your system:
         options.PeriodInSeconds = 2;
    });
 
-   builder.Services.Configure<StarfishOptions>(builder.Configuration.GetSection(nameof(StarfishOptions)));
+   builder.Services.Configure<StarfishOptions>
+       (builder.Configuration.GetSection(nameof(StarfishOptions)));
    ```
