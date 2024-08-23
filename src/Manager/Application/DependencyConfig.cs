@@ -21,8 +21,6 @@ public static class DependencyConfig
         });
         services.AddValidatorsFromAssemblyContaining(typeof(Application));
 
-        services.AddScoped<RepositoryService>();
-
         return services;
     }
 

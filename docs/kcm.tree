@@ -11,4 +11,8 @@
         <toc-element topic="roadmap.md" toc-title="Road Map"/>
     </toc-element>
     <toc-element topic="getting-started.md"/>
+    <toc-element topic="usage.md">
+        <toc-element topic="project.md"/>
+        <toc-element topic="configuration.md"/>
+    </toc-element>
 </instance-profile>

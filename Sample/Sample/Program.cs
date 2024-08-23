@@ -14,9 +14,6 @@ builder.Configuration.AddConfigurationManager(options =>
     options.SecreteManagerOptions = new()
     {
         BaseAddress = new Uri("https://localhost:7206"),
-        Scopes = ["KalanalyzeCode.ConfigurationManager", "profile", "openid"],
-        ClientId = "postman.apikey",
-        ClientSecrete = "secret",
         ApiKey = "f05285ec-838c-444d-9323-e56aced7a7cb"
     };
         
@@ -24,7 +21,7 @@ builder.Configuration.AddConfigurationManager(options =>
     options.PeriodInSeconds = 2;
 });
 
-builder.Services.Configure<StarfishOptions>(builder.Configuration.GetSection(nameof(StarfishOptions)));
+builder.Services.Configure<PostgreSql>(builder.Configuration.GetSection(nameof(PostgreSql)));
 
 var app = builder.Build();
 
@@ -43,7 +40,7 @@ var summaries = new[]
 };
 
 app.MapGet("/optionmonitor", 
-        (IOptionsMonitor<StarfishOptions> optionMonitor) => optionMonitor.CurrentValue)
+        (IOptionsMonitor<PostgreSql> optionMonitor) => optionMonitor.CurrentValue)
     .WithName("OptionMonitor")
     .WithOpenApi();
 
