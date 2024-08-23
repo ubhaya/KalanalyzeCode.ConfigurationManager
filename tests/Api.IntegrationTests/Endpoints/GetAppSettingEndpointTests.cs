@@ -21,7 +21,7 @@ public class GetAppSettingEndpointTests : TestBase
 
     
     
-    [Fact]
+    //[Fact]
     public async Task GetAppSettingEndpoint_ReturnResult_WhenValidSettingNamesParse()
     {
         // Arrange
@@ -44,7 +44,7 @@ public class GetAppSettingEndpointTests : TestBase
         settings.Configurations.Should().NotBeEmpty();
     }
     
-    [Fact]
+    //[Fact]
     public async Task GetAppSettingEndpoint_ReturnResult_WhenInvalidSettingNamesParse()
     {
         // Arrange

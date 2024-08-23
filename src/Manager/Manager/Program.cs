@@ -12,6 +12,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddSwaggerService();
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddApplicationCore();
 
 builder.Services.AddPersistence(builder.Configuration);

@@ -21,7 +21,7 @@ builder.Configuration.AddConfigurationManager(options =>
     options.PeriodInSeconds = 2;
 });
 
-builder.Services.Configure<StarfishOptions>(builder.Configuration.GetSection(nameof(StarfishOptions)));
+builder.Services.Configure<PostgreSql>(builder.Configuration.GetSection(nameof(PostgreSql)));
 
 var app = builder.Build();
 
@@ -40,7 +40,7 @@ var summaries = new[]
 };
 
 app.MapGet("/optionmonitor", 
-        (IOptionsMonitor<StarfishOptions> optionMonitor) => optionMonitor.CurrentValue)
+        (IOptionsMonitor<PostgreSql> optionMonitor) => optionMonitor.CurrentValue)
     .WithName("OptionMonitor")
     .WithOpenApi();
 

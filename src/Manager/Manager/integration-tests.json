@@ -46,8 +46,8 @@
       "propertySetterAccessModifier": "",
       "generateNativeRecords": false,
       "generateContractsOutput": true,
-      "contractsNamespace": "KalanalyzeCode.ConfigurationManager.Ui.Client",
-      "contractsOutputFilePath": "../Manager.Client/Contracts.g.cs",
+      "contractsNamespace": "KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client",
+      "contractsOutputFilePath": "../../../tests/Api.IntegrationTests/Contracts.g.cs",
       "parameterDateTimeFormat": "s",
       "parameterDateFormat": "yyyy-MM-dd",
       "generateUpdateJsonSerializerSettingsMethod": true,
@@ -69,7 +69,7 @@
       "wrapResponseMethods": [],
       "generateResponseClasses": true,
       "responseClass": "SwaggerResponse",
-      "namespace": "KalanalyzeCode.ConfigurationManager.Ui.Client",
+      "namespace": "KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Client",
       "requiredPropertiesMustBeDefined": true,
       "dateType": "System.DateOnly",
       "jsonConverters": null,
@@ -103,7 +103,7 @@
       "templateDirectory": null,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": "../Manager.Client/ApiClient.g.cs",
+      "output": "../../../tests/Api.IntegrationTests/ApiClient.g.cs",
       "newLineBehavior": "Auto"
     }
   }

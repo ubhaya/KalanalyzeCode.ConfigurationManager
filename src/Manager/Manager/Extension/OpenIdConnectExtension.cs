@@ -1,3 +1,4 @@
+using KalanalyzeCode.ConfigurationManager.Application.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -68,6 +69,11 @@ public static class OpenIdConnectExtension
                     ValidateLifetime = false,
                 };
             });
+
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("SettingsPolicy", policy => policy.Requirements.Add(new ProjectApiKeyRequirement()));
+        });
 
         return services;
     }

@@ -17,6 +17,7 @@ public static class IdentityServiceExtension
         
         
         builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+        builder.Services.AddScoped<IAuthorizationHandler, ProjectAuthorizationHandler>();
         builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionAuthorizationPolicyProvider>();
 
         return builder;

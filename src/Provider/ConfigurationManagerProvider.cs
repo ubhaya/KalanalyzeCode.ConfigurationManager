@@ -74,11 +74,11 @@ public class ConfigurationManagerProvider : ConfigurationProvider, IDisposable
         });
         
         var result = Task.Run(async () => 
-                await _client.GetAsync("StarfishOptions"))
+                await _client.GetAsync("Project 1"))
             .Result;
 
-        Data = result?.Settings
-                   .ToDictionary<ApplicationSettings, string, string?>(c => c.Id, c => c.Value,
+        Data = result?.Configurations
+                   .ToDictionary<Configuration, string, string?>(c => c.Name, c => c.Value,
                        StringComparer.OrdinalIgnoreCase) ??
                [];
     }
