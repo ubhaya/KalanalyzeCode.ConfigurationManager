@@ -1,24 +1,33 @@
 ﻿using KalanalyzeCode.ConfigurationManager.Application.Contract.Request;
 using KalanalyzeCode.ConfigurationManager.Application.Contract.Response;
+using KalanalyzeCode.ConfigurationManager.Application.Infrastructure.Persistence;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace KalanalyzeCode.ConfigurationManager.Application.Features.Categories.Queries;
 
 public class GetAppSettingsRequestHandler : IRequestHandler<GetAppSettingsRequest, GetAppSettingsResponse>
 {
-    private readonly RepositoryService _repository;
+    private readonly IApplicationDbContext _context;
 
-    public GetAppSettingsRequestHandler(RepositoryService repository)
+    public GetAppSettingsRequestHandler(IApplicationDbContext context)
     {
-        _repository = repository;
+        _context = context;
     }
 
     public async Task<GetAppSettingsResponse> Handle(GetAppSettingsRequest request, CancellationToken cancellationToken)
     {
-        var result = await _repository.GetAllApplicationSettings(request.SettingName, cancellationToken);
-        return new GetAppSettingsResponse()
+        var project = await _context.Projects
+            .Include(p=>p.Configurations)
+            .Where(p => p.Name == request.ProjectName)
+            .SingleOrDefaultAsync(cancellationToken);
+        
+        if (project == null)
+            return new GetAppSettingsResponse();
+
+        return new GetAppSettingsResponse
         {
-            Settings = result
+            Configurations = project.Configurations
         };
     }
 }

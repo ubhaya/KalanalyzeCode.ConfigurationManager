@@ -1,8 +1,10 @@
 using System.Diagnostics;
+using AutoFixture;
 using FluentAssertions;
 using KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Helpers;
 using KalanalyzeCode.ConfigurationManager.Application.Contract.Request;
 using KalanalyzeCode.ConfigurationManager.Entity.Concrete;
+using KalanalyzeCode.ConfigurationManager.Entity.Entities;
 using MediatR;
 
 namespace KalanalyzeCode.ConfigurationManager.Api.IntegrationTests.Endpoints;
@@ -23,11 +25,14 @@ public class GetAppSettingEndpointTests : TestBase
     public async Task GetAppSettingEndpoint_ReturnResult_WhenValidSettingNamesParse()
     {
         // Arrange
-        var testSettings = "TestSettings";
-        await AddAsync(new ConfigurationSettings() { Id = testSettings, Value = "true" });
+        var testSettings = "Project 1";
+        var project = Fixture.Build<Project>()
+            .With(p=>p.Name, testSettings)
+            .Create();
+        await AddAsync(project);
         var request = new GetAppSettingsRequest()
         {
-            SettingName = testSettings
+            ProjectName = testSettings
         };
 
         // Act
@@ -35,8 +40,8 @@ public class GetAppSettingEndpointTests : TestBase
         // Assert
         settings.Should().NotBeNull();
         Debug.Assert(settings is not null);
-        Debug.Assert(settings.Settings is not null);
-        settings.Settings.Should().NotBeEmpty();
+        Debug.Assert(settings.Configurations is not null);
+        settings.Configurations.Should().NotBeEmpty();
     }
     
     [Fact]
@@ -45,7 +50,7 @@ public class GetAppSettingEndpointTests : TestBase
         // Arrange
         var request = new GetAppSettingsRequest()
         {
-            SettingName = "invalidName"
+            ProjectName = "invalidName"
         };
     
         // Act
@@ -54,7 +59,7 @@ public class GetAppSettingEndpointTests : TestBase
         // Assert
         settings.Should().NotBeNull();
         Debug.Assert(settings is not null);
-        Debug.Assert(settings.Settings is not null);
-        settings.Settings.Should().BeNullOrEmpty();
+        Debug.Assert(settings.Configurations is not null);
+        settings.Configurations.Should().BeNullOrEmpty();
     }
 }
