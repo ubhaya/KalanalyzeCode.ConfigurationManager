@@ -66,4 +66,7 @@
     <PackageVersion Include="SpecFlow.Tools.MsBuild.Generation" Version="3.9.74" />
     <PackageVersion Include="SpecFlow.xUnit" Version="3.9.74" />
   </ItemGroup>
+  <ItemGroup>
+    <GlobalPackageReference Include="Microsoft.Build.CopyOnWrite" Version="1.0.315"/>
+  </ItemGroup>
 </Project>
